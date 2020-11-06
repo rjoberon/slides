@@ -349,7 +349,86 @@ michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfac
 
 ## Häufigkeit der Muster
 
-**Michel: (ein Teil von) Table 1 aus dem EMNLP-Paper**
+<table style="width:100%">
+  <caption>Anzahl der VA Kandidaten nach jedem Schritt</caption>
+  <tr>
+    <th>pattern</th>
+    <th>regex</th>
+    <th>Wikidata</th>
+    <th>blacklist</th>
+    <th>true VA</th>
+  </tr>
+  <tr>
+    <th>the-of</th>
+    <th>12,748,73</th>
+    <th>90,71</th>
+    <th>3,591</th>
+    <th>2,779</th>
+  </tr>
+  <tr>
+    <th>a-of</th>
+    <th>5,900,83</th>
+    <th>11,860</th>
+    <th>705</th>
+    <th>118</th>
+  </tr>
+  <tr>
+    <th>an-of</th>
+    <th>956,24</th>
+    <th>4,539</th>
+    <th>88</th>
+    <th>14</th>
+  </tr>
+  <tr>
+    <th>the-for</th>
+    <th>2,960,45</th>
+    <th>8,070</th>
+    <th>817</th>
+    <th>24</th>
+  </tr>
+  <tr>
+    <th>a-for</th>
+    <th>1,869,94</th>
+    <th>4,812</th>
+    <th>536</th>
+    <th>59</th>
+  </tr>
+  <tr>
+    <th>an-for</th>
+    <th>304,52</th>
+    <th>1,424</th>
+    <th>296</th>
+    <th>13</th>
+  </tr>
+  <tr>
+    <th>the-amon</th>
+    <th>122,345</th>
+    <th>139</th>
+    <th>13</th>
+    <th>3</th>
+  </tr>
+  <tr>
+    <th>a-among</th>
+    <th>67,019</th>
+    <th>82</th>
+    <th>25</th>
+    <th>13</th>
+  </tr>
+  <tr>
+    <th>an-among</th>
+    <th>11,158</th>
+    <th>12</th>
+    <th>1</th>
+    <th>0</th>
+  </tr>
+  <tr>
+    <th>sum</th>
+    <th>24,941,27</th>
+    <th>121,65</th>
+    <th>6,072</th>
+    <th>3,023</th>
+  </tr>
+</table>
 
 --
 
@@ -358,12 +437,6 @@ michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfac
 
 <table style="width:100%">
   <caption>Güte der drei automatisierten Ansätze im Vergleich zur Baseline.</caption>
-  <tr>
-    <td>WD</td>
-    <td>67.3%</td>
-    <td>93.0%</td>
-    <td>78.1%</td>
-  </tr>
   <tr>
     <th>approach</th>
     <th>prec</th>
@@ -394,7 +467,8 @@ michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfac
     <td>85.3%</td>
     <td><b>86.1%</b></td>
   </tr>
- </table> 
+</table>
+
 --
 
 ## zeitliche Verteilung
