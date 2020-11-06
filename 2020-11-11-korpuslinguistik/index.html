@@ -337,11 +337,13 @@ Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade
 
 ## Sequence Labelling
 
-
+michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfach zuviel ist
 
 ---
 
 # 3. Ergebnisse
+
+
 
 --
 
@@ -353,8 +355,46 @@ Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade
 
 ## Güte der Verfahren
 
-**Michel: analog Table 2**
 
+<table style="width:100%">
+  <caption>Güte der drei automatisierten Ansätze im Vergleich zur Baseline.</caption>
+  <tr>
+    <td>WD</td>
+    <td>67.3%</td>
+    <td>93.0%</td>
+    <td>78.1%</td>
+  </tr>
+  <tr>
+    <th>approach</th>
+    <th>prec</th>
+    <th>rec</th>
+    <th>f1</th>
+  </tr>
+  <tr>
+    <td>baseline</td>
+    <td>49.8%</td>
+    <td>-</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>WD</td>
+    <td>67.3%</td>
+    <td><b>93.0%</b></td>
+    <td>78.1%</td>
+  </tr>
+  <tr>
+    <td>NER</td>
+    <td>71.8%</td>
+    <td>81.3%</td>
+    <td>76.2%</td>
+  </tr>
+  <tr>
+    <td>BLSTM</td>
+    <td><b>86.9%</b></td>
+    <td>85.3%</td>
+    <td><b>86.1%</b></td>
+  </tr>
+ </table> 
 --
 
 ## zeitliche Verteilung
