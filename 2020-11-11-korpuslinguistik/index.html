@@ -311,12 +311,29 @@ Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade
 ### Pre-processing
 
 <b>Problem</b>: Neuronale Netze können nur mit numerischen Werten arbeiten
+
 <b>Lösung</b>: word embeddings
 
-"Word embedding" ist ein Verfahren, um Wörter durch numerische Vektoren zu repräsentieren.
+*Word embedding* ist ein Verfahren, um Wörter durch numerische Vektoren zu repräsentieren.
 
-![House](images/wordembedding.png)<!-- .element width="600px" -->
+![Embedding](images/wordembedding.png)<!-- .element width="600px" -->
 
+--
+
+### Neuronales Netz
+
+1. Input: Satz
+2. Umwandlung des Satzes in Matrix
+3. Matrix als Input für Neuronales Netz
+4. NN besteht aus bidirektionales Long short-term memory
+   - Vorteil: "Erinnerung" an vorherige Werte
+   - bidirektional: in beide Richtungen
+5. Zusammenführen der Outputvektoren
+6. Ausgabe: Binär
+
+![Architecture](images/blstm_clf.png)<!-- .element width="600px" -->
+
+--
 
 ## Sequence Labelling
 
