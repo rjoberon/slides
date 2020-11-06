@@ -210,7 +210,7 @@ Ziel: automatische Extraktion aus großen Zeitungskorpora
 
 1. Regelbasiert ([Fischer/Jäschke 2019](https://doi.org/10.1093/llc/fqy087))
 2. Automatisierte regelbasierte Verfahren ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
-3. binäres maschinelles Lernen ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
+3. Maschinelles Lernen ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
 4. Sequence Labeling (work in progress)
 
 **Michel, Da wir so viel Zeit haben, könnten wir auch WD und NER mit reinnehmen**
@@ -245,7 +245,8 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 --
 
-## Automatisiertes regelbasiertes Verfahren 1 (basierend auf Bekanntheit in Wikidata)
+## Automatisiertes regelbasiertes Verfahren 1
+### basierend auf Bekanntheit in Wikidata
 
 1. Regex (a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>)
 2. Entity Linking - Abgleich gegen Wikidata Liste 
@@ -254,12 +255,13 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
    - Entitätenfilter
 
 --
-## Bekanntheitsmaß 
+
+### Bekanntheitsmaß 
 
 - Einführung eines Maßes, welches die Bekanntheit aller Entitäten in Wikidata wiederspiegelt
-- verschiedene  (Anzahl Seitenlinks, Aussagen oder clickstream data)
-- Entität der Klasse "human" vs. bekannteste Entität aus Wikidata (die denselben Namen oder Alias besitzt)
-- z.B. "the <span style="color:red;">House</span> of Commons" oder  "the <span style="color:red;">House</span> Creativity":
+- Basis: Anzahl Seitenlinks WD, Anzahl Aussagen WD oder Wikipedia clickstream data
+- Entität der Klasse "human" vs. bekannteste Entität aus Wikidata
+- Beispiel "the <span style="color:red;">House</span> of Creativity":
    - House (Gebäude, 184)
    - Dr. House (TV Serie, 79)
    - Homer Doliver House (Botanist, 9)
@@ -268,34 +270,53 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 <b>Lösung</b>: Falls die Entität der Klasse "human" die bekannteste Entität in Wikidata ist, bleibt der Kandidat in der Liste
 
-
 --
-## Entitätenfilter
 
-- <b>Problem</b>: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
-  - Prince (Sänger, 101) vs. Prince (Sohn eines Königs/einer Königin, 71)
+### Entitätenfilter
+
+<b>Problem</b>: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
+- Prince (Sänger, 101)
+- Prince (Sohn eines Königs/einer Königin, 71)
 
 ![House](images/prince_vs_prince.png)<!-- .element width="600px" -->
 
-- <b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
-   - Prince of Spain, Prince of Wales, Streets of New York, Baths of Caracalla
+<b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
+- Prince of Wales, Streets of New York, Baths of Caracalla
+
+--
+
+## Automatisiertes regelbasiertes Verfahren 1
+### basierend auf NER-Tool
+
+1. Regex (a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>)
+2. Anwendung eines <b>Named-Entity-Recognition (NER) Tools</b>
+   - z.B. Stanford NLP Group
+   - alle Wörter zwischen a/an/the und of/for/among müssen als *Person* getagged werden
+3. Entitätenfilter (aus 1. Ansatz)
+
+Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of
 
 
 --
 
-## Automatisiertes regelbasiertes Verfahren 1 (basierend auf NER-Tool)
+## Maschinelles Lernen
+### binärer Klassifizierer
 
-
-
---
-
-
-## Maschinelles Lernen (binärer Klassifizierer)
-
-
-
+1. Daten labeln (auf Satzebene)
+2. Pre-processing
+3. Neuronales Netz trainieren und evaluieren
 
 --
+
+### Pre-processing
+
+<b>Problem</b>: Neuronale Netze können nur mit numerischen Werten arbeiten
+<b>Lösung</b>: word embeddings
+
+"Word embedding" ist ein Verfahren, um Wörter durch numerische Vektoren zu repräsentieren.
+
+![House](images/wordembedding.png)<!-- .element width="600px" -->
+
 
 ## Sequence Labelling
 
