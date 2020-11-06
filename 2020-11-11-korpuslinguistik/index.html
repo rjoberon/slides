@@ -249,25 +249,36 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 1. Regex 
 2. Entity Linking - Wikidata
-3. Sperrliste durch automatisiertes Verfahren ersetzen:
-   - Einführung eines Bekanntheitsmaßes
-   - basierend auf Wikidata (Anzahl sitelinks, statemens oder clickstream data)
-   - Entität der Klasse "human" vs. bekannteste Entität mit demselben Label aus Wikidata
-   - 
+3. Sperrliste durch automatisiertes Verfahren ersetzen
+   - Bekanntheitsmaß
+   - Entitätenfilter
 
-![House](images/house_vs_house.png)<!-- .element width="400px" -->
+--
+## Bekanntheitsmaß 
 
+- basierend auf Wikidata (Anzahl Seitenlinks, Aussagen oder clickstream data)
+- Entität der Klasse "human" vs. bekannteste Entität aus Wikidata (die denselben Namen oder Alias besitzt)
+- z.B. the <span style="color:red;">House</span> of Commons, the <span style="color:red;">House</span> Creativity:
+   - House (Gebäude, 184) vs. Dr.House (TV Serie, 79) vs. Homer Doliver House (Botanist, 9)
 
+![House](images/house_vs_house.png)<!-- .element width="600px" -->
 
 
 --
+## Entitätenfilter
 
+- Problem: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
+  - Prince (Sänger, 101) vs. Prince (Sohn eines Königs/einer Königin, 71)
+
+![House](images/prince_vs_prince.png)<!-- .element width="600px" -->
+
+- Lösung: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
+   - Prince of Spain, Prince of Wales, Streets of New York, Baths of Caracalla
+--
 ## Automatisiertes regelbasiertes Verfahren 1 (basierend auf NER-Tool)
 
 
-**Michel, hier bitte befüllen (bei Bedarf mehrere Folien)**
 
-![House](images/prince_vs_prince.png)<!-- .element width="400px" -->
 --
 
 ## Maschinelles Lernen (binärer Klassifizierer)
