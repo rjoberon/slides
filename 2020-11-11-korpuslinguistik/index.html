@@ -247,43 +247,52 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 ## Automatisiertes regelbasiertes Verfahren 1 (basierend auf Bekanntheit in Wikidata)
 
-1. Regex 
-2. Entity Linking - Wikidata
-3. Sperrliste durch automatisiertes Verfahren ersetzen
+1. Regex (a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>)
+2. Entity Linking - Abgleich gegen Wikidata Liste 
+3. Sperrliste durch <span style="color:red;">automatisierte Verfahren</span> ersetzen
    - Bekanntheitsmaß
    - Entitätenfilter
 
 --
 ## Bekanntheitsmaß 
 
-- basierend auf Wikidata (Anzahl Seitenlinks, Aussagen oder clickstream data)
+- Einführung eines Maßes, welches die Bekanntheit aller Entitäten in Wikidata wiederspiegelt
+- verschiedene  (Anzahl Seitenlinks, Aussagen oder clickstream data)
 - Entität der Klasse "human" vs. bekannteste Entität aus Wikidata (die denselben Namen oder Alias besitzt)
-- z.B. the <span style="color:red;">House</span> of Commons, the <span style="color:red;">House</span> Creativity:
-   - House (Gebäude, 184) vs. Dr.House (TV Serie, 79) vs. Homer Doliver House (Botanist, 9)
+- z.B. "the <span style="color:red;">House</span> of Commons" oder  "the <span style="color:red;">House</span> Creativity":
+   - House (Gebäude, 184)
+   - Dr. House (TV Serie, 79)
+   - Homer Doliver House (Botanist, 9)
 
 ![House](images/house_vs_house.png)<!-- .element width="600px" -->
+
+<b>Lösung</b>: Falls die Entität der Klasse "human" die bekannteste Entität in Wikidata ist, bleibt der Kandidat in der Liste
 
 
 --
 ## Entitätenfilter
 
-- Problem: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
+- <b>Problem</b>: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
   - Prince (Sänger, 101) vs. Prince (Sohn eines Königs/einer Königin, 71)
 
 ![House](images/prince_vs_prince.png)<!-- .element width="600px" -->
 
-- Lösung: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
+- <b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
    - Prince of Spain, Prince of Wales, Streets of New York, Baths of Caracalla
+
+
 --
+
 ## Automatisiertes regelbasiertes Verfahren 1 (basierend auf NER-Tool)
 
 
 
 --
 
+
 ## Maschinelles Lernen (binärer Klassifizierer)
 
-**Michel, hier bitte befüllen (bei Bedarf mehrere Folien)**
+
 
 
 --
