@@ -211,20 +211,13 @@ Ziel: automatische Extraktion aus großen Zeitungskorpora
    - NER
    - BLSTM
 
-Ich überlege auch gerade, ob wir nicht den [allerersten
-Ansatz](http://slides.igada.de/2017-10-10-ischool/#/3) und da
-insbesondere die [Ergebnisse zu den
-Mustern](http://slides.igada.de/2017-10-10-ischool/#/3/9) mit
-reinnehmen. Allerdings war das alles recht ad-hoc. Vielleicht als
-Extra/Backup-Slides und dann gleich incl. [NatAdj](http://slides.igada.de/2017-10-10-ischool/#/4)
-
 Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 --
 
 ## Regelbasiert
 
-1. Fokus auf das häufigste Muster *"the <span style="color:red;">source</span> of <span style="color:green;">modifier</span>"*:
+1. Fokus auf das häufigste Muster *"the <span style="color:red;">Source</span> of <span style="color:green;">Modifier</span>"*:
   ```python
   re.compile("(\\bthe\\s+([\\w.,'-]+\\s+){1,5}?of\\b)", re.UNICODE)
   ```
@@ -236,103 +229,101 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 → Anzahl der Kandidaten für das Jahr 1987 reduzierte sich von 641,432 über 5,236 zu 131
 
-**noch
-[detaillierter](http://slides.igada.de/2017-10-10-ischool/#/5/1) erklären?**
+Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
+   style="color:red;">Source</span> of/for/among <span
+   style="color:green;">Modifier</span>"*).
 
 --
 
-## Automatisierte Verfahren (1/3)
-### -- basierend auf "Bekanntheit" in Wikidata --
+## Wikidata
 
-1. Regex
-   - a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>
-2. Entity Linking
-   - Abgleich gegen Wikidata Liste
-3. Sperrliste durch <span style="color:blue;">automatisierte Verfahren</span> ersetzen
-   - Bekanntheitsmaß
-   - Entitätenfilter
+- Schritt 1 + 2 wie gehabt
+- in Schritt 3 Ersetzung der Sperrliste durch automatisierte Verfahren:
+   1. Bekanntheitsmaß
+   2. Entitätenfilter
 
 --
 
-### Bekanntheitsmaß
+### 1. Bekanntheitsmaß
 
-- Einführung eines Maßes, welches die <span style="color:blue;">Bekanntheit aller Entitäten in Wikidata</span> wiederspiegelt
-- Basis: Anzahl Seitenlinks WD
-- Entität der Klasse "human" vs. bekannteste Entität aus Wikidata
-- <b>Beispiel</b>: <i>"the <span style="color:red;">House</span> of Creativity"</i>
-   - House (Gebäude, 184)
-   - Dr. House (TV Serie, 79)
-   - Homer Doliver House (Botanist, 9)
+- Maß, welches die *Bekanntheit aller Entitäten in Wikipedia* wiederspiegelt
+- Grundlage: Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikipedia
+- Entität der Klasse "human" vs. bekannteste Entität
+- **Beispiel**: *"the <span style="color:red;">House</span> of <span style="color:green;">Creativity</span>"*
 
-![House](images/house_vs_house.png)<!-- .element width="600px" -->
+  | Entität | Sitelinks |
+  |:--------|----------:|
+  |[House](https://www.wikidata.org/wiki/Q3947) (Gebäude) | 184 |
+  |[Dr. House](https://www.wikidata.org/wiki/Q23558) (TV Serie)| 79 |
+  |[Homer Doliver House](https://www.wikidata.org/wiki/Q3139666) (Botaniker) | 9|
 
-<b>Lösung</b>: Falls die Entität der Klasse "human" die bekannteste Entität in Wikidata ist, bleibt der Kandidat in der Kandidatenliste
+  ![House](images/house_vs_house.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
 
---
-
-### Entitätenfilter
-
-<b>Problem</b>: Was passiert mit Beispielen wie <i>"the <span style="color:red;">Prince</span> of Spain"</i>?
-- Prince (Sänger, 101)
-- Prince (Sohn eines Königs/einer Königin, 71)
-
-![House](images/prince_vs_prince.png)<!-- .element width="600px" -->
-
-<b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. <i>Prince of Spain</i>) gegen Wikidata Entitäten Liste
-- <i>Prince of Wales, Streets of New York, Baths of Caracalla</i>
+→ Wir behalten Kandidaten, deren Entität der Klasse "human" die bekannteste Entität  ist.
 
 --
 
-## Automatisierte Verfahren (2/3)
-### -- basierend auf NER-Tool --
+### 2. Entitätenfilter
 
-1. Regex
-   - a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>
-2. Anwendung eines <span style="color:blue;">Named-Entity-Recognition (NER) Tools</span>
-   - z.B. Stanford NLP Group
-   - alle Wörter zwischen a/an/the und of/for/among müssen als *Person* getagged werden
-3. Entitätenfilter (aus 1. Ansatz)
+- **Problem:** Was passiert mit Fällen wie *"the <span style="color:red;">Prince</span> of Spain"*?
 
-<b>Beispiel</b>: <i>the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of</i>
+  | Entität | Sitelinks |
+  |:--------|----------:|
+  | [Prince](https://www.wikidata.org/wiki/Q7542) (Sänger) | 101|
+  | [Prince](https://www.wikidata.org/wiki/Q2747456) (Sohn eines Königs/einer Königin) | 71|
+
+![House](images/prince_vs_prince.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
+
+→ Abgleich zwischen <span style="color:red;">Source</span> + Folgewörtern im Satz (z.B. *Prince of Spain*) gegen Wikidata-Entitäten-Liste
+- *Prince of Wales, Streets of New York, Baths of Caracalla*
+
+--
+
+## NER-Tool
+
+1. wie gehabt
+2. Anwendung von *Named-Entity-Recognition (NER)*
+   - z.B. Stanford NLP
+   - Wörter zwischen "a/an/the" und "of/for/among" müssen als *Person* getagged werden
+3. Entitätenfilter (aus regelbasiertem Ansatz)
+
+**Beispiel**: *"the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of"*
 
 
 --
 
-## Automatisierte Verfahren (3/3)
-### -- BLSTM -- 
+## BLSTM
 
 1. Binäres Labeln der Daten
    - auf Satzebene
-2. Pre-processing
-   - word embedding
+2. Vorverarbeitung
+   - Word Embeddings (BERT)
 3. Neuronales Netz
    - Training und Evaluierung
 
 --
 
-### Pre-processing
+### Vorverarbeitung
 
-<b>Problem</b>: Neuronale Netze können nur mit numerischen Werten arbeiten
+- *Problem*: Neuronale Netze können nur mit numerischen Werten arbeiten
+- *Lösung*: Word Embeddings
+  - Repräsentation von Wörtern durch numerische Vektoren
 
-<b>Lösung</b>: word embeddings
-
-*Word embedding* ist ein Verfahren, um Wörter durch numerische Vektoren zu repräsentieren.
-
-![Embedding](images/wordembedding.png)<!-- .element width="400px" -->
+![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
 
 --
 
 ### Neuronales Netz
 
-1. Input: Satz
-2. Umwandlung des Satzes in Matrix für Input
-3. NN besteht aus bidirektionales Long short-term memory Layern
-   - Vorteil: "Erinnerung" an vorherige Werte
+1. Eingabe: Satz
+2. Umwandlung des Satzes in eine Matrix mit Hilfe der Wortvektoren
+3. BLSTN = *bidirectional Long Short-Term Memory*
+   - Vorteil: "Erinnerung" vorheriger Werte
    - bidirektional: in beide Richtungen
-4. Zusammenführen der Outputvektoren
-5. Ausgabe: Binär: {0,1}
+4. Zusammenführen der Ausgabevektoren
+5. Ausgabe: binär (0, 1)
 
-![Architecture](images/blstm_clf.png)<!-- .element width="300px" -->
+![Architecture](images/blstm_clf.png)<!-- .element style="width:300px;box-shadow:none;" -->
 
 ---
 
@@ -344,129 +335,37 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 ## Häufigkeit der Muster
 
-<table style="width:100%">
 
-  <tr>
-    <th>pattern</th>
-    <th>regex</th>
-    <th>Wikidata</th>
-    <th>blacklist</th>
-    <th>true VA</th>
-  </tr>
-  <tr>
-    <td>the-of</td>
-    <td>12,748,73</td>
-    <td>90,71</td>
-    <td>3,591</td>
-    <td>2,779</td>
-  </tr>
-  <tr>
-    <td>a-of</td>
-    <td>5,900,83</td>
-    <td>11,860</td>
-    <td>705</td>
-    <td>118</td>
-  </tr>
-  <tr>
-    <td>an-of</td>
-    <td>956,24</td>
-    <td>4,539</td>
-    <td>88</td>
-    <td>14</td>
-  </tr>
-  <tr>
-    <td>the-for</td>
-    <td>2,960,45</td>
-    <td>8,070</td>
-    <td>817</td>
-    <td>24</td>
-  </tr>
-  <tr>
-    <td>a-for</td>
-    <td>1,869,94</td>
-    <td>4,812</td>
-    <td>536</td>
-    <td>59</td>
-  </tr>
-  <tr>
-    <td>an-for</td>
-    <td>304,52</td>
-    <td>1,424</td>
-    <td>296</td>
-    <td>13</td>
-  </tr>
-  <tr>
-    <td>the-among</td>
-    <td>122,345</td>
-    <td>139</td>
-    <td>13</td>
-    <td>3</td>
-  </tr>
-  <tr>
-    <td>a-among</td>
-    <td>67,019</td>
-    <td>82</td>
-    <td>25</td>
-    <td>13</td>
-  </tr>
-  <tr>
-    <td>an-among</td>
-    <td>11,158</td>
-    <td>12</td>
-    <td>1</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <th>sum</th>
-    <td>24,941,27</td>
-    <td>121,65</td>
-    <td>6,072</td>
-    <td>3,023</td>
-  </tr>
-	  <td colspan="5"><hr/></td>
-    <caption style="caption-side:bottom">Anzahl der VA Kandidaten nach jedem Schritt.</caption>
-</table>
+
+|Muster | Regex | Wikidata | Sperrliste | Vossantos|
+|:-|-:|-:|-:|-:|
+|the-of | 12,748,735 | 90,712 | 3,591 | 2,779|
+|a-of | 5,900,839 | 11,860 | 705 | 118|
+|an-of | 956,247 | 4,539 | 88 | 14|
+|the-for | 2,960,459 | 8,070 | 817 | 24|
+|a-for | 1,869,946 | 4,812 | 536 | 59|
+|an-for | 304,529 | 1,424 | 296 | 13|
+|the-among | 122,345 | 139 | 13 | 3|
+|a-among | 67,019 | 82 | 25 | 13|
+|an-among | 11,158 | 12 | 1 | 0|
+|**Summe** | 24,941,277 | 121,650 | 6,072 | 3,023|
+
+
+Anzahl der Vossanto-Kandidaten nach jedem Schritt beim regelbasierten Verfahren
+
 
 --
 
 ## Güte der Verfahren
 
+|Ansatz|Precision|Recall|F1-Maß|
+|:-|-:|-:|-:|
+|Regelbasiert|49.8%|-|-|
+|Wikidata|67.3%|93.0%|78.1%|
+|NER|71.8%|81.3%|76.2%|
+|BLSTM|86.9%|85.3%|86.1%|
 
-<table style="width:100%">
-
-  <tr>
-    <th>approach</th>
-    <th>prec</th>
-    <th>rec</th>
-    <th>f1</th>
-  </tr>
-  <tr>
-    <th>baseline</th>
-    <td>49.8%</td>
-    <td>-</td>
-    <td>-</td>
-  </tr>
-  <tr>
-    <th>WD</th>
-    <td>67.3%</td>
-    <td><b>93.0%</b></td>
-    <td>78.1%</td>
-  </tr>
-  <tr>
-    <th>NER</th>
-    <td>71.8%</td>
-    <td>81.3%</td>
-    <td>76.2%</td>
-  </tr>
-  <tr>
-    <th>BLSTM</th>
-    <td><b>86.9%</b></td>
-    <td>85.3%</td>
-    <td><b>86.1%</b></td>
-  </tr>
-	  <td colspan="4"><hr/></td>
-    <caption style="caption-side:bottom">Güte der drei automatisierten Ansätze basierend auf die Ergebnisse des regelbasierten Ansatzes.</caption>
-</table>
+Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierten Ansatzes!
 
 --
 
@@ -474,9 +373,7 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 ![zeitliche Verteilung der Vossantos um NYT-Korpus](images/vossantos_theof_nyt.svg)<!-- .element width="70%" -->
 
-<!-- https://github.com/weltliteratur/vossanto/blob/master/theof/nyt_vossantos_over_time.svg -->
 
-Unter den 6,072 Kandidaten wurden 3,023 Vossantos gefunden.
 
 --
 
@@ -531,7 +428,7 @@ racing in the 1980's, orange juice, real-life bulls, recording,
 Sauternes, snowboarding, soccer, television puppets, tennis, the
 Buffalo team, the dirt set, the Eagles, the game, the Hudson, the
 National Football League, the South Korean penal system, the sport,
-the White Sox, this sport, women's ball, women's basketball,
+the White Sox, this sport, women's ball, women's basketball
 </small>
 
 * »Romario is the **Michael Jordan** of soccer and Bebeto is the Magic Johnson of soccer« ([1994](http://www.nytimes.com/1994/07/05/sports/world-cup-94-point-proved-hearts-heavy-it-s-time-to-go-home.html))
@@ -706,8 +603,6 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 # 4. Diskussion
 
-**das muss noch angepasst werden**
-
 - einfaches aber robustes Verfahren welches von
   Geisteswissenschaftler:innen nachvollzogen werden kann
 - größte (bis dato) bekannte Sammlung an Vossianischen Antonomasien
@@ -720,7 +615,7 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
    - Fact extraction: *"Today, the German Ronaldo quit his career."*
    - Entitäten Disambiguation und Coreference resolution: *"Jimmy Johnson is the Madonna of college football..."*
    - creative text generation: Überschriften von Spielberichten, "Aufwerten" von automatisch generierten Artikeln
-   - 
+   -
 
 - might not work well for other languages (e.g., in German more complex regex necessary due to gender-specific articles and larger variety of prepositions)
 
@@ -832,6 +727,156 @@ Quelle: [XKCD, Randall Munroe](https://xkcd.com/1256) / CC BY-NC 2.5
   [10.1515/9783110685886-012](https://doi.org/10.1515/9783110685886-012)
 
 </small>
+
+---
+
+# Vorherige Ansätze
+
+--
+
+## NLP+NER
+
+### Methode
+* Verarbeitung mittels NLTK (Bird/Loper/Klein 2009):
+	* Satzerkennung, POS
+	* NER (Personen, Orte, Organisationen)
+* Entdeckung typischer Vossanto-Muster mittels regulärer Ausdrücke
+* vereinfachtes Beispiel (die * stehen für die drei Teile einer Vossanto):
+
+```
+\((PERSON|ORGANIZATION|GPE) *\) (is|has) (often|sometimes)? (been)? (called)?
+the \(PERSON|ORGANIZATION|GPE) *\) (of|among|from) \((PERSON|ORGANIZATION|GPE) *\)
+```<!-- .element: style="font-size:0.75em;" -->
+
+--
+
+### vollständiger regulärer Ausdruck
+
+```python
+vossanto_re_str = """
+( # target
+  \((PERSON|ORGANIZATION|GPE)\ (?P<x10>[^)]*?)\)
+  (\ \((PERSON|ORGANIZATION)\ (?P<x11>[^)]*?)\))?
+  (\ (?P<x12>[^/()]*?)/NNP?)?
+)
+
+\
+( # is
+(is|has|are)/VBZ (\ (often|sometimes)/RB)? (\ been/VBN)? (\ called/VBN)?|
+-/:|
+,/,
+)
+
+\ the/DT # the
+
+\
+( # source
+  \((PERSON|ORGANIZATION|GPE)\ (?P<y11>[^)]*?)\)
+  (\ (?P<y12>[^/()]*?)/NNP?)?
+|
+  (?P<y31>[^/()]*?)/NNP
+)
+
+\ (of|among|from)/IN # of
+
+\ ( # modifier
+  ((?P<z10>[^/()]*?)/(CD|DT|JJ|IN))?
+  (?P<z11>[^/()]*?)/(NNS?|DT)
+  (\ (?P<z12>[^/()]*?)/(IN|JJ))?
+  (\ (?P<z13>[^/()]*?)/NNS?)?
+|
+  (?P<z31>[^/()]*?)/NNP
+|
+  ((?P<z40>[^/()]*?)/(CD|DT|JJ)\ )?
+  \((ORGANIZATION|PERSON|GPE)\ (?P<z41>[^)]*?)\)
+  (\ (?P<z43>[^/()]*?)/NN[SP]?)?
+)
+
+\ [\.,-]/[\.,:]
+"""
+```
+
+--
+
+### typische Muster
+
+| n | Target, | the | Source | of | Modifier | Beispiel |
+|:--:|:-------:|:---:|:------------:|:------------:|:--------:|:---:|:----------------------------------------------------------------------------------------:|
+| 13 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NNS</span> | (<span style="color:blue;">PER Thomas Eisner</span>) ,/, the/DT (<span style="color:red;">ORG St. Francis</span>) of/IN <span style="color:green;">bugs/NNS</span> |
+| 13 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">GPE</span> | (<span style="color:blue;">PER Ethel Merman</span>) ,/, the/DT (<span style="color:red;">ORG Birgit Nilsson</span>) of/IN (<span style="color:green;">GPE Broadway</span>) |
+| 10 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN</span> | (<span style="color:blue;">PER Eddie Shore</span>) ,/, the/DT (<span style="color:red;">ORG Babe Ruth</span>) of/IN <span style="color:green;">hockey/NN</span> |
+| 9 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">DT NN</span> | (<span style="color:blue;">PER Hal Schell</span>) ,/, the/DT (<span style="color:red;">ORG Boswell</span>) of/IN <span style="color:green;">the/DT delta/NN</span> |
+| 7 | <span style="color:blue;">PER</span> | VBZ DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN</span> | (<span style="color:blue;">PER Mr. Solerwitz</span>) is/VBZ the/DT (<span style="color:red;">ORG Babe Ruth</span>) of/IN <span style="color:green;">ripoffs/NNS</span> |
+| 7 | <span style="color:blue;">PER</span> | DT | <span style="color:red;">PER</span> | IN | <span style="color:green;">GPE</span> | (<span style="color:blue;">PER Oscar</span>) ,/, the/DT (<span style="color:red;">PER Larry Bird</span>) of/IN (<span style="color:green;">GPE Brazil</span>) ,/, |
+| 7 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN NNS</span> | (<span style="color:blue;">PER Edward Rogoff</span>) ,/, the/DT (<span style="color:red;">ORG Don Quixote</span>) of/IN <span style="color:green;">cab/NN riders/NNS</span> |
+| 6 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">JJ NN</span> | (<span style="color:blue;">PER Carlos Gardel</span>) ,/, the/DT (<span style="color:red;">ORG Elvis</span>) of/IN <span style="color:green;">tango/JJ culture/NN</span> |
+| 5 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN NN</span> | (<span style="color:blue;">PER Johnny Miller</span>) ,/, the/DT (<span style="color:red;">ORG Simon Cowell</span>) of/IN <span style="color:green;">golf/NN criticism/NN</span> |
+| 5 | <span style="color:blue;">GPE</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NNS</span> | (<span style="color:blue;">GPE McEnroe</span>) ,/, the/DT (<span style="color:red;">ORG Picasso</span>) of/IN <span style="color:green;">players/NNS</span>  |
+<!-- .element: style="font-size:0.75em;" -->
+
+
+--
+
+## NatAdj
+
+### Methode
+
+- Idee: Fokus auf Vossantos mit Nationaladjektiven als <span
+  style="color:green;">Modifier</span> (z.B., *"the Chinese Picasso"*)
+- wieder NLTK für POS+NER
+- [Liste von
+  Nationaladjektiven](https://en.wikipedia.org/wiki/List_of_adjectival_and_demonymic_forms_for_countries_and_nations)
+  von Wikipedia
+- Auftreten von *"the NATADJ ENTITY"* finden
+- Experiment: für jedes Adjektiv die Phrase *"the ADJECTIVE Michael
+	 Jordan"* mit NLTK parsen
+
+--
+
+### Ergebnisse
+
+| Länge | Häufigkeit | Muster | Beispiel |
+|:---:|:---------:|:----------------------:|:------------------------------------------------------------------: |
+| 1 | 183 | ORG | the/DT (ORG Cook Island Michael Jordan) |
+| 1 | 3 | FACILITY | the/DT (FACILITY Faroese Michael Jordan) |
+| 1 | 5 | PER | the/DT (PER Chadian Michael Jordan) |
+| 2 | 1 | GPE ORG | the/DT (GPE French) (ORG Guianese Michael Jordan) |
+| 2 | 1 | ORG PER | the/DT (ORG Americans) (PER Michael Jordan) |
+| 2 | 2 | NNP PER | the/DT I-Kiribati/NNP (PER Michael Jordan) |
+| 2 | 3 | JJ PER | the/DT Saint-Martinoise/JJ (PER Michael Jordan) |
+| 2 | 89 | GPE PER | the/DT (GPE Grenadian) (PER Michael Jordan) |
+| 2 | 9 | LOC PER | the/DT (LOC South Sudanese) (PER Michael Jordan) |
+| 3 | 1 | GPE NNP PER | the/DT (GPE U.S.) Virgin/NNP (PER Island Michael Jordan) |
+| 3 | 1 | ORG CC PER | the/DT (ORG Wallis) and/CC (PER Futuna Michael Jordan) |
+| 3 | 2 | GPE CC PER | the/DT (GPE Turks) and/CC (PER Caicos Island Michael Jordan) |
+| 3 | 2 | GPE LOC PER | the/DT (GPE French) (LOC Polynesian) (PER Michael Jordan) |
+<!-- .element: style="font-size:0.8em;" -->
+
+--
+
+### Ergebnisse
+
+| Länge | Häufigkeit | Muster | Beispiel |
+|:---:|:---------:|:----------------------:|:------------------------------------------------------------------: |
+|1 | 1 | PERSON | the/DT (PERSON Albanian John Doe) |
+|2 | 1 | NNPS PERSON | the/DT Americans/NNPS (PERSON John Doe) |
+|2 | 3 | JJ PERSON | the/DT Saint-Martinoise/JJ (PERSON John Doe) |
+|2 | 4 | FACILITY PERSON | the/DT (FACILITY Faroese) (PERSON John Doe) |
+|2 | 4 | NNP PERSON | the/DT Somalilander/NNP (PERSON John Doe) |
+|2 | 11 | LOCATION PERSON | the/DT (LOCATION South Sudanese) (PERSON John Doe) |
+|2 | 90 | GPE PERSON | the/DT (GPE Grenadian) (PERSON John Doe) |
+|2 | 178 | ORGANIZATION PERSON | the/DT (ORGANIZATION Cook Island) (PERSON John Doe) |
+|3 | 1 | GPE CC PERSON | the/DT (GPE Wallisian) or/CC (PERSON Futunan John Doe) |
+|3 | 1 | GPE PERSON PERSON | the/DT (GPE British) (PERSON Virgin Island) (PERSON John Doe) |
+|3 | 1 | ORGANIZATION CC PERSON | the/DT (ORGANIZATION Wallis) and/CC (PERSON Futuna John Doe) |
+|3 | 1 | ORGANIZATION NNP PERSON | the/DT (ORGANIZATION Jan) Mayen/NNP (PERSON John Doe) |
+|3 | 2 | GPE LOCATION PERSON | the/DT (GPE French) (LOCATION Polynesian) (PERSON John Doe) |
+|3 | 2 | GPE NNP PERSON | the/DT (GPE French) Guianese/NNP (PERSON John Doe) |
+|4 | 1 | GPE CC PERSON PERSON | the/DT (GPE Turks) and/CC (PERSON Caicos Island) (PERSON John Doe) |
+|4 | 1 | GPE NNP NNP PERSON | the/DT (GPE U.S.) Virgin/NNP Island/NNP (PERSON John Doe) |
+<!-- .element: style="font-size:0.8em;" -->
+
+
 
 </script>
 				</section>
