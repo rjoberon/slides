@@ -209,11 +209,10 @@ Ziel: automatische Extraktion aus großen Zeitungskorpora
 <!-- Benennung noch klären -->
 
 1. Regelbasiert ([Fischer/Jäschke 2019](https://doi.org/10.1093/llc/fqy087))
-2. Automatisierte regelbasierte Verfahren ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
-3. Maschinelles Lernen ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
-4. Sequence Labeling (work in progress)
-
-**Michel, Da wir so viel Zeit haben, könnten wir auch WD und NER mit reinnehmen**
+2. Automatisierte Verfahren ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
+   - Wikidata
+   - NER
+   - BLSTM
 
 Ich überlege auch gerade, ob wir nicht den [allerersten
 Ansatz](http://slides.igada.de/2017-10-10-ischool/#/3) und da
@@ -245,14 +244,14 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 --
 
-## Automatisiertes regelbasiertes Verfahren 1
-### basierend auf Bekanntheit in Wikidata
+## Automatisierte Verfahren (1/3)
+### -- basierend auf "Bekanntheit" in Wikidata --
 
 1. Regex
    - a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>
 2. Entity Linking
    - Abgleich gegen Wikidata Liste
-3. Sperrliste durch <span style="color:red;">automatisierte Verfahren</span> ersetzen
+3. Sperrliste durch <span style="color:blue;">automatisierte Verfahren</span> ersetzen
    - Bekanntheitsmaß
    - Entitätenfilter
 
@@ -260,50 +259,50 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 ### Bekanntheitsmaß
 
-- Einführung eines Maßes, welches die Bekanntheit aller Entitäten in Wikidata wiederspiegelt
-- Basis: Anzahl Seitenlinks WD, Anzahl Aussagen WD oder Wikipedia clickstream data
+- Einführung eines Maßes, welches die <span style="color:blue;">Bekanntheit aller Entitäten in Wikidata</span> wiederspiegelt
+- Basis: Anzahl Seitenlinks WD
 - Entität der Klasse "human" vs. bekannteste Entität aus Wikidata
-- Beispiel "the <span style="color:red;">House</span> of Creativity":
+- <b>Beispiel</b>: <i>"the <span style="color:red;">House</span> of Creativity"</i>
    - House (Gebäude, 184)
    - Dr. House (TV Serie, 79)
    - Homer Doliver House (Botanist, 9)
 
 ![House](images/house_vs_house.png)<!-- .element width="600px" -->
 
-<b>Lösung</b>: Falls die Entität der Klasse "human" die bekannteste Entität in Wikidata ist, bleibt der Kandidat in der Liste
+<b>Lösung</b>: Falls die Entität der Klasse "human" die bekannteste Entität in Wikidata ist, bleibt der Kandidat in der Kandidatenliste
 
 --
 
 ### Entitätenfilter
 
-<b>Problem</b>: Was passiert mit Beispielen wie the <span style="color:red;">Prince</span> of Spain?
+<b>Problem</b>: Was passiert mit Beispielen wie <i>"the <span style="color:red;">Prince</span> of Spain"</i>?
 - Prince (Sänger, 101)
 - Prince (Sohn eines Königs/einer Königin, 71)
 
 ![House](images/prince_vs_prince.png)<!-- .element width="600px" -->
 
-<b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. Prince of Spain) gegen Wikidata Entitäten Liste
-- Prince of Wales, Streets of New York, Baths of Caracalla
+<b>Lösung</b>: Abgleich zwischen source + Folgewörter im Satz (z.B. <i>Prince of Spain</i>) gegen Wikidata Entitäten Liste
+- <i>Prince of Wales, Streets of New York, Baths of Caracalla</i>
 
 --
 
-## Automatisiertes regelbasiertes Verfahren
-### basierend auf NER-Tool
+## Automatisierte Verfahren (2/3)
+### -- basierend auf NER-Tool --
 
 1. Regex
    - a/an/the  <span style="color:red;">source</span> of/for/among <span style="color:green;">modifier</span>
-2. Anwendung eines <b>Named-Entity-Recognition (NER) Tools</b>
+2. Anwendung eines <span style="color:blue;">Named-Entity-Recognition (NER) Tools</span>
    - z.B. Stanford NLP Group
    - alle Wörter zwischen a/an/the und of/for/among müssen als *Person* getagged werden
 3. Entitätenfilter (aus 1. Ansatz)
 
-Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of
+<b>Beispiel</b>: <i>the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of</i>
 
 
 --
 
-## Maschinelles Lernen
-### binärer Klassifizierer
+## Automatisierte Verfahren (3/3)
+### -- BLSTM -- 
 
 1. Binäres Labeln der Daten
    - auf Satzebene
@@ -329,21 +328,14 @@ Beispiel: the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade
 ### Neuronales Netz
 
 1. Input: Satz
-2. Umwandlung des Satzes in Matrix
-3. Matrix als Input für Neuronales Netz
-4. NN besteht aus bidirektionales Long short-term memory
+2. Umwandlung des Satzes in Matrix für Input
+3. NN besteht aus bidirektionales Long short-term memory Layern
    - Vorteil: "Erinnerung" an vorherige Werte
    - bidirektional: in beide Richtungen
-5. Zusammenführen der Outputvektoren
-6. Ausgabe: Binär
+4. Zusammenführen der Outputvektoren
+5. Ausgabe: Binär: {0,1}
 
 ![Architecture](images/blstm_clf.png)<!-- .element width="300px" -->
-
---
-
-## Sequence Labelling
-
-michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfach zuviel ist
 
 ---
 
@@ -435,7 +427,7 @@ michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfac
     <td>3,023</td>
   </tr>
 	  <td colspan="5"><hr/></td>
-    <caption style="caption-side:bottom">Anzahl der VA Kandidaten nach jedem Schritt</caption>
+    <caption style="caption-side:bottom">Anzahl der VA Kandidaten nach jedem Schritt.</caption>
 </table>
 
 --
@@ -476,7 +468,7 @@ michel: muss ich nochmal überlegen, was ich da mit reinbringe oder ob es einfac
     <td><b>86.1%</b></td>
   </tr>
 	  <td colspan="4"><hr/></td>
-    <caption style="caption-side:bottom">Güte der drei automatisierten Ansätze im Vergleich zur Baseline.</caption>
+    <caption style="caption-side:bottom">Güte der drei automatisierten Ansätze basierend auf die Ergebnisse des regelbasierten Ansatzes.</caption>
 </table>
 
 --
