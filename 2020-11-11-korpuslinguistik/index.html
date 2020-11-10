@@ -329,13 +329,15 @@ Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade
 
 # 3. Ergebnisse
 
-
+| | of | for | among |
+|-:|-:|-:|-:|
+| **the** | 2,779 | 24 | 3 |
+| **a** | 118 | 59 | 13 |
+| **an** | 14 | 13 | 0 |
 
 --
 
 ## Häufigkeit der Muster
-
-
 
 |Muster | Regex | Wikidata | Sperrliste | Vossantos|
 |:-|-:|-:|-:|-:|
@@ -361,11 +363,28 @@ Anzahl der Vossanto-Kandidaten nach jedem Schritt beim regelbasierten Verfahren
 |Ansatz|Precision|Recall|F1-Maß|
 |:-|-:|-:|-:|
 |Regelbasiert|49.8%|-|-|
-|Wikidata|67.3%|93.0%|78.1%|
+|Wikidata|67.3%|**93.0%**|78.1%|
 |NER|71.8%|81.3%|76.2%|
-|BLSTM|86.9%|85.3%|86.1%|
+|BLSTM|**86.9%**|85.3%|**86.1%**|
 
 Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierten Ansatzes!
+
+
+--
+
+## Schwierigkeit des Tasks
+
+- Annotation von 200 zufällig gewählten Sätzen durch je drei Crowdworker
+- Cohen's Kappa von 0.72 zwischen Experte und Crowdworkern:
+- Experte lag (nach Überprüfung) bei den 28 strittigen Fälle richtig
+- damit Crowdsourcing Accuracy von 86%
+
+<br/>
+
+## Recall
+
+- keine echte Evaluation möglich bei 1.8 Millionen Artikeln
+- in Zufallsstichprobe von 105 Artikeln fanden wir eine Vossanto
 
 --
 
@@ -380,10 +399,10 @@ Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierte
 ## häufige Sources
 
 ![Top Sources](images/topsources.jpg)
-<!-- .element: style="float:right; width: 150px" -->
+<!-- .element: style="float:right; width: 150px;box-shadow:none" -->
 
 | Anzahl | Source |
-|:-----:|:------------------------: |
+|-----:|:------------------------|
 | 72 | [Michael Jordan](https://www.wikidata.org/wiki/Q41421) |
 | 62 | [Rodney Dangerfield](https://www.wikidata.org/wiki/Q436386) |
 | 40 | [Johnny Appleseed](https://www.wikidata.org/wiki/Q369675) |
@@ -459,6 +478,7 @@ the White Sox, this sport, women's ball, women's basketball
   football, racing, soccer, sailing)*
 - **Kultur** *(the art world, ballet, jazz, fashion, hip-hop, dance,
   wine, salsa, juggling)*
+- [mehr auf vossanto.weltliteratur.net](https://vossanto.weltliteratur.net/emnlp-ijcnlp2019/statistics.html#modifiers)
 
 <!-- .element: style="float:right; width: 40%" -->
 
@@ -493,26 +513,26 @@ the White Sox, this sport, women's ball, women's basketball
 
 | Vossantos | Vossantos | Rubrik | Artikel | Artikel |
 |-:|-:|:-|-:|-:|
-| 381 | 12.6% | Sports Desk | 174823 | 9.4% |
-| 222 | 7.4% | Metropolitan Desk | 237896 | 12.8% |
-| 220 | 7.3% | Book Review Desk | 32737 | 1.8% |
-| 180 | 6.0% | National Desk | 143489 | 7.7% |
-| 171 | 5.7% | The Arts/Cultural Desk | 38136 | 2.1% |
-| 169 | 5.6% | Arts and Leisure Desk | 27765 | 1.5% |
-| 135 | 4.5% | Magazine Desk | 25433 | 1.4% |
-| 125 | 4.1% | Editorial Desk | 131762 | 7.1% |
-| 117 | 3.9% | Cultural Desk | 40342 | 2.2% |
-| 99 | 3.3% | Movies, Performing Arts/Weekend Desk | 13929 | 0.8% |
-| 96 | 3.2% | Business/Financial Desk | 112951 | 6.1% |
-| 90 | 3.0% | Foreign Desk | 129732 | 7.0% |
-| 78 | 2.6% | Weekend Desk | 18814 | 1.0% |
-| 74 | 2.5% | Leisure/Weekend Desk | 10766 | 0.6% |
-| 72 | 2.4% | Long Island Weekly Desk | 20453 | 1.1% |
-| 69 | 2.3% | Style Desk | 21569 | 1.2% |
-| 57 | 1.9% | Financial Desk | 206958 | 11.2% |
-| 44 | 1.5% | Arts &amp; Leisure Desk | 6742 | 0.4% |
-| 42 | 1.4% | The City Weekly Desk | 22863 | 1.2% |
-| 41 | 1.4% | Connecticut Weekly Desk | 17034 | 0.9% |
+| 381 | 12.6% | Sports Desk | 174,823 | 9.4% |
+| 222 | 7.4% | Metropolitan Desk | 237,896 | 12.8% |
+| 220 | 7.3% | Book Review Desk | 32,737 | 1.8% |
+| 180 | 6.0% | National Desk | 143,489 | 7.7% |
+| 171 | 5.7% | The Arts/Cultural Desk | 38,136 | 2.1% |
+| 169 | 5.6% | Arts and Leisure Desk | 27,765 | 1.5% |
+| 135 | 4.5% | Magazine Desk | 25,433 | 1.4% |
+| 125 | 4.1% | Editorial Desk | 131,762 | 7.1% |
+| 117 | 3.9% | Cultural Desk | 40,342 | 2.2% |
+| 99 | 3.3% | Movies, Performing Arts/Weekend Desk | 13,929 | 0.8% |
+| 96 | 3.2% | Business/Financial Desk | 112,951 | 6.1% |
+| 90 | 3.0% | Foreign Desk | 129,732 | 7.0% |
+| 78 | 2.6% | Weekend Desk | 18,814 | 1.0% |
+| 74 | 2.5% | Leisure/Weekend Desk | 10,766 | 0.6% |
+| 72 | 2.4% | Long Island Weekly Desk | 20,453 | 1.1% |
+| 69 | 2.3% | Style Desk | 21,569 | 1.2% |
+| 57 | 1.9% | Financial Desk | 206,958 | 11.2% |
+| 44 | 1.5% | Arts &amp; Leisure Desk | 6,742 | 0.4% |
+| 42 | 1.4% | The City Weekly Desk | 22,863 | 1.2% |
+| 41 | 1.4% | Connecticut Weekly Desk | 17,034 | 0.9% |
 
 
 
@@ -564,10 +584,12 @@ the White Sox, this sport, women's ball, women's basketball
   Reinsdorf, called him the **Babe Ruth** of basketball.« ([NYT,
   17.01.1999](http://www.nytimes.com/1999/01/17/weekinreview/ideas-trends-they-re-sort-of-like-mike.html))
 * Bergien 2013 bringt als Beispiel Barack Obama, dessen Name ab 2011
-  seltener als *Target* vorkommt: »the name Obama has changed from a
-  target into a source name« (S. 23)
-* das Oszillieren von Entitäten zwischen *Target* und *Source*
-  verdient es, auf breiterer Datenbasis studiert zu werden
+  seltener als <span class="vatarget">Target</span> vorkommt: »the
+  name Obama has changed from a target into a source name« (S. 23)
+* das Oszillieren von Entitäten zwischen <span
+  class="vatarget">Target</span> und <span
+  class="vasource">Source</span> verdient es, auf breiterer Datenbasis
+  studiert zu werden
 
 --
 
@@ -603,14 +625,22 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 # 4. Diskussion
 
-- einfaches aber robustes Verfahren welches von
-  Geisteswissenschaftler:innen nachvollzogen werden kann
+## Fazit
+
+- regelbasiertes Verfahren: einfach aber robust, kann von
+  Nicht-Expert:innen nachvollzogen werden
+- BLSTM:
 - größte (bis dato) bekannte Sammlung an Vossianischen Antonomasien
 - zahlreiche neue Spezialfälle, bei denen beispielsweise das <span
   class="vatarget">Target</span> keine Person ist (z.B. *the John
   Barrymore of rivers*, *the Forrest Gump of high technology* oder *the
   Marquis de Sade of word processors*)
-- Potential für NLP:
+
+## Einschränkungen
+
+
+## Potential für NLP
+
    - machine translation (**Ist es eigentlich wichtig, hierbei eine VA vorher zu erkennen?**)
    - Fact extraction: *"Today, the German Ronaldo quit his career."*
    - Entitäten Disambiguation und Coreference resolution: *"Jimmy Johnson is the Madonna of college football..."*
@@ -618,6 +648,10 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
    -
 
 - might not work well for other languages (e.g., in German more complex regex necessary due to gender-specific articles and larger variety of prepositions)
+
+--
+
+## Ein Experiment
 
 --
 
