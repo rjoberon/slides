@@ -9,8 +9,8 @@
 		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
 		<link rel="stylesheet" href="../reveal.js/css/theme/simple.css">
 
-	<!-- adjustments for serif.css -->
-	<link rel="stylesheet" href="custom.css">
+		<!-- adjustments for serif.css -->
+	   <link rel="stylesheet" href="custom.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
@@ -144,12 +144,12 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 
 ![Vossanto Memory](images/memory.jpg)<!-- .element width="70%" -->
 
-- <span style="color:red;">Source</span> → <span
-  style="color:green;">Modifier/Metaphor</span> → <span
-  style="color:blue;">Target</span> (vgl. Bergien 2013)
-- <span style="color:blue;">Bill Gates</span>, der <span
-  style="color:red;">Henry Ford</span> des <span
-  style="color:green;">Computerzeitalters</span>
+- <span class="vasource">Source</span> → <span
+  class="vamodifier">Modifier/Metaphor</span> → <span
+  class="vatarget">Target</span> (vgl. Bergien 2013)
+- <span class="vatarget">Bill Gates</span>, der <span
+  class="vasource">Henry Ford</span> des <span
+  class="vamodifier">Computerzeitalters</span>
 
 --
 
@@ -157,29 +157,30 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 
 - Begriff ›Vossianische Antonomasie‹ international kaum verwendet
 - stattdessen etwa Unterscheidung zwischen *Antonomasia<sub>₁</sub>*
-  und *Antonomasia<sub>₂</sub>*: *metonymic* vs. *metaphorical
-  antonomasia*
-
-	(hier wäre unsere Vossanto ein Spezialfall von
-	*Antonomasia<sub>₂</sub>*, nämlich wenn es um »comparisons with
-	paragons from other spheres of culture« geht: »Lyotard is a pope
-	of postmodernism, Bush is no Demosthenes; and we can buy the
-	Cadillac of vacuum cleaners.«, vgl. Holmqvist/Płuciennik 2010)
+  und *Antonomasia<sub>₂</sub>*:
+  <br/>
+  *metonymic* vs. *metaphorical antonomasia*
+  <br/>
+  (hier wäre unsere Vossanto ein Spezialfall von
+  *Antonomasia<sub>₂</sub>*, nämlich wenn es um »comparisons with
+  paragons from other spheres of culture« geht: »Lyotard is a pope
+  of postmodernism, Bush is no Demosthenes; and we can buy the
+  Cadillac of vacuum cleaners.«, vgl. Holmqvist/Płuciennik 2010)
 - wir kürzen ›Vossianische Antonomasie‹ als **Vossanto** ab
 
 --
 
 ## Wesen und Funktion der Vossanto
 
-- Entitäten können sowohl als <span style="color:red;">Source</span>
-  als auch als <span style="color:blue;">Target</span> auftreten,
+- Entitäten können sowohl als <span class="vasource">Source</span>
+  als auch als <span class="vatarget">Target</span> auftreten,
   z.B. Obama: bis 2011 war er vor allem <span
-  style="color:blue;">Target</span> und wurde danach immer mehr <span
-  style="color:red;">Source</span> (Bergien 2013)
+  class="vatarget">Target</span> und wurde danach immer mehr <span
+  class="vasource">Source</span> (Bergien 2013)
 - eine Funktion der Vossanto ist die *Inkulturation*, d.h. wir erhöhen
-  das <span style="color:blue;">Target</span> durch eine Referenz auf
-  die <span style="color:red;">Source</span> und das <span
-  style="color:green;">aktualisierende Signal</span>:
+  das <span class="vatarget">Target</span> durch eine Referenz auf
+  die <span class="vasource">Source</span> und das <span
+  class="vamodifier">aktualisierende Signal</span>:
   > »If we refer to
   > Leonard Cohen as the Lord Byron of rock music, we treat a popular
   > singer as a famous romantic poet elevating him and popular songs to
@@ -201,55 +202,56 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 
 # 2. Methoden
 
-Ziel: automatische Extraktion aus großen Zeitungskorpora
+Ziel: automatische Extraktion aus großen Textkorpora
 
 <!-- Benennung noch klären -->
 
 1. Regelbasiert ([Fischer/Jäschke 2019](https://doi.org/10.1093/llc/fqy087))
 2. Automatisierte Verfahren ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
-   - Wikidata
-   - NER
-   - BLSTM
+   1. Wikidata
+   2. NER
+   3. BLSTM
 
 Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 
 --
 
-## Regelbasiert
+## 1. Regelbasiert
 
-1. Fokus auf das häufigste Muster *"the <span style="color:red;">Source</span> of <span style="color:green;">Modifier</span>"*:
+1. Fokus auf das häufigste Muster *"the <span
+   class="vasource">Source</span> of <span
+   class="vamodifier">Modifier</span>"*:
   ```python
   re.compile("(\\bthe\\s+([\\w.,'-]+\\s+){1,5}?of\\b)", re.UNICODE)
   ```
+   - später Ergänzung um weitere Muster (*"a/an/the <span
+	 class="vasource">Source</span> of/for/among <span
+	 class="vamodifier">Modifier</span>"*)
 2. Liste von Namen und Aliasen [aller Instanzen der Klasse "human"](https://query.wikidata.org/#%20%20SELECT%20%3Fitem%20%3FitemLabel%20WHERE%0A%20%20%7B%0A%20%20%20%20%3Fitem%20wdt%3AP31%20wd%3AQ5%20.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20instance%20of%20human%0A%20%20%20%20SERVICE%20wikibase%3Alabel%20%7B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20...%20include%20the%20labels%0A%20%20%20%20%20%20bd%3AserviceParam%20wikibase%3Alanguage%20%22en%22%0A%20%20%20%20%7D%0A%20%20%7D%0A) aus Wikidata
    - Abgleich des Textes zwischen *"the"* und *"of"* gegen diese Liste
 3. iterative Erstellung einer [Sperrliste von mehrdeutigen Source-Namen](https://github.com/weltliteratur/vossanto/blob/master/theof/blacklist.tsv)
-   - Ignorieren von Kandidaten, deren <span style="color:red;">Source</span> in der Sperrliste enthalten ist
+   - Ignorieren von Kandidaten, deren <span class="vasource">Source</span> in der Sperrliste enthalten ist
 
 
-→ Anzahl der Kandidaten für das Jahr 1987 reduzierte sich von 641,432 über 5,236 zu 131
+→ Anzahl der Kandidaten für das Jahr 1987 reduzierte sich von 641,432 über 5,236 zu 131.
 
-Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
-   style="color:red;">Source</span> of/for/among <span
-   style="color:green;">Modifier</span>"*).
 
 --
 
-## Wikidata
+## 2.a Wikidata
 
-- Schritt 1 + 2 wie gehabt
-- in Schritt 3 Ersetzung der Sperrliste durch automatisierte Verfahren:
-   1. Bekanntheitsmaß
-   2. Entitätenfilter
+- Schritte 1 + 2 wie gehabt
+- in Schritt 3 Ersetzung der Sperrliste durch automatisierte Verfahren:<br/>
+   Bekanntheitsmaß + Entitätenfilter
 
 --
 
-### 1. Bekanntheitsmaß
+### Bekanntheitsmaß
 
-- Maß, welches die *Bekanntheit aller Entitäten in Wikipedia* wiederspiegelt
-- Grundlage: Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikipedia
+- Widerspiegelung der *Bekanntheit* der Entitäten
+- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikipedia
 - Entität der Klasse "human" vs. bekannteste Entität
-- **Beispiel**: *"the <span style="color:red;">House</span> of <span style="color:green;">Creativity</span>"*
+- Beispiel: *"the <span class="vasource">House</span> of <span class="vamodifier">Creativity</span>"*
 
   | Entität | Sitelinks |
   |:--------|----------:|
@@ -263,23 +265,21 @@ Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
 
 --
 
-### 2. Entitätenfilter
+### Entitätenfilter
 
-- **Problem:** Was passiert mit Fällen wie *"the <span style="color:red;">Prince</span> of Spain"*?
+- Problem: Was passiert mit Fällen wie *"the <span class="vasource">Prince</span> of Spain"*?
 
   | Entität | Sitelinks |
   |:--------|----------:|
   | [Prince](https://www.wikidata.org/wiki/Q7542) (Sänger) | 101|
   | [Prince](https://www.wikidata.org/wiki/Q2747456) (Sohn eines Königs/einer Königin) | 71|
-
-![House](images/prince_vs_prince.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
-
-→ Abgleich zwischen <span style="color:red;">Source</span> + Folgewörtern im Satz (z.B. *Prince of Spain*) gegen Wikidata-Entitäten-Liste
+  ![House](images/prince_vs_prince.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
+- → Abgleich zwischen <span class="vasource">Source</span> + Folgewörtern im Satz (z.B. *Prince of Spain*) gegen Wikidata-Entitäten-Liste
 - *Prince of Wales, Streets of New York, Baths of Caracalla*
 
 --
 
-## NER-Tool
+## 2.b NER
 
 1. wie gehabt
 2. Anwendung von *Named-Entity-Recognition (NER)*
@@ -287,17 +287,17 @@ Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
    - Wörter zwischen "a/an/the" und "of/for/among" müssen als *Person* getagged werden
 3. Entitätenfilter (aus regelbasiertem Ansatz)
 
-**Beispiel**: *"the (O) <span style="color:red;">Marquis ("Person") de ("Person") Sade ("Person")</span> of"*
+Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade ("Person")</span> of"*
 
 
 --
 
-## BLSTM
+## 2.c BLSTM
 
 1. Binäres Labeln der Daten
    - auf Satzebene
 2. Vorverarbeitung
-   - Word Embeddings (BERT)
+   - Word Embeddings
 3. Neuronales Netz
    - Training und Evaluierung
 
@@ -306,7 +306,7 @@ Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
 ### Vorverarbeitung
 
 - *Problem*: Neuronale Netze können nur mit numerischen Werten arbeiten
-- *Lösung*: Word Embeddings
+- *Lösung*: Word Embeddings (GloVe)
   - Repräsentation von Wörtern durch numerische Vektoren
 
 ![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
@@ -317,7 +317,7 @@ Nachfolgend Ergänzung um weitere Muster (*"a/an/the <span
 
 1. Eingabe: Satz
 2. Umwandlung des Satzes in eine Matrix mit Hilfe der Wortvektoren
-3. BLSTN = *bidirectional Long Short-Term Memory*
+3. BLSTM = *bidirectional Long Short-Term Memory*
    - Vorteil: "Erinnerung" vorheriger Werte
    - bidirektional: in beide Richtungen
 4. Zusammenführen der Ausgabevektoren
@@ -607,7 +607,7 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
   Geisteswissenschaftler:innen nachvollzogen werden kann
 - größte (bis dato) bekannte Sammlung an Vossianischen Antonomasien
 - zahlreiche neue Spezialfälle, bei denen beispielsweise das <span
-  style="color:blue;">Target</span> keine Person ist (z.B. *the John
+  class="vatarget">Target</span> keine Person ist (z.B. *the John
   Barrymore of rivers*, *the Forrest Gump of high technology* oder *the
   Marquis de Sade of word processors*)
 - Potential für NLP:
@@ -631,15 +631,15 @@ https://vossanto.weltliteratur.net/timeline/
 FRAGE: Sollen Muster hierhin kommen oder lieber zu special cases?
 
 - neue <b>Muster</b> erkennen:
-   - the <span style="color:green;">modifier</span> <span style="color:red;">source</span>, z.B. the  <span style="color:green;">new</span> <span style="color:red;">Michael Jordan</span>
-   - an <span style="color:green;">modifier</span> version of <span style="color:red;">source</span>, z.B. an <span style="color:green;">adult</span> version of <span style="color:red;">capture the flag</span>
-   - the <span style="color:green;">modifier</span> equivalent, z.B. the <span style="color:green;">campus</span> equivalent of the <span style="color:red;">White House</span>
-   - a kind of <span style="color:red;">source</span> of  <span style="color:red;">Joseph Wright</span>, z.B. a kind of  <span style="color:green;">modifier</span> of  <span style="color:green;">Modernism</span>
+   - the <span class="vamodifier">modifier</span> <span class="vasource">source</span>, z.B. the  <span class="vamodifier">new</span> <span class="vasource">Michael Jordan</span>
+   - an <span class="vamodifier">modifier</span> version of <span class="vasource">source</span>, z.B. an <span class="vamodifier">adult</span> version of <span class="vasource">capture the flag</span>
+   - the <span class="vamodifier">modifier</span> equivalent, z.B. the <span class="vamodifier">campus</span> equivalent of the <span class="vasource">White House</span>
+   - a kind of <span class="vasource">source</span> of  <span class="vasource">Joseph Wright</span>, z.B. a kind of  <span class="vamodifier">modifier</span> of  <span class="vamodifier">Modernism</span>
 
 - <b>Deep Learning</b> Methoden nutzen
    - VA Erkennung durch word embedding o.ä. Methoden
    - Language Models (BERT, Flair, etc.)
-- <b>Erkennung aller VA-Teile</b> (<span style="color:red;">source</span>, <span style="color:green;">modifier</span>, <span style="color:blue;">target</span>) auf Wort-Ebene
+- <b>Erkennung aller VA-Teile</b> (<span class="vasource">source</span>, <span class="vamodifier">modifier</span>, <span class="vatarget">target</span>) auf Wort-Ebene
    - Sequence Tagging anstatt binärer Klassifikation, d.h. jedem Wort des Satzes einen "Tag" zuweisen.
 - Neue Sprache(n), z.B. Deutsch
 
@@ -802,16 +802,16 @@ vossanto_re_str = """
 
 | n | Target, | the | Source | of | Modifier | Beispiel |
 |:--:|:-------:|:---:|:------------:|:------------:|:--------:|:---:|:----------------------------------------------------------------------------------------:|
-| 13 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NNS</span> | (<span style="color:blue;">PER Thomas Eisner</span>) ,/, the/DT (<span style="color:red;">ORG St. Francis</span>) of/IN <span style="color:green;">bugs/NNS</span> |
-| 13 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">GPE</span> | (<span style="color:blue;">PER Ethel Merman</span>) ,/, the/DT (<span style="color:red;">ORG Birgit Nilsson</span>) of/IN (<span style="color:green;">GPE Broadway</span>) |
-| 10 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN</span> | (<span style="color:blue;">PER Eddie Shore</span>) ,/, the/DT (<span style="color:red;">ORG Babe Ruth</span>) of/IN <span style="color:green;">hockey/NN</span> |
-| 9 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">DT NN</span> | (<span style="color:blue;">PER Hal Schell</span>) ,/, the/DT (<span style="color:red;">ORG Boswell</span>) of/IN <span style="color:green;">the/DT delta/NN</span> |
-| 7 | <span style="color:blue;">PER</span> | VBZ DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN</span> | (<span style="color:blue;">PER Mr. Solerwitz</span>) is/VBZ the/DT (<span style="color:red;">ORG Babe Ruth</span>) of/IN <span style="color:green;">ripoffs/NNS</span> |
-| 7 | <span style="color:blue;">PER</span> | DT | <span style="color:red;">PER</span> | IN | <span style="color:green;">GPE</span> | (<span style="color:blue;">PER Oscar</span>) ,/, the/DT (<span style="color:red;">PER Larry Bird</span>) of/IN (<span style="color:green;">GPE Brazil</span>) ,/, |
-| 7 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN NNS</span> | (<span style="color:blue;">PER Edward Rogoff</span>) ,/, the/DT (<span style="color:red;">ORG Don Quixote</span>) of/IN <span style="color:green;">cab/NN riders/NNS</span> |
-| 6 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">JJ NN</span> | (<span style="color:blue;">PER Carlos Gardel</span>) ,/, the/DT (<span style="color:red;">ORG Elvis</span>) of/IN <span style="color:green;">tango/JJ culture/NN</span> |
-| 5 | <span style="color:blue;">PER</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NN NN</span> | (<span style="color:blue;">PER Johnny Miller</span>) ,/, the/DT (<span style="color:red;">ORG Simon Cowell</span>) of/IN <span style="color:green;">golf/NN criticism/NN</span> |
-| 5 | <span style="color:blue;">GPE</span>, | DT | <span style="color:red;">ORG</span> | IN | <span style="color:green;">NNS</span> | (<span style="color:blue;">GPE McEnroe</span>) ,/, the/DT (<span style="color:red;">ORG Picasso</span>) of/IN <span style="color:green;">players/NNS</span>  |
+| 13 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NNS</span> | (<span class="vatarget">PER Thomas Eisner</span>) ,/, the/DT (<span class="vasource">ORG St. Francis</span>) of/IN <span class="vamodifier">bugs/NNS</span> |
+| 13 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">GPE</span> | (<span class="vatarget">PER Ethel Merman</span>) ,/, the/DT (<span class="vasource">ORG Birgit Nilsson</span>) of/IN (<span class="vamodifier">GPE Broadway</span>) |
+| 10 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NN</span> | (<span class="vatarget">PER Eddie Shore</span>) ,/, the/DT (<span class="vasource">ORG Babe Ruth</span>) of/IN <span class="vamodifier">hockey/NN</span> |
+| 9 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">DT NN</span> | (<span class="vatarget">PER Hal Schell</span>) ,/, the/DT (<span class="vasource">ORG Boswell</span>) of/IN <span class="vamodifier">the/DT delta/NN</span> |
+| 7 | <span class="vatarget">PER</span> | VBZ DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NN</span> | (<span class="vatarget">PER Mr. Solerwitz</span>) is/VBZ the/DT (<span class="vasource">ORG Babe Ruth</span>) of/IN <span class="vamodifier">ripoffs/NNS</span> |
+| 7 | <span class="vatarget">PER</span> | DT | <span class="vasource">PER</span> | IN | <span class="vamodifier">GPE</span> | (<span class="vatarget">PER Oscar</span>) ,/, the/DT (<span class="vasource">PER Larry Bird</span>) of/IN (<span class="vamodifier">GPE Brazil</span>) ,/, |
+| 7 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NN NNS</span> | (<span class="vatarget">PER Edward Rogoff</span>) ,/, the/DT (<span class="vasource">ORG Don Quixote</span>) of/IN <span class="vamodifier">cab/NN riders/NNS</span> |
+| 6 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">JJ NN</span> | (<span class="vatarget">PER Carlos Gardel</span>) ,/, the/DT (<span class="vasource">ORG Elvis</span>) of/IN <span class="vamodifier">tango/JJ culture/NN</span> |
+| 5 | <span class="vatarget">PER</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NN NN</span> | (<span class="vatarget">PER Johnny Miller</span>) ,/, the/DT (<span class="vasource">ORG Simon Cowell</span>) of/IN <span class="vamodifier">golf/NN criticism/NN</span> |
+| 5 | <span class="vatarget">GPE</span>, | DT | <span class="vasource">ORG</span> | IN | <span class="vamodifier">NNS</span> | (<span class="vatarget">GPE McEnroe</span>) ,/, the/DT (<span class="vasource">ORG Picasso</span>) of/IN <span class="vamodifier">players/NNS</span>  |
 <!-- .element: style="font-size:0.75em;" -->
 
 
@@ -822,7 +822,7 @@ vossanto_re_str = """
 ### Methode
 
 - Idee: Fokus auf Vossantos mit Nationaladjektiven als <span
-  style="color:green;">Modifier</span> (z.B., *"the Chinese Picasso"*)
+  class="vamodifier">Modifier</span> (z.B., *"the Chinese Picasso"*)
 - wieder NLTK für POS+NER
 - [Liste von
   Nationaladjektiven](https://en.wikipedia.org/wiki/List_of_adjectival_and_demonymic_forms_for_countries_and_nations)

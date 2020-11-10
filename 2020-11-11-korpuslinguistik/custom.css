@@ -1,4 +1,3 @@
-
 .reveal {
   font-size: 24px; }
 
@@ -45,4 +44,30 @@
   text-align: right;
   z-index:-10;
   width:50%;
+}
+/* fix line height for sub */
+sub {
+  vertical-align: baseline !important;
+  position: relative;
+  top: 0.1em;
+}
+
+blockquote p {
+    margin-top: 0px !important;
+}
+
+.vasource {
+    color: red;
+}
+
+.vatarget {
+    color: blue;
+}
+
+.vamodifier {
+    color: green;
+}
+
+ol ol {
+    list-style-type: lower-alpha !important;
 }
