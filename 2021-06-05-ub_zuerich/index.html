@@ -387,13 +387,13 @@ Bildquelle: <a href="https://commons.wikimedia.org/wiki/File:Gerardus_Johannes_V
 ## Was ist eine Vossianische Antonomasie?
 
 - Subphänomen der klassischen ›Antonomasie‹
-   - eine Art Metonym
-   - ein Epitheton oder eine Phrase ersetzt einen Eigennamen
+- morphosyntaktische Auffälligkeiten: Eigennamen erscheinen prädikativ (wie bei der Deonymisierung); Artikelgebrauch vor Eigenname
+- Funktionsweise: »bestimmte als salient begriffene Eigenschaften oder Charakteristika des ursprünglichen Namenträgers [werden] auf ein anderes Referenzobjekt übertragen« ([Thurmair 2020](https://doi.org/10.1515/9783110685886-012))
 
-![Vossanto Memory](images/memory.jpg)<!-- .element width="70%" -->
+![Vossanto Memory](images/memory.jpg)<!-- .element width="50%" -->
 
 - <span class="vasource">Source</span> → <span
-  class="vamodifier">Modifier/Metaphor</span> → <span
+  class="vamodifier">Modifier</span> → <span
   class="vatarget">Target</span> (vgl. [Bergien 2013](http://onomasticafelecan.ro/iconn2/proceedings/1_01_Bergien_Angelika_ICONN_2.pdf))
 - <span class="vatarget">Bill Gates</span>, der <span
   class="vasource">Henry Ford</span> des <span
@@ -466,7 +466,7 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 ### Bekanntheitsmaß
 
 - Widerspiegelung der *Bekanntheit* der Entitäten
-- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikipedia
+- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikidata
 - Entität der Klasse "human" vs. bekannteste Entität
 - Beispiel: *"the <span class="vasource">House</span> of <span class="vamodifier">Creativity</span>"*
 
@@ -504,7 +504,8 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
    - Wörter zwischen "a/an/the" und "of/for/among" müssen als *Person* getagged werden
 3. Entitätenfilter (aus Wikidata-Ansatz)
 
-Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade ("Person")</span> of"*
+Beispiel: *»the ('O') <span class='vasource'>Marquis ('Person') de
+('Person') Sade ('Person')</span> of ('O')«*
 
 
 --
@@ -512,7 +513,7 @@ Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade
 ## 2.c BLSTM (1/2)
 
 1. (binäre) Annotation der Daten auf Satzebene
-2. Repräsentation der Wörter durch *Word Embeddings* (GloVe, [Pennington et al. 2014](https://www.aclweb.org/anthology/D14-1162))
+2. Repräsentation der Wörter durch *Word Embeddings* ([GloVe](https://github.com/stanfordnlp/GloVe), [Pennington et al. 2014](https://www.aclweb.org/anthology/D14-1162))
 
 ![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
 
@@ -737,9 +738,9 @@ the White Sox, this sport, women's ball, women's basketball
 ![Marquis de Sade](images/Marquis_de_Sade_portrait.jpg)<!-- .element height="300px" -->
 ![Screenshot of Microsoft Word 1.15](images/word115formatting.png)<!-- .element height="300px" -->
 
-"When we introduced Word in October 1983, in its first incarnation it
+»When we introduced Word in October 1983, in its first incarnation it
 was dubbed the **Marquis de Sade** of *word processors*, which was not
-altogether unfair."
+altogether unfair.«
 ([1993](http://www.nytimes.com/1993/09/26/business/sound-bytes-to-this-microsoft-executive-the-suite-smells-of-success.html))
 
 <small>
