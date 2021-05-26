@@ -1,0 +1,78 @@
+.reveal {
+  font-size: 24px; }
+
+.reveal h1 {
+  font-size: 3.1em; }
+
+.reveal h2 {
+  font-size: 1.7em; }
+
+.reveal h3 {
+  font-size: 1.2em; }
+
+.reveal h4 {
+  font-size: 1em; }
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h5 {
+    font-family: Gill Sans;
+    font-weight: 300;
+}
+
+.reveal a {
+  color: #2048a0; }
+
+.reveal a:hover {
+  color: #4068c0; }
+
+.reveal section img {
+  border: 4px none #000;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.reveal .left {
+  left:-8.33%;
+  text-align: left;
+  float: left;
+  width:50%;
+  z-index:-10;
+}
+
+.reveal .right {
+  left:31.25%;
+  top: 75px;
+  float: right;
+  text-align: right;
+  z-index:-10;
+  width:50%;
+}
+
+/* fix line height for sub */
+sub {
+  vertical-align: baseline !important;
+  position: relative;
+  top: 0.1em;
+}
+
+blockquote p {
+    margin-top: 0px !important;
+}
+
+.vasource {
+    color: red;
+}
+
+.vatarget {
+    color: blue;
+}
+
+.vamodifier {
+    color: green;
+}
+
+ol ol {
+    list-style-type: lower-alpha !important;
+}
+
+.reveal blockquote {
+    width: 80%;
+}
