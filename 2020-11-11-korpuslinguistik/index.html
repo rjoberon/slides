@@ -139,13 +139,13 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 ## Was ist eine Vossianische Antonomasie? (3/4)
 
 - Subphänomen der klassischen ›Antonomasie‹
-   - eine Art Metonymie
-   - ein Epitheton oder eine Phrase ersetzt einen Eigennamen
+- morphosyntaktische Auffälligkeiten: Eigennamen erscheinen prädikativ (wie bei der Deonymisierung); Artikelgebrauch vor Eigenname
+- Funktionsweise: »bestimmte als salient begriffene Eigenschaften oder Charakteristika des ursprünglichen Namenträgers [werden] auf ein anderes Referenzobjekt übertragen« (Thurmair 2020)
 
-![Vossanto Memory](images/memory.jpg)<!-- .element width="70%" -->
+![Vossanto Memory](images/memory.jpg)<!-- .element width="50%" -->
 
 - <span class="vasource">Source</span> → <span
-  class="vamodifier">Modifier/Metaphor</span> → <span
+  class="vamodifier">Modifier</span> → <span
   class="vatarget">Target</span> (vgl. Bergien 2013)
 - <span class="vatarget">Bill Gates</span>, der <span
   class="vasource">Henry Ford</span> des <span
@@ -249,7 +249,7 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
 ### Bekanntheitsmaß
 
 - Widerspiegelung der *Bekanntheit* der Entitäten
-- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikipedia
+- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikidata
 - Entität der Klasse "human" vs. bekannteste Entität
 - Beispiel: *"the <span class="vasource">House</span> of <span class="vamodifier">Creativity</span>"*
 
@@ -287,7 +287,7 @@ Korpus: »New York Times« 1987–2007 (Sandhaus 2008)
    - Wörter zwischen "a/an/the" und "of/for/among" müssen als *Person* getagged werden
 3. Entitätenfilter (aus Wikidata-Ansatz)
 
-Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade ("Person")</span> of"*
+Beispiel: *"the ("O") <span class="vasource">Marquis ("Person") de ("Person") Sade ("Person")</span> of ("O")"*
 
 
 --
@@ -306,7 +306,7 @@ Beispiel: *"the (O) <span class="vasource">Marquis ("Person") de ("Person") Sade
 ### Vorverarbeitung
 
 - *Problem*: Neuronale Netze können nur mit numerischen Werten arbeiten
-- *Lösung*: Word Embeddings (GloVe)
+- *Lösung*: Word Embeddings [(GloVe)](https://github.com/stanfordnlp/GloVe)
   - Repräsentation von Wörtern durch numerische Vektoren
 
 ![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
@@ -713,9 +713,7 @@ https://vossanto.weltliteratur.net/timeline/
 
 ## Ausblick
 
-- Deep Learning
-   - Vossanto-Erkennung durch Word Embeddings o.ä. Methoden
-   - Language Models wie BERT, Flair, etc.
+- Language Models, z.B. BERT, Flair, etc.
 - Erkennung aller Vossanto-Teile (<span class="vasource">Source</span>, <span class="vamodifier">Modifier</span>, <span class="vatarget">Target</span>) auf Wort-Ebene
    - Sequence Tagging statt binärer Klassifikation
    - Koreferenz-Auflösung für <span class="vatarget">Target</span>
