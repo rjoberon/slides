@@ -1,3 +1,11 @@
+li.web::marker {
+    content: "🌐 ";
+}
+li.doc::marker {
+    content: "🗎 ";
+}
+
+
 .reveal {
   font-size: 24px; }
 
