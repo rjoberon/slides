@@ -82,27 +82,27 @@ besser zu verstehen und neue Dienste bereitzustellen?**
 
 ## Drei Beispiele
 
+
 Bibliothekskatalog<br/>
-![mittlere Seitenanzahlen pro Jahr](images/issued_pages_1913_de.svg)<!-- .element height="200px" -->
+![mittlere Seitenanzahlen pro Jahr](images/issued_pages_1913_de.svg)<!-- .element height="190px" -->
 
 <!-- .element style="float:left" -->
 
 
-Literatur<br/>
-![Screenshot Annette](images/annette.png)<!-- .element height="200px" -->
+literarische Werke<br/>
+![Screenshot Annette](images/annette.png)<!-- .element height="190px" -->
 
 <!-- .element style="float:left" -->
 
 
 Zeitungskorpus<br/>
-![Jim Koch, the Steve Jobs of beer](images/the-steve-jobs-of-beer_theatlantic-com.jpg)<!-- .element height="200px" -->
+![Jim Koch, the Steve Jobs of beer](images/the-steve-jobs-of-beer_theatlantic-com.jpg)<!-- .element height="190px" -->
 
 <!-- .element style="float:left" -->
 
-<!--
-Framework zur Exploration und Analyse des DNB-Katalogs<!-- .element style="font-size:small" --
-Extraktion und Analyse Vossianischer Antonomasien<!-- .element style="font-size:small" --
--->
+
+
+
 
 
 ---
@@ -123,17 +123,25 @@ Extraktion und Analyse Vossianischer Antonomasien<!-- .element style="font-size:
 
 Projektseite: [vossanto.weltliteratur.net](https://vossanto.weltliteratur.net/)
 
-## Agenda
+--
+# Agenda
+
+<br/>
 
 - 🤔 Was ist eine Vossianische Antonomasie?
 - 🙋 Beispiele und Spezialfälle
 - ⛮ Extraktionsmethoden
 - ✨ Ergebnisse
--
+
+
+<!--
+ Framework zur Exploration und Analyse des DNB-Katalogs
+Extraktion und Analyse Vossianischer Antonomasien
+-->
 
 ---
 
-# Was ist eine Vossianische Antonomasie?
+## Was ist eine Vossianische Antonomasie?
 
 
 
@@ -275,26 +283,29 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 
 # Beispiele und Spezialfälle
 
-- zwei häufige Klassen von <span class="vamodifier">Modifiern</span>:
-  - temporal *(his/her/our day/time/generation/era, today, the (19)90's, the 19th century)*
-  - lokal *(Japan, China, Brazil, Iran, Mexico, Israel, India, South Africa, Poland, Spain)*
+## zwei häufige Klassen von <span class="vamodifier">Modifiern</span>:
 
-  (dann eher Metonymie statt Metapher)
+- **temporal** *(his/her/our day/time/generation/era, today, the (19)90's, the 19th century)*
+   - »<span class="vatarget">She</span> is not the <span class="vasource">Laurie Anderson</span> of <span class="vamodifier">her time</span>, of course.«   <p></p>
+- **lokal** *(Japan, China, Brazil, Iran, Mexico, Israel, India, South Africa, Poland, Spain)*
+   - »<span class="vatarget">Mr. Cybulski</span>'s performance, full of cynical bravado, established him as the <span class="vasource">James Dean</span> of <span class="vamodifier">Poland</span>.«
+
+(dann eher Metonymie statt Metapher)
 
 --
 
 ## Beispiele und Spezialfälle: Übung
 
-- Ziel: Reichhaltigkeit von Vossantos erfahren, Kategorien
-  ("Dimensionen") identifizieren
-- Aufgabe: Kategorisierung von Beispielsätzen
-- Ideen für Kategorien: mehrfach-Vossanto/Source/Modifier,
-  hypothetisch, erklärt, Negation, Art der Source/des Targets, Plural,
-  temporal, ...
-- pro Gruppe 4-8 Sätze
-- gemeinsames "Whiteboard" zur Ergebnissicherung
+- **Ziele**:
+   - Reichhaltigkeit von Vossantos erfahren
+   - Kategorien ("Dimensionen") identifizieren
+- **Aufgabe**: Kategorisierung von Beispielsätzen
+   - beispielhafte Ideen für Kategorien: *mehrfach-Vossanto/Source/Modifier, hypothetisch, erklärt, Negation, Art der Source/des Targets, Plural, temporal, ...*
+- **Vorgehen**:
+   - pro Gruppe 4-8 Sätze
+   - gemeinsames "Whiteboard" zur Ergebnissicherung
 
-![Kategorisierung](img/vossanto-kategorisierung.png)
+![Kategorisierung](images/vossanto-kategorisierung.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
 
 ---
 
@@ -314,9 +325,7 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 ## Mitmachen und Nachvollziehen
 
-Jupyter Notebook auf ![Google Colab](https://colab.research.google.com/img/colab_favicon.ico) Google Colaboratory:
-
-https://colab.research.google.com/drive/17MSbQ_DmrbsWSdObw9eVkZY0IV2DnFHJ
+→ Jupyter Notebook auf Google  ![Google Colab](https://colab.research.google.com/img/colab_favicon.ico)<!-- .element style="height:1.5em;box-shadow:none;margin:0px;vertical-align:-.35em" --> Colaboratory
 
 --
 
@@ -398,7 +407,8 @@ Beispiel: *»the ('O') <span class='vasource'>Marquis ('Person') de
 
 ## 2.c BLSTM (1/2)
 
-1. (binäre) Annotation der Daten auf Satzebene
+1. (binäre) Annotation der Daten auf Satzebene = Trainingsdaten
+   - 6072 Sätze, davon 3023 mit Vossantos
 2. Repräsentation der Wörter durch *Word Embeddings* ([GloVe](https://github.com/stanfordnlp/GloVe), [Pennington et al. 2014](https://www.aclweb.org/anthology/D14-1162))
 
 ![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
