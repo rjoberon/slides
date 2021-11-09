@@ -102,141 +102,6 @@ Extraktion und Analyse Vossianischer Antonomasien<!-- .element style="font-size:
 <!-- .element style="float:left" -->
 
 
---
-
-# Agenda
-
-- Was ist eine Vossianische Antonomasie
-- Methoden
-
----
-
-# Framework zur Exploration und Analyse des DNB-Katalogs
-
-<br/>
-zusammen mit [Frank
-Fischer](https://www.hse.ru/en/org/persons/182492735)<br/>
-
-Higher School of Economics, Moskau<!-- .element: style="font-size:0.75em;" -->
-
-<br/>
-gesamter Vortrag: [Liebe und Tod in der Deutschen
-Nationalbibliothek](https://lehkost.github.io/slides/2018-koeln/)<br/> DHd
-Köln, 1. März 2018
-
---
-
-## Ziele und Ausgangslage
-
-- Nutzbarmachung von Katalogmetadaten zur Bearbeitung konkreter
-  Forschungsfragen
-- einfaches Framework, um verschiedene Aspekte des DNB-Katalogs zu
-  untersuchen
-- Datendienst der DNB: http://www.dnb.de/datendienst – dritteljährlicher Komplettabzug der Katalogdaten im RDF-Format (CC0-Lizenz 😊)
-- »Titeldaten der DNB«: 14 102 309 Datensätze und 227 212 707 Tripel (»Fakten«)
-- **~ 180 000** Romane (laut [»rdau:P60493«](http://www.rdaregistry.info/Elements/u/#P60493), Label: »has other title information«)
-- Angabe zu Autor&#42;innen durch die numerische GND-Kennung ermöglicht Verknüpfung der Daten mit u.a. Wikidata
-  ```xml
-  <dcterms:creator rdf:resource="http://d-nb.info/gnd/118540238"/>
-  ```
-
-
-![Deutsche Nationalibliothek](images/DNB.svg)
-<!-- .element: style="box-shadow: none; height: 100px;" -->
-![Wikidata](images/Wikidata-logo-en.svg)
-<!-- .element: style="box-shadow: none; height: 100px" -->
-
-
-
---
-
-## Framework
-
-![Überblick über das Framework](images/framework.svg)<!-- .element width="1040px" -->
-
-alle Schritte im
-[GitHub-Repository](https://github.com/weltliteratur/dnb) dokumentiert
-
-
---
-
-## Subdatensätze
-
-![zeitliche Verteilung fünf verschiedener Subdatensätze](images/items_per_year_de.svg)<!-- .element width="640px" -->
-
---
-
-## Häufigste Substantive in Romantiteln
-
-<br />
-
-| Substantiv | Frequenz |
-|:--|--:|
-| Liebe | 3 117 |
-| Mann | 1 906 |
-| Frau | 1 686 |
-| Tod | 1 537 |
-| Nacht | 1 505 |
-| Leben | 1 496 |
-| Welt | 1 188 |
-| Haus | 1 158 |
-| Zeit | 1 037 |
-| Schatten | 1 029 |
-
-<br />
-<small>Häufigste Substantive in Romantiteln im gesamten DNB-Katalog.</small>
-
---
-
-## Häufigste Trigramme in Titeln
-
-<br />
-
-| Trigramm | Frequenz |
-|:--|--:|
-| Das Geheimnis der | 238
-| Das Haus der | 224
-| Der Mann der | 189
-| Das Geheimnis des | 175
-| Die Tochter des | 160
-| Im Schatten des | 128
-| Der Mann im | 128
-| Das Lied der | 125
-| Die Frau des | 124
-| Die Reise nach | 108
-
-<br />
-<small>Häufigste Trigramme in Romantiteln im DNB-Katalog.</small>
-
---
-
-## Romanumfänge
-
-![Bücher pro Seitenanzahl](images/pages_200-400_de.svg)<!-- .element width="640px" -->
-
-<small>Anzahl der Bücher pro Seitenanzahl im Umfangsbereich 200 bis 400 Seiten.
-<br/><br/>
-**Publikumsfrage:** Es gibt einen Peak aller 16 Seiten, weil …</small>
-
---
-
-## Entwicklung des Romanumfangs seit 1913
-
-![mittlere Seitenanzahl pro Jahr](images/issued_pages_1913_de.svg)<!-- .element width="640px" -->
-
-<small>Entwicklung der mittleren Seitenanzahl pro Jahr seit 1913. – Scheint eine Vermutung von Helge Malchow zu bestätigen: »Mit dem Einzug des Computers in den Schreibprozess sind die Romane nach meinem Eindruck im Durchschnitt um zehn Prozent länger geworden.« ([*Die Zeit* 47/2012](http://www.zeit.de/2012/47/Buecher-Internet-Literatur-Verleger/komplettansicht))</small>
-
---
-
-## Lessons learned
-
-- Bibliothekskataloge sind interessant und können sogar einige
-  Überraschungen enthalten
-- einfache Kommandozeilenwerkzeuge und Programmierkenntnisse reichen
-- reichhaltige Ergebnisse basierend auf einer nur sehr kleinen Auswahl an Metadatenfeldern
-- **Bibliotheken**: Ausgangspunkt für die interaktive Exploration des Katalogs
-
-
 ---
 
 
@@ -255,9 +120,17 @@ alle Schritte im
 
 Projektseite: [vossanto.weltliteratur.net](https://vossanto.weltliteratur.net/)
 
---
+## Agenda
 
-## Was ist eine Vossianische Antonomasie?
+- 🤔 Was ist eine Vossianische Antonomasie?
+- 🙋 Beispiele und Spezialfälle
+- ⛮ Extraktionsmethoden
+- ✨ Ergebnisse
+-
+
+---
+
+# Was ist eine Vossianische Antonomasie?
 
 
 
@@ -397,7 +270,7 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 
 ---
 
-## Beispiele und Spezialfälle
+# Beispiele und Spezialfälle
 
 - zwei häufige Klassen von <span class="vamodifier">Modifiern</span>:
   - temporal *(his/her/our day/time/generation/era, today, the (19)90's, the 19th century)*
@@ -419,9 +292,10 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
 - gemeinsames "Whiteboard" zur Ergebnissicherung
 
 ![Kategorisierung](img/vossanto-kategorisierung.png)
+
 ---
 
-## Methoden
+# Methoden
 
 Ziel: automatische Extraktion aus großen Zeitungskorpora
 
@@ -541,7 +415,10 @@ Beispiel: *»the ('O') <span class='vasource'>Marquis ('Person') de
 ![Architecture](images/blstm_clf.png)<!-- .element style="width:300px;box-shadow:none;" -->
 
 
---
+---
+
+# Ergebnisse
+
 
 ## Häufigkeit der Muster
 
@@ -797,23 +674,6 @@ https://vossanto.weltliteratur.net/timeline/
 
 --
 
-## Ausblick: Was ist wichtig? Schlüsselstellen in der Literatur
-
-![Was ist wichtig?](images/was_ist_wichtig.png)
-<!-- .element: style="box-shadow:none" -->
-
-[DFG-Projekt](https://www.projekte.hu-berlin.de/de/schluesselstellen) (04/2020 – 03/2023) zusammen mit [Prof. Steffen Martus](https://www.literatur.hu-berlin.de/de/derzeitige-institutsmitarbeiterinnen/1683975)
-
---
-
-
-## Ausblick: Was ist wichtig? Schlüsselstellen in der Literatur
-
-!["Die Judenbuche" im Explorations-Tool](images/was_ist_wichtig_judenbuche.png)
-
-
---
-
 <div style="float:right; width:24%;">
   <a href="https://slides.igada.de/2021-06-05-ub_zuerich/"><img src="images/qrcode.png" alt="Link zu den Folien" style="box-shadow:none;margin-bottom:3px;"/></a>
 
@@ -848,6 +708,155 @@ Quelle: [XKCD, Randall Munroe](https://xkcd.com/1256) / CC BY-NC 2.5
 - Kontakt: [robert.jaeschke@hu-berlin.de](mailto:robert.jaeschke@hu-berlin.de)
 
 <!-- .element: style="width: 70%; float:left;" -->
+
+
+
+---
+
+# Framework zur Exploration und Analyse des DNB-Katalogs
+
+<br/>
+zusammen mit [Frank
+Fischer](https://www.hse.ru/en/org/persons/182492735)<br/>
+
+Higher School of Economics, Moskau<!-- .element: style="font-size:0.75em;" -->
+
+<br/>
+gesamter Vortrag: [Liebe und Tod in der Deutschen
+Nationalbibliothek](https://lehkost.github.io/slides/2018-koeln/)<br/> DHd
+Köln, 1. März 2018
+
+--
+
+## Ziele und Ausgangslage
+
+- Nutzbarmachung von Katalogmetadaten zur Bearbeitung konkreter
+  Forschungsfragen
+- einfaches Framework, um verschiedene Aspekte des DNB-Katalogs zu
+  untersuchen
+- Datendienst der DNB: http://www.dnb.de/datendienst – dritteljährlicher Komplettabzug der Katalogdaten im RDF-Format (CC0-Lizenz 😊)
+- »Titeldaten der DNB«: 14 102 309 Datensätze und 227 212 707 Tripel (»Fakten«)
+- **~ 180 000** Romane (laut [»rdau:P60493«](http://www.rdaregistry.info/Elements/u/#P60493), Label: »has other title information«)
+- Angabe zu Autor&#42;innen durch die numerische GND-Kennung ermöglicht Verknüpfung der Daten mit u.a. Wikidata
+  ```xml
+  <dcterms:creator rdf:resource="http://d-nb.info/gnd/118540238"/>
+  ```
+
+
+![Deutsche Nationalibliothek](images/DNB.svg)
+<!-- .element: style="box-shadow: none; height: 100px;" -->
+![Wikidata](images/Wikidata-logo-en.svg)
+<!-- .element: style="box-shadow: none; height: 100px" -->
+
+
+
+--
+
+## Framework
+
+![Überblick über das Framework](images/framework.svg)<!-- .element width="1040px" -->
+
+alle Schritte im
+[GitHub-Repository](https://github.com/weltliteratur/dnb) dokumentiert
+
+
+--
+
+## Subdatensätze
+
+![zeitliche Verteilung fünf verschiedener Subdatensätze](images/items_per_year_de.svg)<!-- .element width="640px" -->
+
+--
+
+## Häufigste Substantive in Romantiteln
+
+<br />
+
+| Substantiv | Frequenz |
+|:--|--:|
+| Liebe | 3 117 |
+| Mann | 1 906 |
+| Frau | 1 686 |
+| Tod | 1 537 |
+| Nacht | 1 505 |
+| Leben | 1 496 |
+| Welt | 1 188 |
+| Haus | 1 158 |
+| Zeit | 1 037 |
+| Schatten | 1 029 |
+
+<br />
+<small>Häufigste Substantive in Romantiteln im gesamten DNB-Katalog.</small>
+
+--
+
+## Häufigste Trigramme in Titeln
+
+<br />
+
+| Trigramm | Frequenz |
+|:--|--:|
+| Das Geheimnis der | 238
+| Das Haus der | 224
+| Der Mann der | 189
+| Das Geheimnis des | 175
+| Die Tochter des | 160
+| Im Schatten des | 128
+| Der Mann im | 128
+| Das Lied der | 125
+| Die Frau des | 124
+| Die Reise nach | 108
+
+<br />
+<small>Häufigste Trigramme in Romantiteln im DNB-Katalog.</small>
+
+--
+
+## Romanumfänge
+
+![Bücher pro Seitenanzahl](images/pages_200-400_de.svg)<!-- .element width="640px" -->
+
+<small>Anzahl der Bücher pro Seitenanzahl im Umfangsbereich 200 bis 400 Seiten.
+<br/><br/>
+**Publikumsfrage:** Es gibt einen Peak aller 16 Seiten, weil …</small>
+
+--
+
+## Entwicklung des Romanumfangs seit 1913
+
+![mittlere Seitenanzahl pro Jahr](images/issued_pages_1913_de.svg)<!-- .element width="640px" -->
+
+<small>Entwicklung der mittleren Seitenanzahl pro Jahr seit 1913. – Scheint eine Vermutung von Helge Malchow zu bestätigen: »Mit dem Einzug des Computers in den Schreibprozess sind die Romane nach meinem Eindruck im Durchschnitt um zehn Prozent länger geworden.« ([*Die Zeit* 47/2012](http://www.zeit.de/2012/47/Buecher-Internet-Literatur-Verleger/komplettansicht))</small>
+
+--
+
+## Lessons learned
+
+- Bibliothekskataloge sind interessant und können sogar einige
+  Überraschungen enthalten
+- einfache Kommandozeilenwerkzeuge und Programmierkenntnisse reichen
+- reichhaltige Ergebnisse basierend auf einer nur sehr kleinen Auswahl an Metadatenfeldern
+- **Bibliotheken**: Ausgangspunkt für die interaktive Exploration des Katalogs
+
+---
+
+## Was ist wichtig? Schlüsselstellen in der Literatur
+
+![Was ist wichtig?](images/was_ist_wichtig.png)
+<!-- .element: style="box-shadow:none" -->
+
+[DFG-Projekt](https://www.projekte.hu-berlin.de/de/schluesselstellen) (04/2020 – 03/2023) zusammen mit [Prof. Steffen Martus](https://www.literatur.hu-berlin.de/de/derzeitige-institutsmitarbeiterinnen/1683975)
+
+--
+
+
+## Was ist wichtig? Schlüsselstellen in der Literatur
+
+!["Die Judenbuche" im Explorations-Tool](images/annette.png)
+
+
+
+
 
 
 </script>
