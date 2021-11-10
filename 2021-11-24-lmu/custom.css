@@ -4,7 +4,12 @@ li.web::marker {
 li.doc::marker {
     content: "🗎 ";
 }
-
+li.mail::marker {
+    content: "✉ ";
+}
+li.clap::marker {
+    content: "👏 ";
+}
 
 .reveal {
   font-size: 24px; }
