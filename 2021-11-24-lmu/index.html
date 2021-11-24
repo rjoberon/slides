@@ -321,6 +321,7 @@ Ziel: automatische Extraktion aus großen Zeitungskorpora
    1. Wikidata
    2. NER
    3. BLSTM
+   4. BERT
 
 Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upenn.edu/LDC2008T19))
 
@@ -430,6 +431,17 @@ Beispiel: *»the ('O') <span class='vasource'>Marquis ('Person') de
 
 ![Architecture](images/blstm_clf.png)<!-- .element style="width:300px;box-shadow:none;" -->
 
+--
+
+## 2.d BERT
+
+*work in progress!*
+
+1. BERT = Bidirectional Encoder Representations from Transformers ([Devlin et al. 2019](https://arxiv.org/abs/1810.04805))
+1. auf großem Korpus vortrainiertes neuronales Netzwerk
+1. Hinzufügen und Trainieren einer weiteren Schicht ("task adaptation")
+1. Aufgabe: binäre Klassifikation von Sätzen
+
 
 ---
 
@@ -479,12 +491,17 @@ gefundenen Kandidaten)
 |Ansatz|Precision|Recall|F1-Maß|
 |:-|-:|-:|-:|
 |Regelbasiert|49.8%|-|-|
-|Wikidata|67.3%|**93.0%**|78.1%|
-|NER|71.8%|81.3%|76.2%|
-|BLSTM|**86.9%**|85.3%|**86.1%**|
+|Wikidata|67.3%|**93.0%**|78.1|
+|NER|71.8%|81.3%|76.2|
+|BLSTM|**86.9%**|85.3%|**86.1**|
+|BERT<sup>*</sup>|97.1%|97.7%|97.4|
 
 Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierten Ansatzes!
 
+
+<br/>
+
+<small><sup>*</sup> Leicht anderes Experiment, daher nicht direkt vergleichbar.</small>
 
 --
 
@@ -745,7 +762,8 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 - regelbasiertes Verfahren: einfach aber robust, Nachvollziehbarkeit für
   Nicht-Expert:innen
-- BLSTM: State-of-the-Art-Ansatz automatisiert Finden auf neuen Korpora
+- BLSTM: automatisiert Finden, gute Ergebnisse auf vorgefilterten Texten
+- BERT: State-of-the-Art-Ansatz mit guten Ergebnissen auf unbekannten Texten
 - größte (bis dato) bekannte Sammlung an Vossianischen Antonomasien
 - zahlreiche neue Spezialfälle, bei denen beispielsweise das <span
   class="vatarget">Target</span> keine Person ist (z.B. *the John
