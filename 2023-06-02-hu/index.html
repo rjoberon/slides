@@ -331,12 +331,9 @@ Bildquelle: [Sven Wolter](https://commons.wikimedia.org/wiki/User:Sven_Wolter), 
 Ziel: automatische Extraktion aus großen Zeitungskorpora
 
 1. Regelbasierte Identifikation ([Fischer/Jäschke 2019](https://doi.org/10.1093/llc/fqy087))
-2. Automatisierte Identifikation ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
-   1. Wikidata
-   2. NER
-   3. BLSTM
-   4. BERT
-3. Automatisierte Extraktion ([Schwab et al. 2022](https://doi.org/10.3389/frai.2022.868249))
+2. Automatisierte
+   1. Identifikation ([Schwab et al. 2019](https://doi.org/10.18653/v1/D19-1647))
+   2. Extraktion ([Schwab et al. 2022](https://doi.org/10.3389/frai.2022.868249))
 
 Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upenn.edu/LDC2008T19))
 
@@ -348,7 +345,7 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 --
 
-## 1. Regelbasiert
+## 1. Regelbasierte Identifikation
 
 1. Fokus auf das häufigste Muster *"the <span
    class="vasource">Source</span> of <span
@@ -369,106 +366,8 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 --
 
-## 2.a Wikidata
 
-- Schritte 1 + 2 wie gehabt
-- in Schritt 3 Ersetzung der Sperrliste durch automatisierte Verfahren:<br/>
-   Bekanntheitsmaß + Entitätenfilter
-
---
-
-### Bekanntheitsmaß
-
-- Widerspiegelung der *Bekanntheit* der Entitäten
-- → Anzahl der [Sitelinks](https://wikidata.org/wiki/Help:Sitelinks) in Wikidata
-- Entität der Klasse "human" vs. bekannteste Entität
-- Beispiel: *"the <span class="vasource">House</span> of <span class="vamodifier">Creativity</span>"*
-
-  | Entität | Sitelinks |
-  |:--------|----------:|
-  |[House](https://www.wikidata.org/wiki/Q3947) (Gebäude) | 184 |
-  |[Dr. House](https://www.wikidata.org/wiki/Q23558) (TV Serie)| 79 |
-  |[Homer Doliver House](https://www.wikidata.org/wiki/Q3139666) (Botaniker) | 9|
-
-  ![House](images/house_vs_house.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
-
-→ Wir behalten Kandidaten, deren Entität der Klasse "human" die bekannteste Entität  ist.
-
---
-
-### Entitätenfilter
-
-- Problem: Was passiert mit Fällen wie *"the <span class="vasource">Prince</span> of Spain"*?
-
-  | Entität | Sitelinks |
-  |:--------|----------:|
-  | [Prince](https://www.wikidata.org/wiki/Q7542) (Sänger) | 101|
-  | [Prince](https://www.wikidata.org/wiki/Q2747456) (Sohn eines Königs/einer Königin) | 71|
-  ![House](images/prince_vs_prince.png)<!-- .element style="width:600px;box-shadow:none;margin:0px;" -->
-- → Abgleich zwischen <span class="vasource">Source</span> + Folgewörtern im Satz (z.B. *Prince of Spain*) gegen Wikidata-Entitäten-Liste
-- *Prince of Wales, Streets of New York, Baths of Caracalla*
-
---
-
-## 2.b NER
-
-1. wie gehabt
-2. Anwendung von *Named-Entity-Recognition (NER)*
-   - z.B. Stanford NLP
-   - Wörter zwischen "a/an/the" und "of/for/among" müssen als *Person* getagged werden
-3. Entitätenfilter (aus Wikidata-Ansatz)
-
-Beispiel: *»the ('O') <span class='vasource'>Marquis ('Person') de
-('Person') Sade ('Person')</span> of ('O')«*
-
-
---
-
-## 2.c BLSTM (1/2)
-
-1. (binäre) Annotation der Daten auf Satzebene = Trainingsdaten
-   - 6072 Sätze, davon 3023 mit Vossantos
-2. Repräsentation der Wörter durch *Word Embeddings* ([GloVe](https://github.com/stanfordnlp/GloVe), [Pennington et al. 2014](https://www.aclweb.org/anthology/D14-1162))
-
-![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
-
---
-
-## 2.c BLSTM (2/2)
-
-1. Eingabe: Satz
-2. Repräsentation des Satzes als Matrix mit Hilfe der Wortvektoren
-3. BLSTM = *bidirectional Long Short-Term Memory* ([Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
-   - Vorteil: "Erinnerung" vorheriger Werte
-   - bidirektional: in beide Richtungen
-4. Zusammenführen der Ausgabevektoren
-5. Ausgabe: binär (1, 0)
-
-![Architecture](images/blstm_clf.png)<!-- .element style="width:300px;box-shadow:none;" -->
-
---
-
-## 2.d BERT
-
-*work in progress!*
-
-1. BERT = Bidirectional Encoder Representations from Transformers ([Devlin et al. 2019](https://arxiv.org/abs/1810.04805))
-1. auf großem Korpus vortrainiertes neuronales Netzwerk
-1. Hinzufügen und Trainieren einer weiteren Schicht ("task adaptation")
-1. Aufgabe: binäre Klassifikation von Sätzen
-
-
---
-
-## 3. Automatisierte Extraktion
-
-
----
-
-# Ergebnisse
-
-
-## Häufigkeit der Muster
+## Ergebnis: Häufigkeit der Muster (1/2)
 
 | | of | for | among | Summe |
 |--------:|------:|----:|------:|------:|
@@ -485,7 +384,7 @@ gefundenen Kandidaten)
 
 --
 
-## Häufigkeit der Muster
+## Ergebis: Häufigkeit der Muster (2/2)
 
 |Muster | Regex | Wikidata | Sperrliste | Vossantos|
 |:-:|-:|-:|-:|-:|
@@ -504,24 +403,163 @@ gefundenen Kandidaten)
 <small>Anzahl der Vossanto-Kandidaten nach jedem Schritt beim regelbasierten Verfahren</small>
 
 
+
 --
 
-## Güte der Verfahren
+## 2. Automatisierte Verfahren
 
-|Ansatz|Precision|Recall|F1-Maß|
-|:-|-:|-:|-:|
-|Regelbasiert|49.8%|-|-|
-|Wikidata|67.3%|**93.0%**|78.1|
-|NER|71.8%|81.3%|76.2|
-|BLSTM|**86.9%**|85.3%|**86.1**|
-|BERT<sup>*</sup>|97.1%|97.7%|97.4|
+<table class="methods">
+  <tr>
+    <td>Identifikation → <em>binäre Klassifikation</em></td>
+    <td>Extraktion → <em>Sequence Tagging</em></td>
+  </tr>
+  <tr>
+    <td class="m1t">BLSTM-ATT</td>
+    <td class="m2t">BLSTM-CRF</td>
+  </tr>
+  <tr>
+    <td class="m1b"><img src="images/blstm_att.png" alt="BLSTM-ATT Architecture" style="box-shadow: none;"/></td>
+    <td class="m2b"><img src="images/blstm_crf.png" alt="BLSTM-CRF Architecture" style="box-shadow: none;"/></td>
+  </tr>
+  <tr>
+    <td class="m3">BERT-CLF</td>
+    <td class="m4">BERT-SEQ</td>
+  </tr>
+</table>
 
-Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierten Ansatzes!
+
+<small>Vorgehen und Bezeichnungen entsprechend [Schwab et al. 2022](https://doi.org/10.3389/frai.2022.868249).</small>
 
 
-<br/>
+--
 
-<small><sup>*</sup> Leicht anderes Experiment, daher nicht direkt vergleichbar.</small>
+## Ausgangslage / Vorbereitung
+
+- Annotierte Daten für Training und Evaluation:
+   - 5995 Sätze, davon 3066 mit Vossantos
+   - letztere jeweils mit ausgezeichnetem Source, Modifier und Target (soweit vorhanden)
+
+--
+
+## Grundlagen: Modelle für Neuronale Netze (1/2)
+
+![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)
+
+--
+
+## Grundlagen: Modelle für Neuronale Netze (2/2)
+
+- *(Bi)LSTM*: (Bidirectional) Long Short-Term Memory ([Hochreiter und Schmidhuber 1997](https://doi.org/10.1162/neco.1997.9.8.1735), [Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
+   - Vorteil: "Erinnerung" vorheriger Werte
+   - bidirektional: in beide Richtungen
+- Transformer
+
+--
+
+## Grundlagen: Pre-Trained (Large) Language Models (1/2)
+
+- Grundidee: Wörter als Vektoren darstellen → *Word Embeddings*
+   - semantische Ähnlichkeit durch Nähe im Vektorraum
+   - geeignete Eingabe für neuronale Netze
+- Ansatz:
+   - neuronales Netzwerk lernt Wörter vorherzusagen
+   - Wortvektoren werden aus dem Netzwerk extrahiert
+- auch: Anpassung des trainierten Netzes auf verschiedene *Domänen* und *Aufgaben* ([Gururangan et al. 2020](http://arxiv.org/abs/2004.10964))
+
+![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
+
+--
+
+## Grundlagen: Pre-Trained (Large) Language Models (2/2)
+
+Beispiele für (im Anschluss verwendete) Modelle:
+- [GloVe](https://github.com/stanfordnlp/GloVe) (Global Vectors for Word Representation), [Pennington et al. 2014](https://doi.org/10.3115/v1/D14-1162)
+   - unüberwachtes Lernen (log-bilineare Regression)
+- [ELMo](https://allenai.org/allennlp/software/elmo) (Embeddings from Language Models), [Peters et al. 2018](https://doi.org/10.18653/v1/N18-1202)
+   - kontextualisiert, Bi-LSTM
+- [BERT](https://github.com/google-research/bert) (Bidirectional Encoder Representations from Transformers), [Devlin et al. 2019](https://doi.org/10.18653/v1/N19-1423)
+   - Transformer
+
+--
+
+## 2.a BLSTM-ATT (binäre Klassifikation)
+
+1. Eingabe: Satz
+2. Repräsentation des Satzes als Matrix von Wortvektoren
+3. BLSTM + Attention
+4. Zusammenführen der Ausgabevektoren
+5. Ausgabe: binär (1, 0)
+
+![Architecture](images/blstm_att.png)<!-- .element style="width:300px;box-shadow:none;" -->
+
+--
+
+## 2.b BLSTM-CRF (Sequence Tagging)
+
+1. Eingabe: Satz
+2. Repräsentation des Satzes als Matrix von Wortvektoren
+3. BLSTM + Conditional Random Field (CRF)
+4. Ausgabe: Klasse für jedes Eingabewort
+
+![Architecture](images/blstm_crf.png)<!-- .element style="width:300px;box-shadow:none;" -->
+
+--
+
+## 2.a BERT-CLF
+
+1. BERT = Bidirectional Encoder Representations from Transformers ([Devlin et al. 2019](https://arxiv.org/abs/1810.04805))
+1. auf großem Korpus vortrainiertes neuronales Netzwerk
+1. Hinzufügen und Trainieren einer weiteren Schicht ("task adaptation")
+1. Aufgabe: binäre Klassifikation von Sätzen
+
+--
+
+## 2.b BERT-SEQ
+
+
+---
+
+# Evaluation
+
+--
+
+## Überblick
+
+![Evaluation](images/evaluation.png)<!-- .element style="width:862px;box-shadow:none;" -->
+
+- NYT: [New York Times, 1987–2007](https://catalog.ldc.upenn.edu/LDC2008T19), (1,8 Millionen Artikel)
+   - aVA: 5995 annotierte Sätze (davon enthalten 3066 eine Vossanto)
+   - eVA: erweitert aVA sukzessive um 50000, 100000, … 500000 zufällige negative Sätze
+- SIG: [Signal Media One-Million News Articles](https://research.signal-ai.com/newsir16/signal-dataset.html)
+
+--
+
+## Güte der Verfahren (1/2)
+
+![Performance](images/performance.png)<!-- .element style="box-shadow:none;" -->
+
+--
+
+## Güte der Verfahren (2/2)
+
+![Performance](images/performance_chunks.png)<!-- .element style="box-shadow:none;" -->
+
+
+<small>Güte von BERT-SEQ auf den unterschiedlichen Teilen von Vossantos.</small>
+
+--
+
+## Typische Fehler
+
+- falsch positiv:
+   - »But should I be the Pierre Cardin of today …?«
+   - »an Augusto Pinochet of Chile«
+   - »the Greta Garbo of ‘Grand Hotel’«
+   - »the Bill Clinton of the 1992 campaign«
+- falsch negativ:
+   - »the Lana Turner of the 1990’s«
+   - »the Harold Stassen of Utah«
+   - »a Marx for the twentieth century«
 
 --
 
@@ -539,12 +577,35 @@ Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierte
 - keine echte Evaluation möglich bei 1.8 Millionen Artikeln
 - in Zufallsstichprobe von 105 Artikeln fanden wir eine Vossanto
 
+
 --
 
+## Generalisierbarkeit (1/2)
+
+![Generalisierbarkeit](images/generalisierbarkeit.png)<!-- .element style="box-shadow:none;" -->
+
+
+<small>In 60 Millionen Sätzen wurden 9578 Vossanto-Kandidaten gefunden.</small>
+
+--
+
+## Generalisierbarkeit (2/2)
+
+![Generalisierbarkeit](images/generalisierbarkeit_new.png)<!-- .element style="width:50%;box-shadow:none;" -->
+
+
+---
+
+
+# (inhaltliche) Ergebnisse
+
+<small>Basierend auf dem regelbasierten Ansatz ([Fischer/Jäschke 2019](https://doi.org/10.1093/llc/fqy087)).</small>
+
+--
 
 ## zeitliche Verteilung
 
-![zeitliche Verteilung der Vossantos um NYT-Korpus](images/vossantos_theof_nyt.svg)<!-- .element width="70%" -->
+![zeitliche Verteilung der Vossantos um NYT-Korpus](images/vossantos_theof_nyt.svg)<!-- .element style="width:80%;box-shadow:none;" -->
 
 --
 
@@ -580,7 +641,7 @@ Güte der automatisierten Ansätze basiert auf den Ergebnissen des regelbasierte
 
 ## zeitliche Verteilung der Sources
 
-![Verteilung über die Zeit](images/nyt_sources_over_time.svg)<!-- .element width="80%" -->
+![Verteilung über die Zeit](images/nyt_sources_over_time.svg)<!-- .element style="width:80%;box-shadow:none" -->
 
 --
 
@@ -778,17 +839,24 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 # Diskussion
 
+--
+
 ## Fazit
 
 - regelbasiertes Verfahren: einfach aber robust, Nachvollziehbarkeit für
   Nicht-Expert:innen
 - BLSTM: automatisiert Finden, gute Ergebnisse auf vorgefilterten Texten
 - BERT: State-of-the-Art-Ansatz mit guten Ergebnissen auf unbekannten Texten
+- klare Gewinner: vortrainierte BERT-Modelle
+- striktes Sequence Tagging ähnlich gut wie CLF-Baseline
+- Generalisierbarkeit: neue Muster + Sources
+- Robustheit durch angepasste Klassenverteilung
 - größte (bis dato) bekannte Sammlung an Vossianischen Antonomasien
 - zahlreiche neue Spezialfälle, bei denen beispielsweise das <span
   class="vatarget">Target</span> keine Person ist (z.B. *the John
   Barrymore of rivers*, *the Forrest Gump of high technology* oder *the
   Marquis de Sade of word processors*)
+
 
 --
 
@@ -816,7 +884,18 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 - maschinelle Übersetzung, Fact Extraction (*"Today, the German Ronaldo quit his career."*)
 - Disambiguation von Entitäten und Koreferenz-Auflösung (*"Jimmy
   Johnson is the Madonna of college football ..."*)
+- Question Answering
 - kreative Texterzeugung (Überschriften von Spielberichten, Aufwerten von automatisch generierten Artikeln)
+
+--
+## Herausforderungen
+
+- Varianten und Spezialfälle
+- Identifikation der Target-Entitäten
+- Sparsity
+- Label-Kosten/-Menge
+- Evaluation (Recall vs. Precision)
+- Semantik
 
 --
 
@@ -830,11 +909,11 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 --
 
+## Daten, Code und mehr
 
 ![Timeline](images/timeline.png)<!-- .element width="80%" -->
 
-https://vossanto.weltliteratur.net/timeline/
-
+https://vossanto.weltliteratur.net/
 
 --
 

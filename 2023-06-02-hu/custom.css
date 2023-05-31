@@ -89,3 +89,43 @@ ol ol {
 .reveal blockquote {
     width: 80%;
 }
+
+/* custom table for methods overview */
+
+table.methods {
+    border-collapse: separate;
+}
+
+table.methods td {
+    border: none;
+    vertical-align: bottom;
+}
+
+table.methods td.m1t, table.methods td.m1b {
+    border-left: 5px solid red;
+    border-right: 5px solid red;
+}
+table.methods td.m1t {
+    border-top: 5px solid red;
+}
+table.methods td.m1b {
+    border-bottom: 5px solid red;
+}
+
+table.methods td.m2t, table.methods td.m2b {
+    border-left: 5px solid green;
+    border-right: 5px solid green;
+}
+table.methods td.m2t {
+    border-top: 5px solid green;
+}
+table.methods td.m2b {
+    border-bottom: 5px solid green;
+}
+
+table.methods td.m3, table.methods tr:last-child td.m3 {
+    border: 5px solid blue;
+}
+table.methods td.m4, table.methods tr:last-child td.m4 {
+    border: 5px solid yellow;
+}
