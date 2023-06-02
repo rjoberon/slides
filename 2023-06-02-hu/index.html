@@ -193,7 +193,7 @@ Bildquelle: <a href="https://commons.wikimedia.org/wiki/File:Gerardus_Johannes_V
 
 --
 
-## Beispiele aus freier Wildbahn (5/5) – recht aktuell
+## Beispiele aus freier Wildbahn (5/5)
 
 <br />
 ![Elon Musk is the Liz Truss of the internet](images/elonmusk.png)<!-- .element width="640px" style="box-shadow:none;margin:0px;" -->
@@ -244,11 +244,11 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
   <br/>
   *metonymic* vs. *metaphorical antonomasia*
   <br/>
-  (hier wäre unsere Vossanto ein Spezialfall von
+  (hier wäre die Vossianische Antonomasie ein Spezialfall von
   *Antonomasia<sub>₂</sub>*, nämlich wenn es um »comparisons with
   paragons from other spheres of culture« geht: »Lyotard is a pope
   of postmodernism, Bush is no Demosthenes; and we can buy the
-  Cadillac of vacuum cleaners.«, vgl. Holmqvist/Płuciennik 2010)
+  Cadillac of vacuum cleaners.«, vgl. [Holmqvist/Płuciennik 2010](https://doi.org/10.1515/9783110230215))
 - wir kürzen ›Vossianische Antonomasie‹ als **Vossanto** ab
 
 --
@@ -259,7 +259,7 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
   als auch als <span class="vatarget">Target</span> auftreten,
   z.B. Obama: bis 2011 war er vor allem <span
   class="vatarget">Target</span> und wurde danach immer mehr <span
-  class="vasource">Source</span> (Bergien 2013)
+  class="vasource">Source</span> ([Bergien 2013](http://onomasticafelecan.ro/iconn2/proceedings/1_01_Bergien_Angelika_ICONN_2.pdf))
 - eine Funktion der Vossanto ist die *Inkulturation*, d.h. wir erhöhen
   das <span class="vatarget">Target</span> durch eine Referenz auf
   die <span class="vasource">Source</span> und das <span
@@ -268,7 +268,7 @@ Heinrich Lausberg: *Handbuch der literarischen Rhetorik. Eine Grundlegung der Li
   > Leonard Cohen as the Lord Byron of rock music, we treat a popular
   > singer as a famous romantic poet elevating him and popular songs to
   > a higher level of culture.«
-  > <footer>(Holmqvist/Płuciennik 2010)</footer>
+  > <footer>([Holmqvist/Płuciennik 2010](https://doi.org/10.1515/9783110230215))</footer>
 - ebd. heißt es aber auch: **»Antonomasia is essentially humanistic
   and anti-computational.«** – d.h., ohne kulturelles
   Hintergrundwissen könne man eine Vossanto nicht verstehen
@@ -348,13 +348,7 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 --
 
-## Mitmachen und Nachvollziehen
-
-→ Jupyter Notebook auf Google  ![Google Colab](https://colab.research.google.com/img/colab_favicon.ico)<!-- .element style="height:1.5em;box-shadow:none;margin:0px;vertical-align:-.35em" --> Colaboratory
-
---
-
-## Schwierigkeit des Tasks
+## Schwierigkeit der Aufgabe
 
 - Annotation von 200 zufällig gewählten Sätzen durch je drei Crowdworker
 - Cohen's Kappa von 0.72 zwischen Experte und Crowdworkern:
@@ -367,6 +361,13 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 - keine echte Evaluation möglich bei 1.8 Millionen Artikeln
 - in Zufallsstichprobe von 105 Artikeln fanden wir eine Vossanto
+
+--
+
+## Mitmachen und Nachvollziehen
+
+→ Jupyter Notebook auf Google  ![Google Colab](https://colab.research.google.com/img/colab_favicon.ico)<!-- .element style="height:1.5em;box-shadow:none;margin:0px;vertical-align:-.35em" --> Colaboratory
+
 
 --
 
@@ -433,8 +434,8 @@ gefundenen Kandidaten)
 
 <table class="methods">
   <tr>
-    <td>Identifikation → <em>binäre Klassifikation</em></td>
-    <td>Extraktion → <em>Sequence Tagging</em></td>
+    <td>a. Identifikation → <em>binäre Klassifikation</em></td>
+    <td>b. Extraktion → <em>Sequence Tagging</em></td>
   </tr>
   <tr>
     <td class="m1t">BLSTM-ATT</td>
@@ -461,24 +462,25 @@ gefundenen Kandidaten)
 - Annotierte Daten für Training und Evaluation:
    - 5995 Sätze, davon 3066 mit Vossantos
    - letztere jeweils mit ausgezeichnetem Source, Modifier und Target (soweit vorhanden):
-
       ```|She|s the *Meryl Streep* of /downtown/```
 
 --
 
-## Grundlagen: Modelle für Neuronale Netze (1/2)
+## Grundlagen: Modelle für neuronale Netze (1/2)
 
-![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)<!-- .element style="width:350px;" -->
+![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)<!-- .element style="width:300px;" -->
+
+<small>Quelle: [Fjodor van Veen & Stefan Leijnen](https://www.asimovinstitute.org/neural-network-zoo/)</small>
 
 --
 
-## Grundlagen: Modelle für Neuronale Netze (1/2)
+## Grundlagen: Modelle für neuronale Netze (1/2)
 
 ![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)
 
 --
 
-## Grundlagen: Modelle für Neuronale Netze (2/2)
+## Grundlagen: Modelle für neuronale Netze (2/2)
 
 - *(B)LSTM*: (Bidirectional) Long Short-Term Memory ([Hochreiter und Schmidhuber 1997](https://doi.org/10.1162/neco.1997.9.8.1735), [Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
    - "Erinnerung" vorheriger Werte; Modellierung von Abhängigkeiten zwischen Eingaben
@@ -488,8 +490,10 @@ gefundenen Kandidaten)
    - verarbeiten Eingaben parallel
    - integrierte Attention ermöglicht Fokussierung auf bestimmte Eingaben
    - Grundlage von BERT und GPT
-- auch verwendet: *CRF* (Conditional Random Fields) ([Lafferty et al. 2001]())
-   - **kein** Neuronales Netz
+
+### auch verwendet:
+- *CRF* (Conditional Random Fields) ([Lafferty et al. 2001]())
+   - **kein** neuronales Netz
    - probabilistisches Modell zur Modellierung von Beziehungen
 
 --
@@ -510,7 +514,8 @@ gefundenen Kandidaten)
 
 ## Grundlagen: Pre-Trained (Large) Language Models (2/2)
 
-Beispiele für (im Anschluss verwendete) Modelle:
+### Beispiele für (im Anschluss verwendete) Modelle
+
 - [GloVe](https://github.com/stanfordnlp/GloVe) (Global Vectors for Word Representation), [Pennington et al. 2014](https://doi.org/10.3115/v1/D14-1162)
    - unüberwachtes Lernen (log-bilineare Regression)
 - [ELMo](https://allenai.org/allennlp/software/elmo) (Embeddings from Language Models), [Peters et al. 2018](https://doi.org/10.18653/v1/N18-1202)
