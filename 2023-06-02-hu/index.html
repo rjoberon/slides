@@ -30,6 +30,11 @@
                             <section data-markdown="" data-separator="^\n---\n" data-separator-vertical="^\n--\n" data-charset="utf-8">
 <script type="text/template">
 
+# https://hu.berlin/ringvorlesung
+
+![QR Code](images/qrcode_index.png)<!-- .element style="box-shadow:none;" -->
+
+--
 
 # Der Manfred Lehmann unter den rhetorischen Stilmitteln <!-- .element: style="font-size:3em;" -->
 
@@ -193,6 +198,10 @@ Bildquelle: <a href="https://commons.wikimedia.org/wiki/File:Gerardus_Johannes_V
 <br />
 ![Elon Musk is the Liz Truss of the internet](images/elonmusk.png)<!-- .element width="640px" style="box-shadow:none;margin:0px;" -->
 
+<br/>
+
+Quelle: [Twitter](https://twitter.com/andrewhunterm/status/1593522991064915968)
+
 --
 
 ## Was ist eine Vossianische Antonomasie? (2/4)
@@ -345,6 +354,22 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 
 --
 
+## Schwierigkeit des Tasks
+
+- Annotation von 200 zufällig gewählten Sätzen durch je drei Crowdworker
+- Cohen's Kappa von 0.72 zwischen Experte und Crowdworkern:
+   - Experte lag (nach Überprüfung) bei den 28 strittigen Fälle richtig
+- damit Crowdsourcing Accuracy von 86%
+
+<br/>
+
+## Recall
+
+- keine echte Evaluation möglich bei 1.8 Millionen Artikeln
+- in Zufallsstichprobe von 105 Artikeln fanden wir eine Vossanto
+
+--
+
 ## 1. Regelbasierte Identifikation
 
 1. Fokus auf das häufigste Muster *"the <span
@@ -402,8 +427,6 @@ gefundenen Kandidaten)
 
 <small>Anzahl der Vossanto-Kandidaten nach jedem Schritt beim regelbasierten Verfahren</small>
 
-
-
 --
 
 ## 2. Automatisierte Verfahren
@@ -437,7 +460,15 @@ gefundenen Kandidaten)
 
 - Annotierte Daten für Training und Evaluation:
    - 5995 Sätze, davon 3066 mit Vossantos
-   - letztere jeweils mit ausgezeichnetem Source, Modifier und Target (soweit vorhanden)
+   - letztere jeweils mit ausgezeichnetem Source, Modifier und Target (soweit vorhanden):
+
+      ```|She|s the *Meryl Streep* of /downtown/```
+
+--
+
+## Grundlagen: Modelle für Neuronale Netze (1/2)
+
+![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)<!-- .element style="width:350px;" -->
 
 --
 
@@ -449,10 +480,17 @@ gefundenen Kandidaten)
 
 ## Grundlagen: Modelle für Neuronale Netze (2/2)
 
-- *(Bi)LSTM*: (Bidirectional) Long Short-Term Memory ([Hochreiter und Schmidhuber 1997](https://doi.org/10.1162/neco.1997.9.8.1735), [Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
-   - Vorteil: "Erinnerung" vorheriger Werte
+- *(B)LSTM*: (Bidirectional) Long Short-Term Memory ([Hochreiter und Schmidhuber 1997](https://doi.org/10.1162/neco.1997.9.8.1735), [Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
+   - "Erinnerung" vorheriger Werte; Modellierung von Abhängigkeiten zwischen Eingaben
    - bidirektional: in beide Richtungen
-- Transformer
+- *Transformer* ([Vaswani et al. 2017](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html))
+   - "Nachfolger" von (B)LSTMS
+   - verarbeiten Eingaben parallel
+   - integrierte Attention ermöglicht Fokussierung auf bestimmte Eingaben
+   - Grundlage von BERT und GPT
+- auch verwendet: *CRF* (Conditional Random Fields) ([Lafferty et al. 2001]())
+   - **kein** Neuronales Netz
+   - probabilistisches Modell zur Modellierung von Beziehungen
 
 --
 
@@ -476,7 +514,7 @@ Beispiele für (im Anschluss verwendete) Modelle:
 - [GloVe](https://github.com/stanfordnlp/GloVe) (Global Vectors for Word Representation), [Pennington et al. 2014](https://doi.org/10.3115/v1/D14-1162)
    - unüberwachtes Lernen (log-bilineare Regression)
 - [ELMo](https://allenai.org/allennlp/software/elmo) (Embeddings from Language Models), [Peters et al. 2018](https://doi.org/10.18653/v1/N18-1202)
-   - kontextualisiert, Bi-LSTM
+   - kontextualisiert, BLSTM
 - [BERT](https://github.com/google-research/bert) (Bidirectional Encoder Representations from Transformers), [Devlin et al. 2019](https://doi.org/10.18653/v1/N19-1423)
    - Transformer
 
@@ -486,11 +524,12 @@ Beispiele für (im Anschluss verwendete) Modelle:
 
 1. Eingabe: Satz
 2. Repräsentation des Satzes als Matrix von Wortvektoren
+   - GloVe und ELMo konkateniert
 3. BLSTM + Attention
 4. Zusammenführen der Ausgabevektoren
 5. Ausgabe: binär (1, 0)
 
-![Architecture](images/blstm_att.png)<!-- .element style="width:300px;box-shadow:none;" -->
+![Architecture](images/blstm_att.png)<!-- .element style="width:500px;box-shadow:none;" -->
 
 --
 
@@ -498,24 +537,25 @@ Beispiele für (im Anschluss verwendete) Modelle:
 
 1. Eingabe: Satz
 2. Repräsentation des Satzes als Matrix von Wortvektoren
-3. BLSTM + Conditional Random Field (CRF)
+   - GloVe und ELMo konkateniert
+3. BLSTM + CRF
 4. Ausgabe: Klasse für jedes Eingabewort
 
-![Architecture](images/blstm_crf.png)<!-- .element style="width:300px;box-shadow:none;" -->
+![Architecture](images/blstm_crf.png)<!-- .element style="width:500px;box-shadow:none;" -->
 
 --
 
 ## 2.a BERT-CLF
 
-1. BERT = Bidirectional Encoder Representations from Transformers ([Devlin et al. 2019](https://arxiv.org/abs/1810.04805))
-1. auf großem Korpus vortrainiertes neuronales Netzwerk
 1. Hinzufügen und Trainieren einer weiteren Schicht ("task adaptation")
 1. Aufgabe: binäre Klassifikation von Sätzen
 
---
+<br/>
 
 ## 2.b BERT-SEQ
 
+1. Hinzufügen und Trainieren einer weiteren Schicht ("task adaptation")
+1. Aufgabe: Tagging der Wörter von Sätzen
 
 ---
 
@@ -563,20 +603,15 @@ Beispiele für (im Anschluss verwendete) Modelle:
 
 --
 
-## Schwierigkeit des Tasks
+## Klassenverteilung
 
-- Annotation von 200 zufällig gewählten Sätzen durch je drei Crowdworker
-- Cohen's Kappa von 0.72 zwischen Experte und Crowdworkern:
-   - Experte lag (nach Überprüfung) bei den 28 strittigen Fälle richtig
-- damit Crowdsourcing Accuracy von 86%
+### BERT-CLF
 
-<br/>
+![eVA BERT CLF](images/eva_bert_clf.png)<!-- .element style="width: 90%; box-shadow:none;" -->
 
-## Recall
+### BERT-SEQ
 
-- keine echte Evaluation möglich bei 1.8 Millionen Artikeln
-- in Zufallsstichprobe von 105 Artikeln fanden wir eine Vossanto
-
+![eVA BERT SEQ](images/eva_bert_seq.png)<!-- .element style="width: 90%; box-shadow:none;" -->
 
 --
 
@@ -860,58 +895,33 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
 
 --
 
-## Einschränkungen
+## Anwendungsbeispiele
 
-- <span class="vasource">Source</span> vom Typ "human"
-- syntaktische Varianten, z.B.
-   - *"the <span class="vamodifier">ADJECTIVE</span> <span class="vasource">ENTITY</span>"* (*"the <span class="vamodifier">new</span> <span class="vasource">Michael Jordan</span>"*)
-   - *"the <span class="vasource">ADJECTIVE/NOUN</span> sort/version/equivalent of"* ("*<span class="vatarget">New South Wales</span>, the <span class="vamodifier">Georgian</span> equivalent of <span class="vasource">deep space</span>"*, *"an <span class="vamodifier">adult</span> version of <span class="vasource">capture the flag</span>"*)
-- Fokus auf Englisch, andere Sprachen deutlich schwieriger
-   - z.B. Deutsch wegen geschlechtsspezifischer Artikel und großer Vielfalt an Präpositionen
-
---
-
-## Erfolglose alternative Ansätze
-
-- geringe Ähnlichkeit (mittels Word Embedding) zwischen <span class="vasource">Source</span> und <span class="vamodifier">Modifier</span>
-   - zu viele neutrale <span class="vamodifier">Modifier</span> wie *"his time"* oder Sub-Genres der <span class="vasource">Source</span> wie *"the Tiger Woods of micro golf"*
-- Kandidaten entfernen, deren <span class="vasource">Source</span> in WordNet enthalten aber nicht als 'person' annotiert ist
-   - *"wife"*, *"chancellor"*, etc. als 'person' in WordNet enthalten
-
---
-## Potential für NLP
-
-- maschinelle Übersetzung, Fact Extraction (*"Today, the German Ronaldo quit his career."*)
-- Disambiguation von Entitäten und Koreferenz-Auflösung (*"Jimmy
-  Johnson is the Madonna of college football ..."*)
+- maschinelle Übersetzung, Fact Extraction
+   - *"Today, the German Ronaldo quit his career."*
+- Disambiguation von Entitäten und Koreferenz-Auflösung
+   - *"Jimmy Johnson is the Madonna of college football ..."*
 - Question Answering
 - kreative Texterzeugung (Überschriften von Spielberichten, Aufwerten von automatisch generierten Artikeln)
 
 --
+
 ## Herausforderungen
 
-- Varianten und Spezialfälle
-- Identifikation der Target-Entitäten
-- Sparsity
-- Label-Kosten/-Menge
-- Evaluation (Recall vs. Precision)
+- Erkennung syntaktischer Varianten
+   - *"the <span class="vamodifier">ADJECTIVE</span> <span class="vasource">ENTITY</span>"* (*"the <span class="vamodifier">new</span> <span class="vasource">Michael Jordan</span>"*)
+   - *"the <span class="vasource">ADJECTIVE/NOUN</span> sort/version/equivalent of"* ("*<span class="vatarget">New South Wales</span>, the <span class="vamodifier">Georgian</span> equivalent of <span class="vasource">deep space</span>"*, *"an <span class="vamodifier">adult</span> version of <span class="vasource">capture the flag</span>"*)
+- Identifikation der Target-Entitäten (→ [Schwab et al. 2023](https://sighum.files.wordpress.com/2023/03/latech-clfl-2023-unofficial-proceedings.pdf))
+- andere Sprachen als Englisch (→ [Schwab et al. 2022b](https://aclanthology.org/2022.icnlsp-1.33))
+- Sparsity (→ Label-Kosten/-Menge, Evaluation des Recalls)
 - Semantik
 
---
-
-## Ausblick
-
-- Language Models, z.B. BERT, FLAIR, etc.
-- Erkennung aller Vossanto-Teile (<span class="vasource">Source</span>, <span class="vamodifier">Modifier</span>, <span class="vatarget">Target</span>) auf Wort-Ebene
-   - Sequence Tagging statt binärer Klassifikation
-   - Koreferenz-Auflösung für <span class="vatarget">Target</span>
-- weitere Sprache(n), z.B. Deutsch
 
 --
 
 ## Daten, Code und mehr
 
-![Timeline](images/timeline.png)<!-- .element width="80%" -->
+![Timeline](images/timeline.png)<!-- .element style="width: 80%; box-shadow:none;" -->
 
 https://vossanto.weltliteratur.net/
 
