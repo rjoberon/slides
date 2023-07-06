@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="de">
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=1920, height=1200, initial-scale=1.0, maximum-scale=1.5, user-scalable=no">
+
+                <title>Tales from the inside: 10 years of growing and
+                maintaining a multi-terabyte longitudinal archive of web pages and tweets</title>
+
+                <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+                <link rel="stylesheet" href="../reveal.js/css/theme/simple.css">
+
+        <!-- adjustments for serif.css -->
+        <link rel="stylesheet" href="custom.css">
+
+                <!-- Theme used for syntax highlighting of code -->
+                <link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+                <!-- Printing and PDF exports -->
+                <script>
+                        var link = document.createElement( 'link' );
+                        link.rel = 'stylesheet';
+                        link.type = 'text/css';
+                        link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+                        document.getElementsByTagName( 'head' )[0].appendChild( link );
+                </script>
+        </head>
+        <body>
+                <div class="reveal">
+                        <div class="slides">
+                            <section data-markdown="" data-separator="^\n---\n" data-separator-vertical="^\n--\n" data-charset="utf-8">
+<script type="text/template">
+
+# Tales from the inside <!-- .element: style="font-size:3em;" -->
+
+## 10 years of growing and maintaining a multi-terabyte longitudinal archive of web pages and tweets
+
+<br />[Robert Jäschke](https://hu.berlin/RJ/)
+
+Humboldt-Universität zu Berlin<!-- .element: style="font-size:0.75em;" -->
+
+<!-- keep me, otherwise this gets interpreted as an ordered list --> 7. Juli 2023
+
+
+<p>
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative
+Commons Lizenzvertrag" style="border-width:0;width:88px" src="images/cc.png"/></a> <br/>
+Dieses Werk ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
+</p>
+
+<!-- .element: style="font-size:0.75em; margin-bottom: 0px; margin-top: 5em;" -->
+
+---
+
+# /me
+
+--
+
+![XKCD Comic No. 435 "Purity"](images/purity.png)
+
+<small>
+[XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
+</small>
+
+--
+
+![BibSonomy](images/bibsonomy.png)
+
+--
+
+# Agenda
+
+--
+# Motivation
+
+around 2012/2013 at [L3S Research Center Hannover](https://www.l3s.de/):
+- build a longitudinal knowledge base on (German) academia ("DBpedia
+  for the German research landscape") → **German Academic Web** (GAW)
+- collect tweets to have data for analysis (e.g., NER, classification, etc.) → **TweetsKB**
+
+---
+
+# Collecting
+
+--
+
+## Goal
+
+### GAW
+
+*bi-annual crawls of "German academic web pages"*
+
+→ seed list of ca. 150 web domains of [German
+universities](http://de.wikipedia.org/wiki/Liste_der_Hochschulen_in_Deutschland)
+with the right to award a doctorate degree
+
+<br/>
+
+### TweetsKB
+
+*collect the freely available 1% sample from Twitter's streaming API*
+
+(until June 16, 2023)
+
+--
+## Tools
+
+### GAW
+https://github.com/internetarchive/heritrix3
+
+> Heritrix is the Internet Archive's open-source, extensible,
+> web-scale, archival-quality web crawler project.
+
+
+<br/>
+
+
+### TweetsKB
+
+https://github.com/lintool/twitter-tools
+
+> This repo holds a collection of tools for the TREC Microblog tracks,
+> which officially ended in 2015.
+
+--
+## Configuration
+
+
+### GAW
+
+quite complex (we can [have a
+  look](https://scm.cms.hu-berlin.de/ipa/gaw/), if you like), e.g.,
+
+- contact details, [web page](https://amor.cms.hu-berlin.de/~jaeschkr/crawler/)
+- resource usage (threads, memory, etc.)
+- inclusion/exclusion rules *(← this is where you can spend hours!)*
+
+it's a (currently) 3466 lines long XML file
+
+<br/>
+
+### TweetsKB
+
+zero configuration
+
+--
+
+## Operation
+
+### GAW
+
+one person:
+- configures, starts, and monitors the crawler every six months
+- starts some cron jobs for monitoring scripts
+- follows a fixed protocol of steps
+- documents all problems, changes, etc.
+- stop after approx. 100 million pages have been crawled (ca. 3 weeks)
+
+![crawl process](https://amor.cms.hu-berlin.de/~tieslers/gaw/progress.svg)<!-- .element style="box-shadow:none;margin:0px;width:50%" -->
+
+
+--
+
+## Operation
+
+### TweetsKB
+
+- once started, the collector runs indefinitely
+- a cron job checks whether it's alive and restarts it, if necessary
+- we tried to ensure that always at least two collectors are running
+  in parallel on different machines (and even locations)
+
+--
+
+## Output
+
+### GAW
+
+WARC files ([Web ARChive](https://en.wikipedia.org/wiki/Web_ARChive) format):
+- ISO standard
+- includes all request and response details plus additional metadata
+- gzip-compressed files (1GB in size)
+
+```
+```
+
+--
+## Output
+
+### TweetsKB
+
+- gzip-compressed JSONL (one file per hour)
+
+```
+```
+
+--
+
+## Documentation
+
+
+
+---
+# Archiving
+
+--
+
+## Storage
+
+available systems:
+- hadoop file system (HDFS) in two clusters (48 and 7 machines, respectively)
+- some standard servers (used mainly for computation)
+
+### GAW
+
+- one directory per crawl; contains all WARC files
+- big cluster: all crawls; small cluster: recent crawls only; server: last crawl only
+- subdirectories with generated / extracted metadata (e.g., CDX, WAT)
+
+```
+> hdu /data/web/gaw
+141.0 T  /data/web/gaw
+```
+
+--
+
+### TweetsKB
+
+- daily files are concatenated into one big daily file
+- copied regularly (~daily) to big & small cluster
+- one directory per collector:
+
+```
+> hdu "/data/twitter/streams/*"
+327.4 G  /data/twitter/streams/fs3
+469.7 G  /data/twitter/streams/gesis
+1.6 T    /data/twitter/streams/goofy
+3.7 T    /data/twitter/streams/hadoop3
+2.8 T    /data/twitter/streams/jerry
+1.7 T    /data/twitter/streams/meco
+4.8 T    /data/twitter/streams/prometheus
+```
+
+
+---
+# Analysing
+
+## GAW
+
+Prüfungsordnungen,
+    CVs,
+
+## Twitter
+
+- social media reaction of Japanese researchers on Fukushima disaster
+- Twitter usage of computer scientists
+- Paper auflisten
+
+
+
+
+--
+
+# Outcomes
+
+## GAW
+- https://data.gesis.org/tweetskb/
+
+## Twitter
+
+- https://data.gesis.org/tweetskb/
+
+
+--
+
+# Challenges
+
+- deduplication
+- sharing (copyright, privacy, volume)
+- working
+- Hosting, Erstellung Metadaten, Arbeiten mit der Datenmenge,
+    Umgehen mit Datenanfragen (alle abgeschreckt vom Aufwand)
+
+--
+
+# from the trenches
+
+## GAW
+
+- we deleted a research group's wiki
+- we shut down all web pages of a big German university
+- we caused overflowing error messages in a project's log file
+
+in short: *we exposed many configuration errors of web servers at German universities*
+
+
+## TweetsKB
+
+
+
+---
+
+<!--
+
+qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2023-06-02-hu/"
+
+-->
+
+<div style="float:right; width:24%;">
+  <a href="https://slides.igada.de/2023-06-02-hu/"><img src="images/qrcode.png" alt="Link zu den Folien" style="box-shadow:none;margin-bottom:3px;"/></a>
+
+  <p style="font-size:.45em;padding-top:0px;margin-top:0px;">
+    <a href="https://slides.igada.de/2023-06-02-hu/">https://slides.igada.de/2023-06-02-hu/</a>
+  </p>
+
+  <a href="https://www.bibsonomy.org/"><img src="images/postit.png" alt="www.bibsonomy.org" style="box-shadow:none;"/></a>
+
+  <a href="http://weltliteratur.net/"><img src="images/logo_weltliteratur_953x265.png" alt="weltliteratur.net" style="box-shadow:none;"/></a>
+
+  <p style="font-size:.62em;padding-top:10px;margin-top:0px;">
+    <a href="https://vossanto.weltliteratur.net/">https://vossanto.weltliteratur.net/</a>
+  </p>
+
+
+</div>
+
+
+![XKCD: Questions?](images/xkcd_1256.png)
+<!-- .element: style="width:100%;margin-bottom:0px;" -->
+
+<!-- .element: style="width:70%;margin-bottom:0px;margin-top:0px;" -->
+
+<small>
+[XKCD, Randall Munroe](https://xkcd.com/1256) / CC BY-NC 2.5
+</small>
+
+<!-- .element: style="margin-top:0px;" -->
+
+
+<ul>
+<li class="clap">Dank an
+  [Frank Fischer](https://lehkost.github.io/) und
+  [Michel Schwab](https://www.ibi.hu-berlin.de/de/institut/personen/schwab)
+<li class="mail"> [robert.jaeschke@hu-berlin.de](mailto:robert.jaeschke@hu-berlin.de)
+<li class="web">https://hu.berlin/RJ
+</ul>
+
+
+<!-- .element: style="width: 70%; float:left;" -->
+
+
+
+</script>
+                            </section>
+                        </div>
+                </div>
+
+                <script src="../reveal.js/lib/js/head.min.js"></script>
+                <script src="../reveal.js/js/reveal.js"></script>
+
+                <script>
+                        // More info https://github.com/hakimel/reveal.js#configuration
+                        Reveal.initialize({
+                                history: true,
+
+                                // More info https://github.com/hakimel/reveal.js#dependencies
+                                dependencies: [
+                                        { src: '../reveal.js/plugin/markdown/marked.js' },
+                                        { src: '../reveal.js/plugin/markdown/markdown.js' },
+                                        { src: '../reveal.js/plugin/notes/notes.js', async: true },
+                                        { src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                                ]
+                        });
+                </script>
+        </body>
+</html>
