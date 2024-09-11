@@ -25,10 +25,10 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.80354938"
-     inkscape:cx="278.14096"
+     inkscape:cx="279.38544"
      inkscape:cy="65.957365"
      inkscape:window-width="1920"
-     inkscape:window-height="1131"
+     inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -41,7 +41,7 @@
      id="layer1"
      transform="translate(-15.833725,-65.585938)">
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:0.499999, 0.499999;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect234"
        width="50.910534"
        height="29.021908"
@@ -57,7 +57,7 @@
          id="tspan2506"
          style="text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="86.952751"
-         y="78.613663">Neuronales</tspan><tspan
+         y="78.613663">neuronales</tspan><tspan
          sodipodi:role="line"
          style="text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
          x="86.952751"

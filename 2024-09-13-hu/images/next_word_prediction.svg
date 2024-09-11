@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="284.9408mm"
+   height="65.292763mm"
+   viewBox="0 0 284.9408 65.292763"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="next_word_prediction.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.3932941"
+     inkscape:cx="747.15025"
+     inkscape:cy="167.2296"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g5505" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(83.473344,-29.054757)">
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#333333;fill-opacity:1;stroke-width:0.264583"
+       x="118.23005"
+       y="33.600216"
+       id="text4830"><tspan
+         sodipodi:role="line"
+         id="tspan4828"
+         style="fill:#333333;fill-opacity:1;stroke-width:0.264583"
+         x="118.23005"
+         y="33.600216">Ausgabe: </tspan><tspan
+         sodipodi:role="line"
+         style="fill:#333333;fill-opacity:1;stroke-width:0.264583"
+         x="118.23005"
+         y="41.537716"
+         id="tspan4834">Wahrscheinlichkeitsverteilung</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#333333;fill-opacity:1;stroke-width:0.264583"
+         x="118.23005"
+         y="49.475216"
+         id="tspan4832">über Wörter</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#333333;fill-opacity:1;stroke-width:0.264583"
+       x="-83.975639"
+       y="33.600216"
+       id="text4830-2"><tspan
+         sodipodi:role="line"
+         id="tspan4828-3"
+         style="fill:#333333;fill-opacity:1;stroke-width:0.264583"
+         x="-83.975639"
+         y="33.600216">Eingabe: </tspan><tspan
+         sodipodi:role="line"
+         style="fill:#333333;fill-opacity:1;stroke-width:0.264583"
+         x="-83.975639"
+         y="41.537716"
+         id="tspan4832-5">Folge von Wörtern</tspan></text>
+    <g
+       id="g5545">
+      <g
+         id="g5076"
+         transform="translate(1.245228,-0.09076755)">
+        <g
+           id="g3406"
+           transform="translate(-1.314369,1.333338)">
+          <text
+             xml:space="preserve"
+             style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="167.29158"
+             y="58.818066"
+             id="text240"><tspan
+               sodipodi:role="line"
+               style="fill:#009400;fill-opacity:1;stroke-width:0.264583"
+               x="167.29158"
+               y="58.818066"
+               id="tspan298">Basketball</tspan></text>
+          <rect
+             style="fill:#009400;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+             id="rect466"
+             width="40"
+             height="5"
+             x="123.64167"
+             y="54.082542" />
+          <text
+             xml:space="preserve"
+             style="font-size:3.52778px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="125.52972"
+             y="57.600571"
+             id="text240-3"><tspan
+               sodipodi:role="line"
+               style="font-size:3.52778px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+               x="125.52972"
+               y="57.600571"
+               id="tspan298-6">0,4</tspan></text>
+        </g>
+        <g
+           id="g3465"
+           transform="translate(-1.4565809,1.1784329)">
+          <text
+             xml:space="preserve"
+             style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="167.43378"
+             y="66.878296"
+             id="text240-7"><tspan
+               sodipodi:role="line"
+               style="fill:#0094ff;fill-opacity:1;stroke-width:0.264583"
+               x="167.43378"
+               y="66.878296"
+               id="tspan298-5">Fußball</tspan></text>
+          <rect
+             style="fill:#0094ff;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+             id="rect466-6"
+             width="10"
+             height="5"
+             x="123.78388"
+             y="62.142769" />
+          <text
+             xml:space="preserve"
+             style="font-size:3.52778px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="125.67193"
+             y="65.660797"
+             id="text240-3-3"><tspan
+               sodipodi:role="line"
+               style="font-size:3.52778px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+               x="125.67193"
+               y="65.660797"
+               id="tspan298-6-5">0,1</tspan></text>
+        </g>
+        <g
+           id="g3855"
+           transform="translate(-1.4565809,9.0837542)">
+          <text
+             xml:space="preserve"
+             style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="167.43378"
+             y="66.878296"
+             id="text240-7-9"><tspan
+               sodipodi:role="line"
+               style="fill:#f74dff;fill-opacity:1;stroke-width:0.264583"
+               x="167.43378"
+               y="66.878296"
+               id="tspan298-5-1">Golf</tspan></text>
+          <rect
+             style="fill:#f74dff;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+             id="rect466-6-0"
+             width="30"
+             height="5"
+             x="123.78388"
+             y="62.142769" />
+          <text
+             xml:space="preserve"
+             style="font-size:3.52778px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+             x="125.67193"
+             y="65.660797"
+             id="text240-3-3-2"><tspan
+               sodipodi:role="line"
+               style="font-size:3.52778px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+               x="125.67193"
+               y="65.660797"
+               id="tspan298-6-5-7">0,3</tspan></text>
+        </g>
+        <g
+           id="g3855-9"
+           transform="translate(-2.6262677,20.704274)">
+          <g
+             id="g3971"
+             transform="translate(1.1696868,-3.7151981)">
+            <text
+               xml:space="preserve"
+               style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+               x="167.43378"
+               y="66.878296"
+               id="text240-7-9-3"><tspan
+                 sodipodi:role="line"
+                 style="fill:#e58436;fill-opacity:1;stroke-width:0.264583"
+                 x="167.43378"
+                 y="66.878296"
+                 id="tspan298-5-1-6">Schach</tspan></text>
+            <rect
+               style="fill:#e58436;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
+               id="rect466-6-0-2"
+               width="10"
+               height="5"
+               x="123.78388"
+               y="62.142769" />
+            <text
+               xml:space="preserve"
+               style="font-size:3.52778px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+               x="125.67193"
+               y="65.660797"
+               id="text240-3-3-2-0"><tspan
+                 sodipodi:role="line"
+                 style="font-size:3.52778px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+                 x="125.67193"
+                 y="65.660797"
+                 id="tspan298-6-5-7-6">0,1</tspan></text>
+          </g>
+        </g>
+        <g
+           id="g3855-9-6"
+           transform="translate(-2.6262677,28.609595)">
+          <g
+             id="g3971-1"
+             transform="translate(1.1696868,-3.7151981)">
+            <text
+               xml:space="preserve"
+               style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+               x="167.43378"
+               y="66.878296"
+               id="text240-7-9-3-8"><tspan
+                 sodipodi:role="line"
+                 style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+                 x="167.43378"
+                 y="66.878296"
+                 id="tspan298-5-1-6-7">...</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-size:3.52778px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+               x="125.67193"
+               y="65.660797"
+               id="text240-3-3-2-0-9"><tspan
+                 sodipodi:role="line"
+                 style="font-size:3.52778px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+                 x="125.67193"
+                 y="65.660797"
+                 id="tspan298-6-5-7-6-2">...</tspan></text>
+          </g>
+        </g>
+      </g>
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#999999;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4935"
+         width="83"
+         height="41.438"
+         x="118.21744"
+         y="52.659519"
+         ry="2.8225029" />
+    </g>
+    <g
+       id="g5510"
+       transform="translate(-83.318357,4.835093)">
+      <text
+         xml:space="preserve"
+         style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+         x="2.5933592"
+         y="70.223946"
+         id="text236"><tspan
+           sodipodi:role="line"
+           id="tspan234"
+           style="stroke-width:0.264583"
+           x="2.5933592"
+           y="70.223946">Michael Jordan spielte professionell ...</tspan></text>
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#999999;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4935-9"
+         width="112.56841"
+         height="9.9357519"
+         x="0.095015496"
+         y="63.57555"
+         ry="2.8225029" />
+    </g>
+    <g
+       id="g5505"
+       transform="translate(-29.3332,34.259594)">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         id="rect234"
+         width="50.910534"
+         height="29.021908"
+         x="77.659187"
+         y="24.607971" />
+      <text
+         xml:space="preserve"
+         style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+         x="102.99508"
+         y="37.385696"
+         id="text2508"><tspan
+           sodipodi:role="line"
+           id="tspan2506"
+           style="text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           x="102.99508"
+           y="37.385696">neuronales</tspan><tspan
+           sodipodi:role="line"
+           style="text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
+           x="102.99508"
+           y="45.323196"
+           id="tspan2510">Netz</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:7.35265px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.30636"
+       x="41.293045"
+       y="65.226509"
+       id="text5549"
+       transform="scale(0.86363407,1.1578978)"><tspan
+         sodipodi:role="line"
+         id="tspan5547"
+         style="stroke-width:0.30636"
+         x="41.293045"
+         y="65.226509">→</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.35265px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.30636"
+       x="122.2202"
+       y="65.226509"
+       id="text5549-2"
+       transform="scale(0.86363407,1.1578978)"><tspan
+         sodipodi:role="line"
+         id="tspan5547-2"
+         style="stroke-width:0.30636"
+         x="122.2202"
+         y="65.226509">→</tspan></text>
+  </g>
+</svg>

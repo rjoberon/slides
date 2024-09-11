@@ -154,14 +154,14 @@ F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with
 
 --
 
-## Sprachverarbeitung mit neuronalen Netzen
+## Textanalyse mit neuronalen Netzen
 
 ![Black Box](images/blackbox.svg)<!-- .element style="box-shadow:none;" -->
 
 ### Details, die wir auslassen
 - Festlegung Vokabular (Wörter, Silben, etc.)
 - Abbildung auf Zahlen
-- Strukur des neuronalen Netzes
+- Architektur des neuronalen Netzes
 - ... und noch einiges mehr
 
 <!--
@@ -172,47 +172,54 @@ F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with
 
 --
 
-## Training
+## Training: Pre-Training → Foundation Model
 
-### Pre-Training → Foundation Model
+*Masked Language Modelling* bzw. *Next-Word Prediction*
 
+![Next Word Prediction](images/next_word_prediction.svg)<!-- .element style="box-shadow:none;" -->
 
+![Embedding](images/wordembedding.png)<!-- .element style="width:250px;box-shadow:none;float:right;" -->
 
-### Fine-Tuning (Domain and Task Adaptation)
-
---
-
-## Pre-Trained (Large) Language Models
-
-- Grundidee: Wörter als Vektoren darstellen → *Word Embeddings*
+- ergibt *Pre-Trained (Large) Language Model* → **LLM**
+- Extraktion von Vektoren für Wörter ergibt *Word Embeddings*
    - semantische Ähnlichkeit durch Nähe im Vektorraum
-   - geeignete Eingabe für neuronale Netze
-- Ansatz:
-   - neuronales Netzwerk lernt Wörter vorherzusagen
-   - Wortvektoren werden aus dem Netzwerk extrahiert
-- auch: Anpassung des trainierten Netzes auf verschiedene *Domänen* und *Aufgaben* ([Gururangan et al. 2020](http://arxiv.org/abs/2004.10964))
-
-![Embedding](images/wordembedding.png)<!-- .element style="width:400px;box-shadow:none;" -->
+   - Eingabe für neuronale Netze
 
 --
 
-## Typische Aufgaben
+## Training: Fine-Tuning
+
+Anpassung des trainierten Netzes auf verschiedene *Domänen* und
+*Aufgaben*<br/>
+(*Domain and Task Adaptation*, [Gururangan et al. 2020](http://arxiv.org/abs/2004.10964))
+
+### Typische Aufgaben
 
 - Klassifikation (z.B. Spam-Emails erkennen)
 - Sequence Tagging (z.B. Namen von Städten in Texten finden)
-- Question Answering (z.B. Fragen
-- usw.
+- Question Answering (z.B. Chatbot)
+- ...
+
+### Prinzipielles Vorgehen
+
+- Hinzufügen einer weiteren Schicht
+- Training mit annotierten Daten
 
 --
 
-## Typisches Vorgehen
+## Beispiele
 
-- Foundation Model
-- Wie kann man sie für andere Tasks einsetzen? (→ finetuning)
-- Welche Sammlungen von Tasks gibt es?
+![LLM Evolution](images/llm_evolution.png)<!-- .element style="box-shadow:none;" -->
 
-- Beispiele nennen (Mixtral, etc.) und kurz erklären (worauf
-  trainiert, Größe, Parameter, wie trainiert, etc.)
+<ul style="font-size:12pt">
+<li class="diamond">Architektur
+<li class="club">Architektur und Modell
+</ul>
+
+S. Minaee, T. Mikolov, N. Nikzad, M. Chenaghlu, R. Socher, X. Amatriain, J. Gao (2024) Large Language Models: A Survey. [arXiv:2402.06196v2 ](https://arxiv.org/html/2402.06196v2)
+
+<!-- .element style="font-size:9pt" -->
+
 
 --
 
