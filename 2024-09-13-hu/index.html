@@ -42,14 +42,14 @@ Humboldt-Universität zu Berlin<!-- .element: style="font-size:0.75em;" -->
 <!-- keep me, otherwise this gets interpreted as an ordered list --> 13. September 2024
 
 
-<p>
+<small>
 <a rel="license"
 href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative
 Commons Lizenzvertrag" style="border-width:0;width:88px" src="images/cc.png"/></a> <br/>
 Dieses Werk ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
-</p>
+</small>
 
-<!-- .element: style="font-size:0.75em; margin-bottom: 0px; margin-top: 5em;" -->
+<!-- .element: style="margin-top: 5em;" -->
 
 ---
 
@@ -60,7 +60,7 @@ Dieses Werk ist lizenziert unter einer <a rel="license" href="http://creativecom
 ![XKCD Comic No. 435 "Purity"](images/purity.png)
 
 <small>
-Quelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
+Bildquelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 </small>
 
 --
@@ -107,7 +107,7 @@ Quelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 
 ![Neuron](images/08_neuron.png)<!-- .element width="45%" style="box-shadow:none;margin:0px;float:left;" -->
 
-![Perzeptron](images/perzeptron.png)<!-- .element width="45%" style="box-shadow:none;margin:0px;float:right;" -->
+![Perzeptron](images/perzeptron.png)<!-- .element class="fragment" width="45%" style="box-shadow:none;margin:0px;float:right;" -->
 
 --
 
@@ -120,15 +120,15 @@ Quelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 
 --
 
-## Architekturen für neuronale Netze (1/2)
+## Architekturen für künstliche neuronale Netze
 
 ![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)<!-- .element style="width:300px;" -->
 
-<small>Quelle: [Fjodor van Veen & Stefan Leijnen](https://www.asimovinstitute.org/neural-network-zoo/)</small>
+<small>Bildquelle: [Fjodor van Veen & Stefan Leijnen](https://www.asimovinstitute.org/neural-network-zoo/)</small>
 
 --
 
-## Architekturen für neuronale Netze (1/2)
+## Architekturen für künstliche neuronale Netze
 
 ![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)
 
@@ -136,21 +136,25 @@ Quelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 
 ## Anwendungsbeispiele
 
-![Spam](images/spam.png)<!-- .element style="box-shadow:none;margin:0px;" -->
+![Spam](images/spam.png)<!-- .element style="box-shadow:none;margin:0px;width:80%" -->
 
-<!-- .element style="display:inline-block;max-width:45%;float:left;font-size:9pt" -->
-
-
-![PlaNet](images/planet.jpg)<!-- .element style="box-shadow:none;margin:0px;" -->
-T. Weyand, I. Kostrikov, J. Philbin (2016) PlaNet – Photo Geolocation with Convolutional Neural Networks. [doi:10.1007/978-3-319-46484-8_3](https://doi.org/10.1007/978-3-319-46484-8_3)
-
-<!-- .element style="display:inline-block;max-width:45%;float:right;font-size:9pt" -->
+<!-- .element class="fragment" style="display:inline-block;max-width:49%;float:left;font-size:9pt" -->
 
 
-![CoverHunter](images/coverhunter.png)<!-- .element style="box-shadow:none;margin:0px;" -->
-F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with Refined Attention and Alignments. [doi:10.1109/ICME55011.2023.00189](https://doi.org/10.1109/ICME55011.2023.00189)
+![PlaNet](images/planet.jpg)<!-- .element style="box-shadow:none;margin:0px;width:80%" -->
+<small>
+Bildquelle: T. Weyand, I. Kostrikov, J. Philbin (2016) PlaNet – Photo Geolocation with Convolutional Neural Networks. [doi:10.1007/978-3-319-46484-8_3](https://doi.org/10.1007/978-3-319-46484-8_3)
+</small>
 
-<!-- .element style="display:inline-block;max-width:45%;float:left;font-size:9pt" -->
+<!-- .element class="fragment" style="display:inline-block;max-width:49%;float:right;" -->
+
+
+![CoverHunter](images/coverhunter.png)<!-- .element style="box-shadow:none;margin:0px;width:80%" -->
+<small>
+Bildquelle: F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with Refined Attention and Alignments. [doi:10.1109/ICME55011.2023.00189](https://doi.org/10.1109/ICME55011.2023.00189)
+</small>
+
+<!-- .element class="fragment" style="display:inline-block;max-width:49%;float:left;" -->
 
 --
 
@@ -158,11 +162,13 @@ F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with
 
 ![Black Box](images/blackbox.svg)<!-- .element style="box-shadow:none;" -->
 
-### Details, die wir auslassen
+### Details, die wir auslassen <!-- .element class="fragment" data-fragment-index="2" -->
 - Festlegung Vokabular (Wörter, Silben, etc.)
 - Abbildung auf Zahlen
 - Architektur des neuronalen Netzes
 - ... und noch einiges mehr
+
+<!-- .element class="fragment" data-fragment-index="2" -->
 
 <!--
 - Wo kommen die Vektoren her?
@@ -178,12 +184,14 @@ F. Liu, D. Tuo, Y. Xu, X. Han (2023) CoverHunter: Cover Song Identification with
 
 ![Next Word Prediction](images/next_word_prediction.svg)<!-- .element style="box-shadow:none;" -->
 
-![Embedding](images/wordembedding.png)<!-- .element style="width:250px;box-shadow:none;float:right;" -->
+![Embedding](images/wordembedding.png)<!-- .element class="fragment" data-fragment-index="2" style="width:250px;box-shadow:none;float:right;" -->
 
 - ergibt *Pre-Trained (Large) Language Model* → **LLM**
 - Extraktion von Vektoren für Wörter ergibt *Word Embeddings*
    - semantische Ähnlichkeit durch Nähe im Vektorraum
    - Eingabe für neuronale Netze
+
+<!-- .element class="fragment" data-fragment-index="2" -->
 
 --
 
@@ -207,7 +215,7 @@ Anpassung des trainierten Netzes auf verschiedene *Domänen* und
 
 --
 
-## Beispiele
+## Beispiele für LLMs
 
 ![LLM Evolution](images/llm_evolution.png)<!-- .element style="box-shadow:none;" -->
 
@@ -216,18 +224,20 @@ Anpassung des trainierten Netzes auf verschiedene *Domänen* und
 <li class="club">Architektur und Modell
 </ul>
 
-S. Minaee, T. Mikolov, N. Nikzad, M. Chenaghlu, R. Socher, X. Amatriain, J. Gao (2024) Large Language Models: A Survey. [arXiv:2402.06196v2 ](https://arxiv.org/html/2402.06196v2)
+<small>
+Bildquelle: S. Minaee, T. Mikolov, N. Nikzad, M. Chenaghlu, R. Socher, X. Amatriain, J. Gao (2024) Large Language Models: A Survey. [arXiv:2402.06196v2 ](https://arxiv.org/html/2402.06196v2)
+</small>
 
-<!-- .element style="font-size:9pt" -->
 
-
---
+<!--
 
 ## Herausforderungen
 
 - Was ist dafür notwendig (annotierte Daten)
 - Was sind typische Herausforderungen (annotierte Daten, shortcut
   learning, ...)
+
+-->
 
 --
 
@@ -237,7 +247,12 @@ Wir wissen:
 - was ein LLM ist
 - wie es trainiert wird
 - welche Arten von Aufgaben es gibt
-- welche LLMs es gibt
+- welche Beispiele für LLMs es gibt
+
+<!-- .element style="margin-bottom:40px" -->
+
+
+→ Was hat es mit dem *Manfred Lehmann unter den rhetorischen Stilmitteln* auf sich?
 
 ---
 
@@ -320,7 +335,7 @@ Quelle: [Twitter](https://twitter.com/andrewhunterm/status/1593522991064915968)
 - wir kürzen ›Vossianische Antonomasie‹ als **Vossanto** ab
 
 
-![Vossanto Memory](images/memory.jpg)<!-- .element width="50%" -->
+![Vossanto Memory](images/memory.jpg)<!-- .element width="45%" -->
 
 - <span class="vasource">Source</span> → <span
   class="vamodifier">Modifier</span> → <span
@@ -443,7 +458,7 @@ Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upen
 --
 
 
-## Ergebnis: Häufigkeit der Muster (1/2)
+## Ergebnis: Häufigkeit der Muster
 
 | | of | for | among | Summe |
 |--------:|------:|----:|------:|------:|
@@ -457,26 +472,6 @@ Anzahl der Vossantos pro Muster<br/>
 (nach manueller Annotation der durch den regelbasierten Ansatz
 gefundenen Kandidaten)
 </small>
-
---
-
-## Ergebis: Häufigkeit der Muster (2/2)
-
-|Muster | Regex | Wikidata | Sperrliste | Vossantos|
-|:-:|-:|-:|-:|-:|
-|the-of | 12,748,735 | 90,712 | 3,591 | 2,779|
-|a-of | 5,900,839 | 11,860 | 705 | 118|
-|an-of | 956,247 | 4,539 | 88 | 14|
-|the-for | 2,960,459 | 8,070 | 817 | 24|
-|a-for | 1,869,946 | 4,812 | 536 | 59|
-|an-for | 304,529 | 1,424 | 296 | 13|
-|the-among | 122,345 | 139 | 13 | 3|
-|a-among | 67,019 | 82 | 25 | 13|
-|an-among | 11,158 | 12 | 1 | 0|
-|**Summe** | 24,941,277 | 121,650 | 6,072 | 3,023|
-
-
-<small>Anzahl der Vossanto-Kandidaten nach jedem Schritt beim regelbasierten Verfahren</small>
 
 --
 
@@ -516,7 +511,7 @@ gefundenen Kandidaten)
 
 --
 
-## Erinnerung: Architekturen für neuronale Netze
+## Erinnerung: Architekturen für künstliche neuronale Netze
 
 ![Neural Network Zoo](https://www.asimovinstitute.org/wp-content/uploads/2019/04/NeuralNetworkZoo20042019.png)
 
@@ -526,21 +521,34 @@ gefundenen Kandidaten)
 
 ### (B)LSTM ([Hochreiter und Schmidhuber 1997](https://doi.org/10.1162/neco.1997.9.8.1735), [Schuster/Paliwal 1997](https://doi.org/10.1109/78.650093))
 
+<!-- .element class="fragment" data-fragment-index="1" -->
+
 - (Bidirectional) Long Short-Term Memory
 - "Erinnerung" vorheriger Werte; Modellierung von Abhängigkeiten zwischen Eingaben
 - bidirektional: in beide Richtungen
 
+<!-- .element class="fragment" data-fragment-index="1" -->
+
 ### Transformer ([Vaswani et al. 2017](https://proceedings.neurips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html))
+
+<!-- .element class="fragment" data-fragment-index="2" -->
+
 - "Nachfolger" von (B)LSTMS
 - verarbeiten Eingaben parallel
 - integrierte Attention ermöglicht Fokussierung auf bestimmte Eingaben
 - Grundlage von BERT und GPT
 
+<!-- .element class="fragment" data-fragment-index="2" -->
 
 ### CRF ([Lafferty et al. 2001]())
+
+<!-- .element class="fragment" data-fragment-index="3" -->
+
 - Conditional Random Fields
 - **kein** neuronales Netz
 - probabilistisches Modell zur Modellierung von Beziehungen
+
+<!-- .element class="fragment" data-fragment-index="3" -->
 
 --
 
