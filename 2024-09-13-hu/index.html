@@ -106,6 +106,20 @@ Bildquelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 
 ![Perzeptron](images/perzeptron.png)<!-- .element class="fragment" width="45%" style="box-shadow:none;margin:0px;float:right;" -->
 
+Note:
+biol. NN:
+- 10¹¹ Neuronen mit jeweils 10⁴ Verbindungen
+- Signale an Nachbarn *aktivieren* oder *inhibieren*
+- können sich selbst organisieren und dadurch lernen
+- haben hohe Generalisierungsfähigkeit
+- sind sehr fehlertolerant
+- Inspiration für Perzeptron / künstliche NN
+
+Perzeptron:
+- Gewichte / Bias
+- Multiplikation + Addition = Skalarprodukt (daher GPUs)
+- Aktivierungsfunktion: Treppe/Sigmoid
+
 --
 
 ## ... zum künstlichen neuronalen Netz
@@ -114,6 +128,14 @@ Bildquelle: [XKCD, Randall Munroe](https://xkcd.com/435) / CC BY-NC 2.5
 
 <!-- mit hinreichend vielen Schichten können wir beliebige Funktionen -->
 <!-- beliebig genau approximieren -->
+
+Note:
+Ein mehrschichtiges neuronales Netz besteht aus:
+- Eingabeschicht: ein Knoten pro Attribut der Eingabedaten
+- Versteckte Schichten: 1-n Schichten mit jeweils m Neuronen
+- Ausgabeschicht: ein Knoten pro Ausgabewert
+- Verbindungen: jeweils zu allen Knoten der folgenden Schicht,
+  versehen mit Gewicht w_ij
 
 --
 
@@ -445,6 +467,14 @@ Ziel: automatische Extraktion aus großen Zeitungskorpora
 
 Korpus: »New York Times« 1987–2007 ([Sandhaus 2008](https://catalog.ldc.upenn.edu/LDC2008T19))
 
+Note:
+- Trainingskorpus
+  - Erstellung aufwendig (muster-basiert, mit entsprechenden Nachteilen)
+  - "alles durchlesen" nicht machbar → Phänomen auf Satzebene zu selten
+  - manchmal auch für Expert:innen schwierig, Phänomen zu erkennen
+- Sprache (→ cross-lingual)
+- Full-Target detection
+
 --
 
 ## Schwierigkeit der Aufgabe
@@ -609,6 +639,11 @@ gefundenen Kandidaten)
 
 ![Architecture](images/blstm_att.png)<!-- .element style="width:500px;box-shadow:none;" -->
 
+Note:
+- bi-directional long short-term memory network → capture long-term dependencies
+- embeddings: GloVe (non-contextualized) + ELMO (contextualized)
+- attention layer = linear layer + softmax
+
 --
 
 ## 2.b BLSTM-CRF (Sequence Tagging)
@@ -620,6 +655,10 @@ gefundenen Kandidaten)
 4. Ausgabe: Klasse für jedes Eingabewort
 
 ![Architecture](images/blstm_crf.png)<!-- .element style="width:500px;box-shadow:none;" -->
+
+Note:
+- CRF: model labels jointly, not independently (as BLSTM do)
+- embeddings wie bei BLSTM-ATT
 
 --
 
@@ -638,6 +677,9 @@ gefundenen Kandidaten)
 1. Aufgabe: Tagging der Wörter von Sätzen
 
 <!-- .element class="fragment" data-fragment-index="2" -->
+
+Note:
+- fine tuned (task adaptation) → single new layer
 
 ---
 
@@ -663,11 +705,27 @@ gefundenen Kandidaten)
    - eVA: erweitert aVA sukzessive um 50000, 100000, … 500000 zufällige negative Sätze
 - SIG: [Signal Media One-Million News Articles](https://research.signal-ai.com/newsir16/signal-dataset.html)
 
+Note:
+- aVA: “the/a/an SOURCE of/for/among”
+- eVA: decreasing ratio of VA (from 51,5% to <1%) durch zufällige negative Sätze
+
 --
 
 ## Güte der Verfahren (1/2)
 
 ![Performance](images/performance.png)<!-- .element style="box-shadow:none;" -->
+
+Note:
+- Baseline CLF: BLSTM (GloVe-Embeddings)
+- Baseline SEQ: CRF
+
+- CLF: beide schlagen Baseline, BERT hat bessere Precision → bestes F1
+- SEQ: beide gleiche Precision, BERT besserer Recall → bestes F1
+- “binarized”: min 1 source tag, min 1 modifier tag (outperform BLSTM!)
+- “strict”: Satz wird nur als korrekt gewerten, wenn alle Tags aller Wörter korrekt sind!
+  - (höhere Precision in diesem Fall, weil ein Satz bei ‘strict’ nur
+    einmal falsch sein kann, ansonsten können mehrere falsche Chunks
+    enthalten sein)
 
 --
 
@@ -692,6 +750,17 @@ gefundenen Kandidaten)
    - »the Harold Stassen of Utah«
    - »a Marx for the twentieth century«
 
+Note:
+falsch positiv:
+- meist genauere Spezifikation der Person
+- “today” = specification (er spricht über sich selbst)
+
+falsch negativ:
+- Wörter nach Entitäten semantisch sehr ähnlich zu denen bei den
+  falsch positiven (“Utah” vs. “Chile”, “1990’s” vs. “today”) aber
+  hier keine Spezifikation sondern Modifier!
+
+
 --
 
 ## Generalisierbarkeit (1/2)
@@ -701,12 +770,36 @@ gefundenen Kandidaten)
 
 <small>In 60 Millionen Sätzen wurden 9578 Vossanto-Kandidaten gefunden.</small>
 
+Note:
+- 60Mill NYT-Sätze mittels BERT-50-SEQ getaggt
+
+- meist bereits bekannte Phrasen um die Source
+- aber auch einige neue
+
+- wir wählen zufällig 25 Sätze unter den 10 häufigsten “unseen”
+  Source-Mustern und 25 unter denen, die nur einmal auftauchen und
+  evaluieren diese → next slide
+
+- dito bei den unseen Sources (rechts)
+
+
 --
 
 ## Generalisierbarkeit (2/2)
 
 ![Generalisierbarkeit](images/generalisierbarkeit_new.png)<!-- .element style="width:50%;box-shadow:none;" -->
 
+
+Note:
+new source phrases:
+- die auf der vorherigen Folie beschriebenen 50 Sätze
+
+new sources:
+- analog (25 Sätze der 10 häufigsten, 25 der einmaligen)
+
+→ vglw. unsicher auf neuen Mustern, neue Entitäten weniger ein Problem
+
+(hier wie überall: SRC > MOD > TRG)
 
 ---
 # Agenda
@@ -995,6 +1088,19 @@ Commons](https://en.wikipedia.org/wiki/Marquis_de_Sade#/media/File:Marquis_de_Sa
    - *"Jimmy Johnson is the Madonna of college football ..."*
 - Question Answering
 - kreative Texterzeugung (Überschriften von Spielberichten, Aufwerten von automatisch generierten Artikeln)
+
+Note:
+(= Potential für NLP)
+
+- **machine translation + fact extraction**:
+“Today, the German Ronaldo quit his career.”
+nicht Ronaldo hört auf, sondern ein Deutscher Spieler (dessen Name hier fehlt)
+
+- **entity disambiguation + coreference resolution**:
+“Jimmy Johnson is the Madonna of College Football” - link Jimmy Johnson to “the Madonna of College Football” but avoid that Madonna is part of any co-reference chain
+
+- **question answering**: Q “Who is the Bill Gates of Japan?” could be answered by a VA
+
 
 --
 
