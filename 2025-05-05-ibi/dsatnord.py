@@ -40,7 +40,7 @@ if __name__ == '__main__':
     colors = plt.colormaps['tab20'](np.linspace(0.15, 0.85, len(sizes)))
 
     done = 0
-    for i in range(max([pos for pos, size, _ in parts]) + 1):
+    for i in range(max([pos for pos, size, _ in parts]) + 2):
         fig, ax = plt.subplots(figsize=(15.15, 1))
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
