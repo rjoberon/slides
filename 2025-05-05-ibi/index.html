@@ -1,33 +1,33 @@
 <!doctype html>
 <html lang="de">
-		<head>
-				<meta charset="utf-8">
-				<meta name="viewport" content="width=1920, height=1200, initial-scale=1.0, maximum-scale=1.5, user-scalable=no">
+				<head>
+								<meta charset="utf-8">
+								<meta name="viewport" content="width=1920, height=1200, initial-scale=1.0, maximum-scale=1.5, user-scalable=no">
 
-				<title>D-Sat</title>
+								<title>D-Sat</title>
 
-				<link rel="stylesheet" href="../reveal.js/css/reveal.css">
-				<link rel="stylesheet" href="../reveal.js/css/theme/simple.css">
+								<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+								<link rel="stylesheet" href="../reveal.js/css/theme/simple.css">
 
-		<!-- adjustments for serif.css -->
-		<link rel="stylesheet" href="custom.css">
+				<!-- adjustments for serif.css -->
+				<link rel="stylesheet" href="custom.css">
 
-				<!-- Theme used for syntax highlighting of code -->
-				<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+								<!-- Theme used for syntax highlighting of code -->
+								<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
 
-				<!-- Printing and PDF exports -->
-				<script>
-						var link = document.createElement( 'link' );
-						link.rel = 'stylesheet';
-						link.type = 'text/css';
-						link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
-						document.getElementsByTagName( 'head' )[0].appendChild( link );
-				</script>
-		</head>
-		<body>
-				<div class="reveal">
-						<div class="slides">
-							<section data-markdown="" data-separator="^\n---\n" data-separator-vertical="^\n--\n" data-charset="utf-8">
+								<!-- Printing and PDF exports -->
+								<script>
+												var link = document.createElement( 'link' );
+												link.rel = 'stylesheet';
+												link.type = 'text/css';
+												link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+												document.getElementsByTagName( 'head' )[0].appendChild( link );
+								</script>
+				</head>
+				<body>
+								<div class="reveal">
+												<div class="slides">
+														<section data-markdown="" data-separator="^\n---\n" data-separator-vertical="^\n--\n" data-charset="utf-8">
 <script type="text/template">
 
 # 42
@@ -64,8 +64,10 @@ This work is licensed under <a rel="license" href="http://creativecommons.org/li
 
 # How it all started
 
+![](images/dsat_cover.jpg)
+<!-- .element class="" style="height:350px; margin:0 10px;" -->
 ![](images/dsat_screenshot.png)
-<!-- .element class="noshadow" style="width:80%" -->
+<!-- .element class="fragment noshadow" style="height:350px; margin:0 10px;" -->
 
 Note:
 - D-Sat: first widely available satellite imagery of Germany
@@ -84,8 +86,8 @@ Note:
 *(I am just finishing my math degree.)*
 
 - nice tool but:<!-- .element class="diagonal" -->
-	- old Windows executable
-	- data hidden in a big blob
+		- old Windows executable
+		- data hidden in a big blob
 - idea: overlay images with information, enrich object descriptions
   with satellite images<!-- .element class="idea" -->
 - How to extract images and geo-code them?<!-- .element class="thinking" -->
@@ -102,13 +104,14 @@ Note:
 <!-- .element class="dsatnord" -->
 
 
-- starting point: understanding the coordinate system
+starting point: understanding the coordinate system
 
 ![](images/map_marker.png)
 
 💡 `grep Berlin dsatnord.mp`
 
---
+<!-- .element class="fragment" -->
+
 
 | Byte            |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |  17 |  18 |  19 |  20 |  21 |  22 |  23 |  24 |
 | --------------- | ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:|
@@ -121,23 +124,9 @@ Note:
 | Alt Duvenstedt  |   0 |   0 |   0 | 128 |  72 | 138 |  32 |  65 |   0 |   0 |   0 |  96 |  47 |   0 |  87 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 | Alt Golm        |  41 |  92 | 143 |  66 | 103 | 241 |  41 |  65 |   0 |   0 |   0 |  32 | 105 |  46 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 | Alt Krenzlin    | 236 |  81 | 184 |  30 |  67 | 245 |  35 |  65 |   0 |   0 |   0 |  64 | 118 | 146 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Madlitz     |  41 |  92 | 143 | 194 | 244 |  64 |  42 |  65 |   0 |   0 |   0 |  64 | 137 |  55 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Mahlisch    |  41 |  92 | 143 | 194 |  33 | 130 |  42 |  65 |   0 |   0 |   0 | 192 |  12 |  65 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Meteln      |  41 |  92 | 143 | 194 | 123 | 252 |  35 |  65 |   0 |   0 |   0 |  96 |  18 | 193 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Mölln       | 236 |  81 | 184 |  30 | 106 | 154 |  34 |  65 |   0 |   0 |   0 |  64 | 141 | 177 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Rehse       |  41 |  92 | 143 | 194 |  34 | 181 |  39 |  65 |   0 |   0 |   0 |  64 |  40 | 171 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Schwerin    |  41 |  92 | 143 |  66 | 217 |  15 |  38 |  65 |   0 |   0 |   0 | 128 | 252 | 169 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Schönau     |  41 |  92 | 143 | 194 | 133 | 207 |  38 |  65 |   0 |   0 |   0 |  64 |  22 | 179 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Sührkow     |  41 |  92 | 143 | 194 | 180 | 156 |  38 |  65 |   0 |   0 |   0 | 160 | 111 | 202 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Tucheband   |   0 |   0 |   0 | 128 | 189 | 174 |  42 |  65 |   0 |   0 |   0 | 192 | 165 |  73 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Zauche      |   0 |   0 |   0 |   0 | 203 | 206 |  41 |  65 |   0 |   0 |   0 | 128 | 246 |   3 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt Zeschdorf   |   0 |   0 |   0 |   0 | 228 | 146 |  42 |  65 |   0 |   0 |   0 | 128 |  30 |  61 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Alt-Schadow     |  20 | 174 |  71 |  97 | 112 | 159 |  41 |  65 |   0 |   0 |   0 | 192 | 164 |  25 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Altbach         |  20 | 174 |  71 |  97 | 167 |  30 |  32 |  65 |   0 |   0 |   0 |  32 | 249 | 158 |  84 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
-| Altbrandsleben  |   0 |   0 |   0 | 128 | 188 | 249 |  35 |  65 |   0 |   0 |   0 |   0 | 170 |  11 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 
 
-<!-- .element style="font-size:11pt" -->
+<!-- .element class="fragment" style="font-size:11pt" -->
 
 --
 
@@ -186,7 +175,8 @@ if (*arg1 == 0x43 && arg1[1] == 0x49 && arg1[2] == 0x53)
 <!-- .element class="fragment" -->
 
 Note:
-What "CIS3" means and how the images are encoded is another (longer) story ...
+- Kudos to Jan for discovering that code!
+- What "CIS3" means and how the images are encoded is another (longer) story ...
 
 --
 
@@ -324,14 +314,14 @@ the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
 <!-- .element class="dsatnord" -->
 
 ![](https://dsat.igada.de/img/ve_offsets.png)
-<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+<!-- .element class="fragment noshadow" style="width:40%;margin:0 10px;"-->
 ![](https://dsat.igada.de/img/ve_offsets_colored.png)
-<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+<!-- .element class="fragment noshadow" style="width:40%;margin:0 10px;"-->
 
 ![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers.png)
-<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+<!-- .element class="fragment noshadow" style="width:40%;margin:0 10px;"-->
 ![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers_zoom2.png)
-<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+<!-- .element class="fragment noshadow" style="width:40%;margin:0 10px;"-->
 
 
 [visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
@@ -444,9 +434,14 @@ the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
 
 
 Note:
-This will only the speaker see?
-
-
+- these signs are a mystery!
+- 201 cities → not clear how they were selected
+- Wavelet vs. BMP
+- Why not generated?
+  - my guess: hand-crafted to fit longer names (see
+	"Villingen-Schwenningen")
+- but: 13394 places overall and for each of them such a sign is shown
+  on the map when searching for the place → those ARE generated!
 
 ---
 
@@ -456,9 +451,9 @@ This will only the speaker see?
 <!-- .element class="dsatnord" -->
 
 ![](https://dsat.igada.de/img/un2.png)
-<!-- .element class="fragment noshadow" style="width:20%;" -->
+<!-- .element class="fragment noshadow" style="height:500px;margin:0 20px;" -->
 ![](https://dsat.igada.de/img/un2_1_int.png)
-<!-- .element class="fragment noshadow" style="width:40%;" -->
+<!-- .element class="fragment noshadow" style="height:500px;margin:0 20px;" -->
 
 
 [solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
@@ -473,9 +468,9 @@ This will only the speaker see?
 
 
 ![](images/mannh1.jpg)
-<!-- .element class="fragment" style="margin:0; width:40%;" -->
+<!-- .element class="fragment" style="margin:0 10px; width:40%;" -->
 ![](images/mannh2.jpg)
-<!-- .element class="fragment" style="margin:0; width:40%;" -->
+<!-- .element class="fragment" style="margin:0 10px; width:40%;" -->
 
 
 ![](https://dsat.igada.de/img/topware0.jpg)
@@ -488,12 +483,11 @@ This will only the speaker see?
 [solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
 <!-- .element class="blog" -->
 
+
 Note:
 - Nachtigall, ick hör dir trappsen!
+- how/Why can we "see" the image when visualising the byte values?
 
-
-[solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
-<!-- .element class="blog" -->
 
 ---
 
@@ -508,9 +502,7 @@ Note:
 
 **incorporate [Ideen für Vortrag](file:README.org*Ideen für Vortrag)**
 
-among them:
-
-- some interesting strings like
+- among them some interesting strings like
 	- `D:\Dsat\Dsat23\CityDlg.cpp..c:\temp\cityname.bin`
 	- `bmp.02..mp`
 	- `stbmp002.bmp`
@@ -528,6 +520,9 @@ among them:
 - formal description of `dsatnord.mp` using Kaitai Struct
   (show an example / screenshot?)
 
+- use hand-crafted colors in legend (e.g., grey for "unknown", same
+  base color for tiles, etc.)
+
 
 Open problems (and how to approach them):
 - decoding COD images
@@ -542,27 +537,33 @@ Open problems (and how to approach them):
 
 
 </script>
-							</section>
-						</div>
-				</div>
+														</section>
+												</div>
+								</div>
 
-				<script src="../reveal.js/lib/js/head.min.js"></script>
-				<script src="../reveal.js/js/reveal.js"></script>
+								<script src="../reveal.js/lib/js/head.min.js"></script>
+								<script src="../reveal.js/js/reveal.js"></script>
 
-				<script>
-						// More info https://github.com/hakimel/reveal.js#configuration
-						Reveal.initialize({
-							history: true,
-							slideNumber: true,
+								<script>
+												// More info https://github.com/hakimel/reveal.js#configuration
+												Reveal.initialize({
+														history: true,
+														slideNumber: true,
 
-							// More info https://github.com/hakimel/reveal.js#dependencies
-							dependencies: [
-									{ src: '../reveal.js/plugin/markdown/marked.js' },
-									{ src: '../reveal.js/plugin/markdown/markdown.js' },
-									{ src: '../reveal.js/plugin/notes/notes.js', async: true },
-									{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-							]
-						});
-				</script>
-		</body>
+														// More info https://github.com/hakimel/reveal.js#dependencies
+														dependencies: [
+																		{ src: '../reveal.js/plugin/markdown/marked.js' },
+																		{ src: '../reveal.js/plugin/markdown/markdown.js' },
+																		{ src: '../reveal.js/plugin/notes/notes.js', async: true },
+																		{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+														]
+												});
+								</script>
+				</body>
 </html>
+
+<!--
+  Local Variables:
+  eval: (indent-tabs-mode)
+  End:
+  -->
