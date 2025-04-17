@@ -61,7 +61,7 @@ if __name__ == '__main__':
             size_cum += size
         legend = ax.legend(ncols=len(parts), bbox_to_anchor=(0, 1), loc='lower left',
                            fontsize="small", frameon=False, labelcolor="linecolor",
-                           title=f"dsatnord.mp:  {done:,}  of  {total_size:,}  bytes  known  ({done/total_size*100:2.2f}%)")
+                           title=f"dsatnord.mp: {done: >11,}  of  {total_size:,}  bytes  known  ({done/total_size*100:2.2f}%)")
 
         plt.tight_layout()
         plt.setp(legend.get_title(), fontfamily="Eurostile Extended", fontsize=13)
