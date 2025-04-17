@@ -12,8 +12,8 @@
 # 2025-04-16 (rja)
 # - initial version
 
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 parts = [
     (2, 16, "header"),
@@ -59,9 +59,10 @@ if __name__ == '__main__':
                 done += size
             ax.barh(0, size, left=size_cum, height=0.1, label=name, color=c, edgecolor=b)
             size_cum += size
-        ax.legend(ncols=len(parts), bbox_to_anchor=(0, 1), loc='lower left',
-                  fontsize='small', frameon=False, labelcolor="linecolor",
-                  title=f"dsatnord.mp ({done:,} of {total_size:,} bytes = {done/total_size*100:2.2f}% known)")
+        legend = ax.legend(ncols=len(parts), bbox_to_anchor=(0, 1), loc='lower left',
+                           fontsize="small", frameon=False, labelcolor="linecolor",
+                           title=f"dsatnord.mp:  {done:,}  of  {total_size:,}  bytes  known  ({done/total_size*100:2.2f}%)")
 
         plt.tight_layout()
+        plt.setp(legend.get_title(), fontfamily="Eurostile Extended", fontsize=13)
         plt.savefig(f"{fname}_{i:02}.svg", bbox_inches='tight')
