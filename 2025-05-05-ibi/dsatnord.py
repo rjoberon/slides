@@ -36,17 +36,18 @@ fname = "images/dsatnord"
 
 if __name__ == '__main__':
     sizes = np.array([size for pos, size, _ in parts])
-
+    total_size = sum(sizes)
     colors = plt.colormaps['tab20'](np.linspace(0.15, 0.85, len(sizes)))
 
+    done = 0
     for i in range(max([pos for pos, size, _ in parts]) + 1):
         fig, ax = plt.subplots(figsize=(15.15, 1))
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
-        #ax.set_frame_on(False)
+        # ax.set_frame_on(False)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        #ax.spines['bottom'].set_visible(False)
+        # ax.spines['bottom'].set_visible(False)
         ax.spines['left'].set_visible(False)
         ax.set_xlim(0, sizes.sum())
 
@@ -54,10 +55,13 @@ if __name__ == '__main__':
         for (pos, size, name), color in zip(parts, colors):
             c = color if pos <= i else "white" # switch parts (in)visible
             b = "black" if pos == i else c
+            if pos == i:
+                done += size
             ax.barh(0, size, left=size_cum, height=0.1, label=name, color=c, edgecolor=b)
             size_cum += size
         ax.legend(ncols=len(parts), bbox_to_anchor=(0, 1), loc='lower left',
-                  fontsize='small', frameon=False, labelcolor="linecolor")
+                  fontsize='small', frameon=False, labelcolor="linecolor",
+                  title=f"dsatnord.mp ({done:,} of {total_size:,} bytes = {done/total_size*100:2.2f}% known)")
 
         plt.tight_layout()
         plt.savefig(f"{fname}_{i:02}.svg", bbox_inches='tight')

@@ -16,6 +16,25 @@ li.club::marker {
 li.diamond::marker {
     content: "♦ ";
 }
+li.thinking::marker {
+    content: "🤔 ";
+}
+li.idea::marker {
+    content: "💡 ";
+}
+li.diagonal::marker {
+    content: "🫤 ";
+}
+li.frowning::marker {
+    content: "🙁 ";
+}
+li.smiling::marker {
+    content: "😀 ";
+}
+li.smiling::marker {
+    content: "😀 ";
+}
+
 
 .reveal {
   font-size: 24px; }
@@ -162,7 +181,7 @@ table.methods td.m4, table.methods tr:last-child td.m4 {
 
 
 .reveal .blog {
-    float:right;
+    float:left;
     font-size:small;
 }
 .reveal .blog::before {

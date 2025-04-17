@@ -30,69 +30,88 @@
 							<section data-markdown="" data-separator="^\n---\n" data-separator-vertical="^\n--\n" data-charset="utf-8">
 <script type="text/template">
 
+# 42
+
+<!-- .element: style="font-size:25em;margin:0;" -->
+
+
+
+---
+
+
 
 # D-Sat <!-- .element: style="font-size:3em;" -->
 
-## Data Archaeology
+## My Excursion Into Data Archaeology
 
-<br />[Robert Jäschke](https://hu.berlin/RJ/)
+<br/>[Robert Jäschke](https://hu.berlin/RJ/)
 
 Humboldt-Universität zu Berlin<!-- .element: style="font-size:0.75em;" -->
 
-<!-- keep me, otherwise this gets interpreted as an ordered list --> 5. May 2025
+May 5th, 2025
 
 
 <small>
-<a rel="license"
-href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative
-Commons Lizenzvertrag" style="border-width:0;width:88px" src="images/cc.png"/></a> <br/>
-Dieses Werk ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Namensnennung – Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0;width:88px" src="images/cc.png"/></a> <br/>
+This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
 </small>
 
 <!-- .element: style="margin-top: 5em;" -->
 
 ---
 
+
+
 # How it all started
 
-screenshot dsat
+![](images/dsat_screenshot.png)
+<!-- .element class="noshadow" style="width:80%" -->
 
-- wofür?
-- nett, aber: old Windows executable, data not reusable
-
-
---
-
-![](images/dsat_files.png)
-<!-- .element style="width:30%;box-shadow:none;margin:0px" -->
-
-![](images/dsatnord_00.svg)
-<!-- .element class="dsatnord" -->
+Note:
+- D-Sat: first widely available satellite imagery of Germany
+- available in the 90s on two CD-ROMs
+- images of Sovjet military satellites
+- valuable tool for exploring and documenting facilities that were
+  used by the Sovjet army in East Germany
+- imagery shows land and buildings shortly after reunification (=
+  still in use)
+- (BTW: cloud on the left hides important facility)
 
 --
 
 ## 2005
 
-*(I am just finishing my math degree)*
+*(I am just finishing my math degree.)*
 
-- hobby: documenting facilities that were used by the Sovjet army in
-  East Germany
-- idea: satellite images were helpful to show land and buildings close
-after reunification (= still in use)
-- idea: overlay images with information / show satellite images next
-to object descriptions
-- how to extract images and geo-code them?
-- starting point: understanding coordinate system
+- nice tool but:<!-- .element class="diagonal" -->
+	- old Windows executable
+	- data hidden in a big blob
+- idea: overlay images with information, enrich object descriptions
+  with satellite images<!-- .element class="idea" -->
+- How to extract images and geo-code them?<!-- .element class="thinking" -->
 
-- Screenshot Ortsmarker
+<!-- .element class="left" -->
 
-- `grep Aachen dsatnord.mp`
 
+![](images/dsat_files.png)
+<!-- .element class="right" style="width:45%;box-shadow:none;margin:0px" -->
+
+--
+
+![](images/dsatnord_00.svg)
+<!-- .element class="dsatnord" -->
+
+
+- starting point: understanding the coordinate system
+
+![](images/map_marker.png)
+
+💡 `grep Berlin dsatnord.mp`
 
 --
 
 | Byte            |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |  17 |  18 |  19 |  20 |  21 |  22 |  23 |  24 |
-| --------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --------------- | ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:| ---:|
 | Alsenz          |  41 |  92 | 143 | 194 | 184 |  76 |  25 |  65 |   0 |   0 |   0 | 192 | 140 |  11 |  85 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 | Alsfeld         |  20 | 174 |  71 | 225 | 165 | 173 |  31 |  65 |   0 |   0 |   0 | 224 |  81 | 122 |  85 |  65 |  26 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 | Alsheim         |  41 |  92 | 143 | 194 |  10 | 159 |  27 |  65 |   0 |   0 |   0 | 192 | 170 |  15 |  85 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
@@ -117,31 +136,37 @@ to object descriptions
 | Altbach         |  20 | 174 |  71 |  97 | 167 |  30 |  32 |  65 |   0 |   0 |   0 |  32 | 249 | 158 |  84 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 | Altbrandsleben  |   0 |   0 |   0 | 128 | 188 | 249 |  35 |  65 |   0 |   0 |   0 |   0 | 170 |  11 |  86 |  65 |   9 |   0 |   0 |   0 |   0 |   0 |   0 |   0 |
 
+
+<!-- .element style="font-size:11pt" -->
+
 --
 
 ![](images/dsatnord_01.svg)
 <!-- .element class="dsatnord" -->
 
-- 13394 places
-- coordinates as two 32 bit (or 64 bit?) values
+- 13394 places<!-- .element class="smiling" -->
+- coordinates as two 32 bit (or 64 bit?) values<!-- .element class="thinking" -->
    - not clear whether (unsigned) integer or floating point values
-- unknown projection and datum
+- unknown projection and datum<!-- .element class="frowning" -->
 
 <!-- .element class="left" -->
 
 
 ![](https://dsat.igada.de/img/dsat1_dekodiert_1.png)
-<!-- .element style="width:30%;box-shadow:none;margin:0px" -->
+<!-- .element style="width:35%;box-shadow:none;margin:0px" -->
 
 [decoding the city database](https://dsat.igada.de/2005/03/26/decoding-the-city-database.html)
 <!-- .element class="blog" -->
 
 
---
+
+---
+
+
 
 ## 2024
 
-*(I somehow stumble over my old web page and got interested again)*
+*(I somehow stumble over my old web page and got interested again.)*
 
 🔎 function `CLsDecode::GetImageDataSize` in `lsd26dll.dll`:
 
@@ -186,7 +211,11 @@ some intriguing observations:
 
 → we'll see later, what this means
 
---
+
+
+---
+
+
 
 ![](images/dsatnord_02.svg)
 <!-- .element class="dsatnord" -->
@@ -202,72 +231,199 @@ The (hexadecimal values of the) first sixteen bytes of `dsatnord.mp`:
 [searching for the index](https://dsat.igada.de/2024/04/23/searching-for-the-index.html)
 <!-- .element class="blog" -->
 
---
+
+
+---
+
+
 
 ![](images/dsatnord_03.svg)
 <!-- .element class="dsatnord" -->
 
-## Offsets
+
+![](https://dsat.igada.de/img/un1.png)
+
+
+
+[searching for the index](https://dsat.igada.de/2024/04/23/searching-for-the-index.html)
+<!-- .element class="blog" -->
+
+Note:
+We can see several segments with quite some regularities.
+
+Skipping the first 16 header bytes, and then interpreting each 4 bytes
+as unsigned integer (`./src/mp.py -c dump_ints un1.dat >
+un1_ints.tsv`), this segment basically contains the byte offsets of
+the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
+525098, 566987, 619866, ...
+
+
+---
+
+
+
+![](images/dsatnord_04.svg)
+<!-- .element class="dsatnord" -->
+
+![](https://dsat.igada.de/img/un3_1_autocorrelation.png)
+<!-- .element class="noshadow" style="width:70%;" -->
+
+[finding something unexpected](https://dsat.igada.de/2024/05/06/finding-something-unexpected.html)
+<!-- .element class="blog" -->
+
+--
+
+
+![](images/dsatnord_04.svg)
+<!-- .element class="dsatnord" -->
+
+
+![](https://dsat.igada.de/img/un3_1_4xhist.png)
+<!-- .element class="noshadow" style="width:70%;" -->
+
+
+[finding something unexpected](https://dsat.igada.de/2024/05/06/finding-something-unexpected.html)
+<!-- .element class="blog" -->
 
 --
 
 ![](images/dsatnord_04.svg)
 <!-- .element class="dsatnord" -->
 
-## Paths
 
+![](https://dsat.igada.de/img/un3_1_int.png)
+<!-- .element style="width:40%;box-shadow:none;margin:0px 30px" -->
 ![](https://dsat.igada.de/img/un3_1_float_color.png)
-<!-- .element style="width:30%;box-shadow:none;margin:0px" -->
+<!-- .element class="fragment" style="width:40%;box-shadow:none;margin:0px  30px" -->
 
-[more details](https://dsat.igada.de/2024/05/06/finding-something-unexpected.html)
-
-
-
+[finding something unexpected](https://dsat.igada.de/2024/05/06/finding-something-unexpected.html)
+<!-- .element class="blog" -->
 
 
---
 
+---
 
 ![](images/dsatnord_05.svg)
 <!-- .element class="dsatnord" -->
 
-## Tiles
+
+|  start offset |  end offset |  tile size |  number of tiles |
+| ------------: | ----------: | ---------: | ---------------: |
+|        316020 |     1070097 |    250x250 |               20 |
+|       1070097 |    10127037 |    500x500 |              169 |
+|      16194771 |    86822577 |    500x500 |             2240 |
+|      86822577 |   644833451 |  1000x1000 |            24701 |
+|               |             |            |        Σ = 27130 |
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
+
+--
+
+![](images/dsatnord_05.svg)
+<!-- .element class="dsatnord" -->
+
+![](https://dsat.igada.de/img/ve_offsets.png)
+<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+![](https://dsat.igada.de/img/ve_offsets_colored.png)
+<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+
+![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers.png)
+<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers_zoom2.png)
+<!-- .element class="fragment noshadow" style="width:35%;margin:0 20px;"-->
+
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
 
 
 --
 
+![](images/dsatnord_05.svg)
+<!-- .element class="dsatnord" -->
+
+![](https://dsat.igada.de/img/ve_tiles250.png)
+<!-- .element class="noshadow" -->
+
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
+
+--
 
 ![](images/dsatnord_06.svg)
 <!-- .element class="dsatnord" -->
 
-## Tiles
+![](https://dsat.igada.de/img/ve_tiles500_13x13.png)
+<!-- .element class="noshadow" -->
+
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
 
 --
 
+![](images/dsatnord_06.svg)
+<!-- .element class="dsatnord" -->
+
+![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers_duplicates.png)
+<!-- .element class="fragment noshadow" style="width:47%;margin:0 10px;"-->
+![](https://dsat.igada.de/img/ve_offsets_colored_wo_outliers_duplicates_zoom1.png)
+<!-- .element class="fragment noshadow" style="width:47%;margin:0 10px;"-->
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
+
+--
 
 ![](images/dsatnord_07.svg)
 <!-- .element class="dsatnord" -->
 
+![](https://dsat.igada.de/img/ve_tiles500_61x49.png)
+<!-- .element class="noshadow" style="width:47%;margin:0 10px;"-->
+![](https://dsat.igada.de/img/ve_tiles500_59x50.png)
+<!-- .element class="fragment noshadow" style="width:47%;margin:0 10px;"-->
 
-## Tiles
+
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
+
 --
-
 
 ![](images/dsatnord_08.svg)
 <!-- .element class="dsatnord" -->
 
 
-## Tiles
+![](https://dsat.igada.de/img/ve_tiles1000_165x250.png)
+<!-- .element class="fragment noshadow" -->
 
---
+[visualising entropy](https://dsat.igada.de/2024/05/11/visualising-entropy.html)
+<!-- .element class="blog" -->
+
+---
+
+![](images/dsatnord_09.svg)
+<!-- .element class="dsatnord" -->
+
 
 ![](https://dsat.igada.de/img/unknown3_1.png)
-<!-- .element class="noshadow" style="width:70%;" -->
+<!-- .element class="noshadow" style="width:60%;margin:0px" -->
+
+[finding something unexpected again](https://dsat.igada.de/2024/07/04/finding-something-unexpected-again.html)
+<!-- .element class="blog" -->
 
 --
 
+![](images/dsatnord_09.svg)
+<!-- .element class="dsatnord" -->
+
+
 ![](https://dsat.igada.de/img/thisisabitmap.png)
-<!-- .element class="noshadow" style="width:70%;" -->
+<!-- .element class="noshadow" style="width:60%;margin:0px" -->
+
+[finding something unexpected again](https://dsat.igada.de/2024/07/04/finding-something-unexpected-again.html)
+<!-- .element class="blog" -->
 
 --
 
@@ -290,7 +446,11 @@ The (hexadecimal values of the) first sixteen bytes of `dsatnord.mp`:
 Note:
 This will only the speaker see?
 
---
+
+
+---
+
+
 
 ![](images/dsatnord_10.svg)
 <!-- .element class="dsatnord" -->
@@ -301,7 +461,12 @@ This will only the speaker see?
 <!-- .element class="fragment noshadow" style="width:40%;" -->
 
 
---
+[solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
+<!-- .element class="blog" -->
+
+---
+
+
 
 ![](images/dsatnord_11.svg)
 <!-- .element class="dsatnord" -->
@@ -326,31 +491,48 @@ This will only the speaker see?
 Note:
 - Nachtigall, ick hör dir trappsen!
 
---
 
-## Unknown
+[solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
+<!-- .element class="blog" -->
+
+---
+
+
 
 ![](images/dsatnord_12.svg)
 <!-- .element class="dsatnord" -->
 
---
+## 28,656 Bytes of Uncharted Territory
 
+**show some examples?**
 
-## Results
+**incorporate [Ideen für Vortrag](file:README.org*Ideen für Vortrag)**
 
-- "What is where?" is solved
-- formal description of `dsatnord.mp` using Kaitai Struct
-  (show an example / screenshot?)
+among them:
+
+- some interesting strings like
+	- `D:\Dsat\Dsat23\CityDlg.cpp..c:\temp\cityname.bin`
+	- `bmp.02..mp`
+	- `stbmp002.bmp`
+
 
 
 ---
 
-# Outlook
+![](images/dsatnord_12.svg)
+<!-- .element class="dsatnord" -->
 
-open problems (and how to approach them):
+## Results & Outlook
+
+- "What is where?" is (basically) solved
+- formal description of `dsatnord.mp` using Kaitai Struct
+  (show an example / screenshot?)
+
+
+Open problems (and how to approach them):
 - decoding COD images
   - → old Java byte code in Internet Archive
-  - collection of 1552 URLs to (potential) COD files in Internet Archive
+  - collection of 1,552 URLs to (potentially) 1,342 COD files in Internet Archive
 - D-Sat coordinate system
   - → former employees of Topware, Scout Systems, Buhl Data Service
 -
