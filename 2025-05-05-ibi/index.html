@@ -416,6 +416,13 @@ Note:
 [finding something unexpected again](https://dsat.igada.de/2024/07/04/finding-something-unexpected-again.html)
 <!-- .element class="blog" -->
 
+
+Note:
+- was browsing in Kaitai to show some strange strings (→ screenshot)
+- colleague: "look, after that there's 'BM' – is this a bitmap?"
+- cool thing with Kaitai: just included bmp.ksy and then proceeded
+- found file size, extracted file and found: *next slide*
+
 --
 
 ![](images/dsatnord_09.svg)<!-- .element class="dsatnord" -->
@@ -433,6 +440,8 @@ Note:
 
 
 Note:
+- Oh, a place sign! "Aachen"!
+- looked at the next bytes – again "BM" ... proceeded extracting
 - these signs are a mystery!
 - 201 cities → not clear how they were selected
 - Wavelet vs. BMP
@@ -456,6 +465,15 @@ Note:
 [solving a mystery (and finding something unexpected again)](https://dsat.igada.de/2024/07/28/solving-a-mystery.html)
 <!-- .element class="blog" -->
 
+Note:
+- proceeded with another small unknown part that looked suspicious (regularities)
+- roughly split it into different sections with Gimp
+- first part: high auto-correlation with 16
+- **Q: you know now what to do then, do you?**
+    - records of size 16 with two numbers = coordinates
+    - → plot them!
+- bam! map of Germany with borders and highways (again) but now in four sizes
+
 ---
 
 
@@ -478,10 +496,13 @@ Note:
 
 
 Note:
+- accidentally (!) looking at the hex values in Kaitai and again saw the character sequence "BM"
 - Nachtigall, ick hör dir trappsen!
+- arial of an industrial estate → company headquarter?
+- and another one (zoomed in)
 - how/Why can we "see" the image when visualising the byte values?
-
-
+- ...
+- and then I realised: that's it! there's nothing more to discover ...
 ---
 
 
@@ -501,6 +522,9 @@ Note:
 	- `bmp.02..mp`
 	- `stbmp002.bmp`
 
+
+Note:
+- ... just a couple of null bytes and some boring strings and maybe something at the end ... but not really something interesting since less than 30,000 bytes (= characters) are unknown
 
 ---
 
@@ -586,7 +610,6 @@ Note:
 			Reveal.initialize({
 				hash: true,
 				history: true,
-				view: "scroll",
 				slideNumber: "c/t",
 
 				// Learn about plugins: https://revealjs.com/plugins/
