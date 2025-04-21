@@ -55,8 +55,8 @@ This work is licensed under <a rel="license" href="http://creativecommons.org/li
 
 # How it all started
 
-![](images/dsat_cover.jpg)<!-- .element class="fragment" style="height:340px; margin:0 10px;" -->
-![](images/dsat_screenshot.png)<!-- .element class="fragment noshadow" style="height:340px; margin:0 10px;" -->
+![](images/dsat_cover.jpg)<!-- .element class="fragment" style="height:390px; margin:0 10px;" -->
+![](images/dsat_screenshot.png)<!-- .element class="fragment noshadow" style="height:390px; margin:0 10px;" -->
 
 image source: [Internet Archive](https://archive.org/details/d-sat_1.0)
 
@@ -139,6 +139,9 @@ starting point: understanding the coordinate system
 <!-- .element class="blog" -->
 
 
+Note:
+- projection & datum: fills another talk
+  *(let's just say I have tried **a lot**)*
 
 ---
 
@@ -166,8 +169,11 @@ if (*arg1 == 0x43 && arg1[1] == 0x49 && arg1[2] == 0x53)
 <!-- .element class="fragment" -->
 
 Note:
+- decompiler?
 - Kudos to Jan for discovering that code!
 - What "CIS3" means and how the images are encoded is another (longer) story ...
+- for now: quickly figured out how to extract width and height of images
+- **lesson:** don't be afraid of hex values and decompilers!
 
 --
 
@@ -189,13 +195,16 @@ Note:
 
 
 Note:
-some intriguing observations:
-- several tiles with size close to 0
-- those are not randomly distributed ...
+- some very large tiles at the beginning, then medium-sized, then with
+  large spread
+- intriguing observation:
+    - several tiles with size close to 0
+    - those are not randomly distributed ...
+    - blue dots more spread left than right
 
 → we'll see later, what this means
 
-
+(in hindsight this plot tells us more than one might think!)
 
 ---
 
@@ -219,6 +228,9 @@ The (hexadecimal values of the) first sixteen bytes of `dsatnord.mp`:
 <!-- .element class="blog" -->
 
 
+Note:
+- ... just to be complete ;-)
+
 
 ---
 
@@ -235,15 +247,14 @@ The (hexadecimal values of the) first sixteen bytes of `dsatnord.mp`:
 <!-- .element class="blog" -->
 
 Note:
-We can see several segments with quite some regularities.
+- visualize bytes to leverage human pattern recognition abilities
+- We can see several segments with quite some regularities.
+- interpreting each 4 bytes as unsigned integer, this segment basically contains the byte offsets of
+  the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
+  525098, 566987, 619866, ...
+- here it was clear what these numbers mean but their purpose was not clear
 
-Skipping the first 16 header bytes, and then interpreting each 4 bytes
-as unsigned integer (`./src/mp.py -c dump_ints un1.dat >
-un1_ints.tsv`), this segment basically contains the byte offsets of
-the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
-525098, 566987, 619866, ...
-
-**We will later see, how to use them**
+**We will later see, how to use them.**
 
 ---
 
@@ -264,6 +275,10 @@ the tiles: 316020, 328719, 351371, 384572, 405841, 446659, 483024,
 
 [finding something unexpected](https://dsat.igada.de/2024/05/06/finding-something-unexpected.html)
 <!-- .element class="blog" -->
+
+
+Note:
+
 
 --
 
@@ -506,24 +521,121 @@ Note:
 
 ---
 
-
-
 ![](images/dsatnord_12.svg)<!-- .element class="dsatnord" -->
 
+## Just 28,656 Bytes of Uncharted Territory
 
-## 28,656 Bytes of Uncharted Territory
+<div class="r-stack r-stretch">
 
-- among them some interesting strings like
-	- `D:\Dsat\Dsat23\CityDlg.cpp..c:\temp\cityname.bin`
-	- `bmp.02..mp`
-	- `stbmp002.bmp`
+```sh
+> hexdump --skip 13522709 --length 384 -C dsatnord.mp
+00ce5715  44 3a 5c 44 73 61 74 5c  44 73 61 74 32 33 5c 43  |D:\Dsat\Dsat23\C|
+00ce5725  69 74 79 44 6c 67 2e 63  70 70 00 00 63 3a 5c 74  |ityDlg.cpp..c:\t|
+00ce5735  65 6d 70 5c 63 69 74 79  6e 61 6d 65 2e 62 69 6e  |emp\cityname.bin|
+00ce5745  00 00 00 00 53 75 63 68  65 20 77 69 65 64 65 72  |....Suche wieder|
+00ce5755  68 6f 6c 74 2e 00 00 00  53 75 63 68 65 20 77 69  |holt....Suche wi|
+00ce5765  65 64 65 72 68 6f 6c 74  2e 00 00 00 00 00 00 00  |ederholt........|
+00ce5775  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00ce5895
+```
+
+<!-- .element class="fragment current-visible" -->
 
 
-<div class="r-stretch">&nbsp;</div>
+
+```sh
+> hexdump --skip 644805639 --length 19277 -C dsatnord.mp
+266ef407  01 01 01 01 01 01 01 01  01 01 01 01 01 01 01 01  |................|
+*
+266f3f47  01 01 01 01 01 01 01 01  01 01 01 01 01           |.............|
+266f3f54
+```
+
+<!-- .element class="fragment current-visible" -->
+
+
+
+```sh
+> hexdump --skip 644824916 --length 8995 -C dsatnord.mp
+266f3f54  43 49 53 33 2e 30 1a 04  00 00 1f 21 00 00 00 00  |CIS3.0.....!....|
+266f3f64  e8 03 e8 03 08 00 00 00  02 01 bf ff ff ff ff ff  |................|
+266f3f74  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+266f4d84  ff ff ff ff ff 03 f6 b4  99 e5 65 dd 48 1d 9b c1  |..........e.H...|
+266f4d94  66 4f 34 16 2e 66 70 0c  2a 8a 5e 4a 05 3e 80 f3  |fO4..fp.*.^J.>..|
+266f4da4  6a 22 fc ff ff ff ff ff  ff ff ff ff ff 41 db c6  |j"...........A..|
+266f4db4  d8 9c db 74 ea 66 a5 24  fc b8 4b 1c 14 00 0e 9f  |...t.f.$..K.....|
+266f4dc4  ff ff ff ff ff ff ff ff  ff 93 d7 3d 3d 45 1c 7b  |...........==E.{|
+266f4dd4  6e ab 81 06 05 2a 29 ca  64 e0 b4 d5 60 f8 97 c2  |n....*).d...`...|
+266f4de4  70 47 62 88 e1 ff ff ff  ff ff ff ff ff ff ff ff  |pGb.............|
+266f4df4  a5 0e 80 68 f9 eb 50 37  f6 89 19 e0 c8 80 38 0c  |...h..P7......8.|
+266f4e04  45 23 9e 05 b6 93 fe ff  ff ff ff ff ff ff ff ff  |E#..............|
+266f4e14  4f ba 5e 3d 9f ff 6d be  0b 5e 31 de e9 a8 29 6d  |O.^=..m..^1...)m|
+266f4e24  88 01 5c 65 00 e4 96 14  4e 42 dd 0e 3a fe ff ff  |..\e....NB..:...|
+266f4e34  ff ff ff ff ff ff ff ff  ff 7f 9a 87 b7 8f f2 85  |................|
+266f4e44  3c 17 2c a5 37 87 4c e8  0a c9 85 24 d4 15 f5 ff  |<.,.7.L....$....|
+266f4e54  ff ff ff ff ff ff ff ff  7f 6e a3 9b 59 67 4d 8f  |.........n..YgM.|
+266f4e64  d9 46 ad 69 f2 97 fb 95  e1 b4 fa 4a 84 23 0b ff  |.F.i.......J.#..|
+266f4e74  ff ff ff ff ff ff ff ff  ff ad 11 ae c7 95 70 f7  |..............p.|
+266f4e84  7b 0f 8c 30 43 6a c9 dd  c7 b6 65 98 95 e9 c7 96  |{..0Cj....e.....|
+266f4e94  a1 32 f3 6d 3f fc ff ff  ff ff ff ff ff ff ff ff  |.2.m?...........|
+266f4ea4  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+266f4f44  ff ff ff ff ff ff ff ff  ff ff fd 4d 84 1f ce 6c  |...........M...l|
+266f4f54  d3 d6 f5 59 e2 ff ff ff  ff ff ff ff 7f 65 e0 df  |...Y.........e..|
+266f4f64  15 0b a1 f0 0b 83 c0 0f  fe 52 26 63 f7 e1 ff ff  |.........R&c....|
+266f4f74  ff ff ff ff ff ff 8f e9  c5 17 15 1b 9e d3 22 1b  |..............".|
+266f4f84  79 67 9b 82 83 10 fb ce  fe ff ff ff ff ff ff ff  |yg..............|
+266f4f94  ff ff 8e cf 6a df 39 b5  31 80 a1 e6 8a c2 4b 62  |....j.9.1.....Kb|
+266f4fa4  cf 34 18 db 10 3e 70 e9  ff ff ff ff ff ff ff ff  |.4...>p.........|
+266f4fb4  ff 4f 34 12 7a 63 ec ba  79 bf a7 e4 07 c3 5f 98  |.O4.zc..y....._.|
+266f4fc4  3c 65 64 d7 83 eb ff ff  ff ff ff ff ff ff ff df  |<ed.............|
+266f4fd4  74 e8 cf 31 cf 98 a6 5b  05 37 66 5b 90 fc 21 b2  |t..1...[.7f[..!.|
+266f4fe4  e6 5f 19 ff ff ff ff ff  ff ff ff ff ff ff 53 dc  |._............S.|
+266f4ff4  2c 21 eb b8 1d de 89 8d  0c 9b 2b d7 ef c9 17 fc  |,!........+.....|
+266f5004  fb ff ff ff ff ff ff ff  ff ff f3 bb 7b 63 8c e3  |............{c..|
+266f5014  6d 06 a4 77 a5 fd 5d ba  db 19 9d ff ff ff ff ff  |m..w..].........|
+266f5024  ff ff ff ff ff 7f 2b 55  d5 90 51 b9 52 06 6c 9e  |......+U..Q.R.l.|
+266f5034  b5 ff ff ff ff ff ff ff  ff cf d7 74 1e 77 09 72  |...........t.w.r|
+266f5044  74 f8 ff ff ff ff ff ff  ff ff d1 53 c7 91 ef 63  |t..........S...c|
+266f5054  a0 1b fc ff ff ff ff ff  ff ff ed 08 52 cc b0 5d  |............R..]|
+266f5064  49 68 e0 ff ff ff ff ff  ff ff bf 6f 57 62 81 8e  |Ih.........oWb..|
+266f5074  b0 fe d6 c1 8e b5 9b ff  ff ff ff ff ff ff ff 82  |................|
+266f5084  eb 36 8f 8d f3 63 4d 38  c5 77 48 d9 3b c8 e0 ff  |.6...cM8.wH.;...|
+266f5094  ff ff ff ff ff ff ff ff  5f 8d db 27 d2 7f 11 91  |........_..'....|
+266f50a4  1e c8 35 b0 7f b6 c3 ff  ff ff ff ff ff ff ff 7f  |..5.............|
+266f50b4  40 f8 1a a4 da 63 19 30  f4 3a aa ac 39 f9 ff ff  |@....c.0.:..9...|
+266f50c4  ff ff ff ff ff ff 7f ef  ca 48 08 13 28 3d 5c f8  |.........H..(=\.|
+266f50d4  51 cf 3c 27 dc c1 fe ff  ff ff ff ff ff ff ff e7  |Q.<'............|
+266f50e4  e9 6e 9c 39 3e 4c 5d 8b  36 f1 ff fa 6f 6e 98 4e  |.n.9>L].6...on.N|
+266f50f4  11 0b 7c c7 ff ff ff ff  ff ff ff ff ff ff 7f e6  |..|.............|
+266f5104  4d 9f f7 b7 a8 0b 6e 61  ca bf 03 09 d4 e5 fb a8  |M.....na........|
+266f5114  e7 ff ff ff ff ff ff ff  ff ff 2f 4a c7 e1 e3 db  |........../J....|
+266f5124  c5 1f 4f 2f a4 e5 87 df  ff ff ff ff ff ff ff ff  |..O/............|
+266f5134  ff 3f c4 0a db 06 75 05  3a 4d 15 ff ff ff ff ff  |.?....u.:M......|
+266f5144  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+266f6084  ff ff ff ff ff ff 7e b4  00 00 00 00 00 00 00 00  |......~.........|
+266f6094  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+266f60a4  00 00 00 00 00 00 00 01  01 01 01 01 01 01 01 01  |................|
+266f60b4  01 01 01 01 01 01 01 01  01 01 01 01 01 01 01 01  |................|
+*
+266f6274  01 01 01                                          |...|
+266f6277
+```
+
+<!-- .element class="fragment" -->
+
+</div>
 
 
 Note:
 - ... just a couple of null bytes and some boring strings and maybe something at the end ... but not really something interesting since less than 30,000 bytes (= characters) are unknown
+- e.g., 19,277 times the byte 0x01
+
+
+
 
 ---
 
