@@ -167,9 +167,10 @@ table.methods td.m4, table.methods tr:last-child td.m4 {
 
 
 /* dsatnord */
-.reveal img.dsatnord  {
+.reveal img.dsatnord, object.dsatnord  {
     box-shadow: none;
     margin: 0px;
+    width: 100%;
     /* fixed position → does not look nice in reveal.js */
 /*    position:fixed;
     bottom:0px;
