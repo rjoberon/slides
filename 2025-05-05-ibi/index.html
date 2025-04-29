@@ -90,8 +90,14 @@ Note:
 
 ![](images/dsat_files.png)<!-- .element class="right" style="width:45%;box-shadow:none;margin:0px" -->
 
+
+![](images/tiles_berlin.png)
+
+<!-- .element class="fragment" style="width:40%; margin:30px;" -->
+
+
 Note:
-- "tile" = (typically) square bitmap; map divided into tiles
+- "tile" = (typically) square bitmap; map divided into tiles (show example)
 
 --
 
@@ -174,6 +180,13 @@ if (*arg1 == 0x43 && arg1[1] == 0x49 && arg1[2] == 0x53)
 
 <!-- .element class="fragment" -->
 
+<br/>
+
+... and so the <em style="font-family: Papyrus; font-size:1.2em; color: #690520">quest for the tiles</em>&nbsp; begins ...
+
+<!-- .element class="fragment" -->
+
+
 Note:
 - decompiler?
 - Kudos to Jan for discovering that code!
@@ -204,9 +217,9 @@ Note:
 - some very large tiles at the beginning, then medium-sized, then with
   large spread
 - intriguing observation:
-    - several tiles with size close to 0
-    - those are not randomly distributed ...
-    - blue dots more spread left than right
+	- several tiles with size close to 0
+	- those are not randomly distributed ...
+	- blue dots more spread left than right
 
 → we'll see later, what this means
 
@@ -641,9 +654,9 @@ Note:
 Note:
 - ... just a couple of null bytes and some boring strings and maybe something at the end ... but not really something interesting since less than 30,000 bytes (= characters) are unknown
 - e.g.,
-    - 1: 304 times 0x00
-    - 2: 19,277 times 0x01 (= all bytes!)
-    - 3: 7,947 times 0xff (= 88%), 462 times 0x01 (= 5%)
+	- 1: 304 times 0x00
+	- 2: 19,277 times 0x01 (= all bytes!)
+	- 3: 7,947 times 0xff (= 88%), 462 times 0x01 (= 5%)
 
 
 
