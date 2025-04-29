@@ -37,11 +37,6 @@ fname = "images/dsatnord"
 baseurl = "/2025-05-05-ibi/#/"
 
 
-def fix_target(fname):
-    # add target="_parent" attribute to all <a xlink:href
-    subprocess.run(["sed", "-i", "-e", "s/<a xlink:href/<a target='_parent' xlink:href/g", fname])
-
-
 if __name__ == '__main__':
     # https://github.com/matplotlib/matplotlib/issues/25567#issuecomment-1487258247
     plt.rcParams['svg.fonttype'] = 'none'
@@ -80,4 +75,6 @@ if __name__ == '__main__':
 
         outfile = f"{fname}_{i:02}.svg"
         plt.savefig(outfile, bbox_inches='tight')
-        fix_target(outfile)
+
+        # add target="_parent" attribute to all <a xlink:href
+        subprocess.run(["sed", "-i", "-e", "s/<a xlink:href/<a target='_parent' xlink:href/g", outfile])
