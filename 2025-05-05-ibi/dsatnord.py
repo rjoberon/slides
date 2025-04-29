@@ -12,6 +12,7 @@
 # 2025-04-16 (rja)
 # - initial version
 
+import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -33,6 +34,13 @@ parts = [
 ]
 
 fname = "images/dsatnord"
+baseurl = "/2025-05-05-ibi/#/"
+
+
+def fix_target(fname):
+    # add target="_parent" attribute to all <a xlink:href
+    subprocess.run(["sed", "-i", "-e", "s/<a xlink:href/<a target='_parent' xlink:href/g", fname])
+
 
 if __name__ == '__main__':
     # https://github.com/matplotlib/matplotlib/issues/25567#issuecomment-1487258247
@@ -65,8 +73,11 @@ if __name__ == '__main__':
             t = ta.get_text()
             for pos, color, size, name, href in parts:
                 if name == t:
-                    ta.set_url("/2025-05-05-ibi/#/" + href)
+                    ta.set_url(baseurl + href)
 
         plt.tight_layout()
         plt.setp(legend.get_title(), fontfamily="Eurostile Extended", fontsize=13)
-        plt.savefig(f"{fname}_{i:02}.svg", bbox_inches='tight')
+
+        outfile = f"{fname}_{i:02}.svg"
+        plt.savefig(outfile, bbox_inches='tight')
+        fix_target(outfile)
