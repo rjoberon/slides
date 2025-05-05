@@ -181,14 +181,17 @@ table.methods td.m4, table.methods tr:last-child td.m4 {
 }
 
 
-.reveal .blog, .reveal .slideurl {
+.reveal .blog, .reveal .slideurl, .reveal .github {
     float:left;
     font-size:small;
 }
 .reveal .blog::before {
     content: "🌐 ";
 }
-
+.reveal .github::before {
+    content: url(images/Octicons-mark-github.svg);
+    padding-right: 3px;
+}
 .reveal .slideurl::before {
     content: "📽  ";
 }
