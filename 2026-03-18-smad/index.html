@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>A corpus of monthly n-grams generated from more than two billion English tweets</title>
+
+		<link rel="stylesheet" href="../reveal.js_5/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js_5/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js_5/dist/theme/simple.css">
+		<link rel="stylesheet" href="custom.css">
+		<link rel="icon" type="image/x-icon" href="https://dsat.igada.de/favicon.ico">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../reveal.js_5/plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-separator="^\n---\n"  data-separator-vertical="^\n--\n">
+					<textarea data-template>
+
+# A corpus of monthly n-grams generated from more than two billion English tweets <!-- .element: style="font-size:3em;" -->
+
+<br/>Elso Dittfeld,¹ [Robert Jäschke](https://hu.berlin/RJ/),¹ Dimitar Dimitrov²
+
+¹ Humboldt-Universität zu Berlin<br/>² GESIS – Leibniz-Institute for the Social Sciences<!-- .element: style="font-size:0.75em;" -->
+
+March 18, 2026
+
+
+<small>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0;width:88px" src="images/cc.png"/></a> <br/>
+This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+</small>
+
+<!-- .element: style="margin-top: 5em;" -->
+
+Note:
+1. What is the problem, why is it hard?
+2. How is it solved today?
+3. What is the new technical idea; why can we succeed now?
+4. What is the impact if successful?
+5. How will the program be organized?
+6. How will intermediate results be generated?
+7. How will you measure progress?
+8. What will it cost?
+
+---
+
+## Twitter Data
+
+<!-- zwei Spalten? "research needs" links "legal constraints" rechts? -->
+
+- researchers:
+  - language evolution on social media
+  - trends & topics
+  -
+- needs of researchers vs. copyright, licensing etc.
+
+--
+
+## Existing Solutions
+
+- [TweetsKB](https://data.gesis.org/tweetskb/): RDF graph of entities
+  extracted from tweets alongside sentiment scores, but excludes
+  actual tweet content.
+- sonst so?
+
+
+
+<small>Pavlos Fafalios et al. “TweetsKB: A Public and Large-Scale
+RDF Corpus of Annotated Tweets.” In: <em>The Semantic Web</em>. Cham:
+Springer International Publishing, 2018,
+pp. 177–190. doi:[10.1007/978-3-319-93417-4_12](https://doi.org/10.1007/978-3-319-93417-4_12).</small>
+
+--
+
+## Derived Text Formats
+
+what?
+
+who?
+
+how?
+
+why?
+
+https://text-plus.org/en/themen-dokumentation/atf/
+
+<small>Christof Schöch et al. “Abgeleitete Textformate: Text und Data
+Mining mit urheberrechtlich geschützten Textbeständen.” In:
+<em>Zeitschrift für digitale Geisteswissenschaften</em> 5
+(2020). doi:[10.17175/2020_006](https://doi.org/10.17175/2020_006).</small>
+
+## n-Grams
+
+What?
+
+Bsp.:
+
+This is a simple sentence.
+
+- 1-grams: This, is, a, simple, sentence
+- 2-grams: This is, is a, a simple, simple sentence
+- 3-grams: This is a, is a simple, a simple sentence
+
+--
+
+##
+
+---
+
+## Approach: Overview
+
+- generate a dataset of 1-, 2-, and 3-grams of words
+
+--
+
+## Ausgangslage
+
+dataset:
+- random 1% sample of the Twitter streaming API between January 2013
+  and June 2023
+
+
+
+--
+
+## Filtering
+
+3,716,933,904 English tweets, we removed 1,606,843,572 retweets and
+2,718,439 duplicates (due to redundant collection), resulting in
+2,107,371,893 unique tweets.
+
+- what about deleted tweets?
+
+--
+## Tokenization
+
+All URLs and @mentions of user names were removed from the textual
+content. To account for idiosyncrasies typical of social media, such
+as creative orthography, meta-information (e.g., hashtags, mentions),
+and emoticons, the text was tokenised using twokenize
+
+
+<small>Alan Ritter et al. “Named Entity Recognition in Tweets: An
+Experimental Study.” In: <em>Proceedings of the 2011 Conference on
+Empirical Methods in Natural Language Processing</em>. Edinburgh,
+Scotland, UK.: Association for Computational Linguistics, July 2011,
+pp. 1524–1534. url:[https://aclanthology.org/D11-1141/](https://aclanthology.org/D11-1141/).</small>
+
+--
+## Result
+
+Screenshot Zenodo
+
+doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
+
+--
+## Result
+- 2 parts: case of letters preserved vs. case normalized to lower case
+- each part: 11 TAR files, one for each year (2013-2023)
+- each TAR: up to 12 gzip-compressed TSV files (one for each month)
+
+→ overall: 125 TSV files
+
+each line in a TSV file represents an n-gram using the following
+columns:
+- `ngram_type`: 1, 2, or 3
+- `count`: frequency, that is, number of times it appears in that
+  month
+- `ngram`: the n-gram itself
+
+Beispiel-Tabelle:
+
+
+
+--
+
+## Limitations
+
+- gaps & errors
+- timeframe
+- post-collection deletions
+- sampling
+
+Note:
+- gaps: outages (crawler, Twitter API)
+- timeframe: first & last month and thus years incomplete
+- sampling:
+  - started from 1%, then filtered → not 1% of English tweets
+
+---
+## Outlook
+
+- well-known situation also in other areas of research, just think
+  about the sharing of annotated copyright-protected material →
+  BibloCon-Vortrag :-)
+
+
+--
+
+## Thanks
+
+- doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
+
+					</textarea>
+				</section>
+			</div>
+		</div>
+		<script src="../reveal.js_5/dist/reveal.js"></script>
+		<script src="../reveal.js_5/plugin/notes/notes.js"></script>
+		<script src="../reveal.js_5/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js_5/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				history: true,
+				slideNumber: "c/t",
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
+
+<!--
+  Local Variables:
+  eval: (indent-tabs-mode)
+  End:
+  -->
