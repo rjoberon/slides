@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="../reveal.js_5/dist/reveal.css">
 		<link rel="stylesheet" href="../reveal.js_5/dist/theme/simple.css">
 		<link rel="stylesheet" href="custom.css">
-		<link rel="icon" type="image/x-icon" href="https://dsat.igada.de/favicon.ico">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="../reveal.js_5/plugin/highlight/zenburn.css">
@@ -38,105 +37,632 @@ This work is licensed under <a rel="license" href="http://creativecommons.org/li
 <!-- .element: style="margin-top: 5em;" -->
 
 Note:
-1. What is the problem, why is it hard?
-2. How is it solved today?
-3. What is the new technical idea; why can we succeed now?
-4. What is the impact if successful?
-5. How will the program be organized?
-6. How will intermediate results be generated?
-7. How will you measure progress?
-8. What will it cost?
+- dataset result of Bachelor thesis of Elso Dittfeld
+- joint work with Dimitar Dimitrov from GESIS
 
 ---
 
-## Twitter Data
+# Introduction
 
-<!-- zwei Spalten? "research needs" links "legal constraints" rechts? -->
+--
 
+![a female scientist with a lab coat and a test
+tube](images/woman-scientist-svgrepo-com.svg) <!-- .element: class="noshadow" style="width: 42%; margin-right:2em;"-->
+![a balance to represent the legal system](images/balance-scale-svgrepo-com.svg) <!-- .element: class="noshadow fragment" style="width: 42%; margin-left:2em;"-->
+
+Note:
+- needs of researchers vs. legal constraints
 - researchers:
   - language evolution on social media
   - trends & topics
-  -
-- needs of researchers vs. copyright, licensing etc.
+- legal constraints:
+  - terms of service
+  - copyright, licensing etc.
+  - personal (privacy)
 
 --
 
-## Existing Solutions
+![Datasets with "tweets" on Zenodo](images/zenodo_tweets.png) <!-- .element: style="float:right; width: 23%;" -->
 
-- [TweetsKB](https://data.gesis.org/tweetskb/): RDF graph of entities
-  extracted from tweets alongside sentiment scores, but excludes
-  actual tweet content.
-- sonst so?
+## Existing Approaches
 
 
+### rehydration
 
-<small>Pavlos Fafalios et al. “TweetsKB: A Public and Large-Scale
-RDF Corpus of Annotated Tweets.” In: <em>The Semantic Web</em>. Cham:
-Springer International Publishing, 2018,
-pp. 177–190. doi:[10.1007/978-3-319-93417-4_12](https://doi.org/10.1007/978-3-319-93417-4_12).</small>
+<!-- .element: class="fragment" -->
+
+is dead <em class="tonedown">([Assenmacher et al. 2023]((https://doi.org/10.36190/2023.56)))</em>
+
+<!-- .element: class="fragment" -->
+
+<br/>
+
+### limited parts of data <!-- .element: class="fragment" -->
+
+- URLs <em class="tonedown">(e.g., doi:[10.5281/zenodo.154583](https://doi.org/10.5281/zenodo.154583))</em>
+- @mentions <em class="tonedown">(e.g., doi:[10.5281/zenodo.3634154](https://doi.org/10.5281/zenodo.3634154))</em>
+- #hashtags <em class="tonedown">(e.g., doi:[10.5281/zenodo.17082606](https://doi.org/10.5281/zenodo.17082606))</em>
+- entities and sentiment scores <em class="tonedown">(e.g., [TweetsKB](https://data.gesis.org/tweetskb/), [Fafalios et al. 2018](https://doi.org/10.1007/978-3-319-93417-4_12))</em>
+- ...
+
+<!-- .element: class="fragment" style="width: 70%" -->
+
+<br/>
+
+→ limited availability of actual text content <!-- .element: class="fragment" -->
+
+
+Note:
+- astoundingly many "tweet" datasets on Zenodo and elsewhere
+- often: just tweet ids →
+- rehydration: publis tweet ids → now practically useless
 
 --
 
-## Derived Text Formats
+## Derived Text Formats <em class="tonedown">(Schöch et al. 2020)</em>
 
-what?
+<div style="float:right; width: 28%;">
 
-who?
+![animation of topic detection on a term-document matrix](https://upload.wikimedia.org/wikipedia/commons/6/6e/Topic_detection_in_a_document-word_matrix.gif)<!-- .element: class="noshadow" style="margin: 0" -->
 
-how?
+<small>© [Christoph Carl Kling](https://commons.wikimedia.org/wiki/File:Topic_detection_in_a_document-word_matrix.gif) / [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)</small>
 
-why?
+</div>
 
-https://text-plus.org/en/themen-dokumentation/atf/
+- transform texts such that original can not be reconstructed
+  - document-term matrices
+  - n-grams
+  - word embeddings
+- transformed texts useful for (some) research
 
-<small>Christof Schöch et al. “Abgeleitete Textformate: Text und Data
-Mining mit urheberrechtlich geschützten Textbeständen.” In:
-<em>Zeitschrift für digitale Geisteswissenschaften</em> 5
-(2020). doi:[10.17175/2020_006](https://doi.org/10.17175/2020_006).</small>
+→ [Text+ working group](https://text-plus.org/en/themen-dokumentation/atf/)
 
+Note:
+- animation shows topic detection on documents for which only a
+  document-term matrix is available
+
+--
 ## n-Grams
 
-What?
-
-Bsp.:
-
-This is a simple sentence.
+> This is a simple sentence.
 
 - 1-grams: This, is, a, simple, sentence
 - 2-grams: This is, is a, a simple, simple sentence
 - 3-grams: This is a, is a simple, a simple sentence
 
---
+<div class="fragment">
 
-##
+<br/>
+
+## Prior Datasets
+- [Herdağdelen 2013](https://doi.org/10.1007/s10579-013-9227-2)
+
+</div>
+
+
+Note:
+- consecutive sequence of n tokens
+- here: tokens = words, but could also be characters
+- existing dataset based on 74,579,965 tweets from 2010 only
+
 
 ---
 
-## Approach: Overview
-
-- generate a dataset of 1-, 2-, and 3-grams of words
+# Approach
 
 --
 
-## Ausgangslage
+## Dataset
 
-dataset:
-- random 1% sample of the Twitter streaming API between January 2013
-  and June 2023
+```
+{
+  "created_at": "Fri Nov 16 16:03:55 +0000 2018",
+  "id": 1063462679623467000,
+  "id_str": "1063462679623467008",
+  "text": "RT @markiaaan: Today Anna Busch @FontaneArchiv &amp; me @UCLab_Potsdam presented our joint research (+@peertrilcke @nrchtct @vik_bru ) in Züric…",
+  "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+  "truncated": false,
+  "in_reply_to_status_id": null,
+  "in_reply_to_status_id_str": null,
+  "in_reply_to_user_id": null,
+  "in_reply_to_user_id_str": null,
+  "in_reply_to_screen_name": null,
+  "user": {
+	"id": 1001363060567797800,
+	"id_str": "1001363060567797760",
+	"name": "DH_Potsdam",
+	"screen_name": "DH_Potsdam",
+	"location": "Potsdam, Deutschland",
+	"url": "https://www.uni-potsdam.de/de/digital-humanities.html",
+	"description": "Network Digital Humanities Potsdam Universities | Netzwerk für Digitale Geisteswissenschaften am Hochschulstandort Potsdam. Tweets by @peertrilcke | @dennmis",
+	"translator_type": "none",
+	"protected": false,
+	"verified": false,
+	"followers_count": 261,
+	"friends_count": 291,
+	"listed_count": 2,
+	"favourites_count": 59,
+	"statuses_count": 26,
+	"created_at": "Tue May 29 07:22:12 +0000 2018",
+	"utc_offset": null,
+	"time_zone": null,
+	"geo_enabled": false,
+	"lang": "de",
+	"contributors_enabled": false,
+	"is_translator": false,
+	"profile_background_color": "F5F8FA",
+	"profile_background_image_url": "",
+	"profile_background_image_url_https": "",
+	"profile_background_tile": false,
+	"profile_link_color": "1DA1F2",
+	"profile_sidebar_border_color": "C0DEED",
+	"profile_sidebar_fill_color": "DDEEF6",
+	"profile_text_color": "333333",
+	"profile_use_background_image": true,
+	"profile_image_url": "http://pbs.twimg.com/profile_images/1011926594758246400/5DmloiGO_normal.jpg",
+	"profile_image_url_https": "https://pbs.twimg.com/profile_images/1011926594758246400/5DmloiGO_normal.jpg",
+	"profile_banner_url": "https://pbs.twimg.com/profile_banners/1001363060567797760/1540200451",
+	"default_profile": true,
+	"default_profile_image": false,
+	"following": null,
+	"follow_request_sent": null,
+	"notifications": null
+  },
+  "geo": null,
+  "coordinates": null,
+  "place": null,
+  "contributors": null,
+  "retweeted_status": {
+	"created_at": "Fri Nov 16 15:37:25 +0000 2018",
+	"id": 1063456009228816400,
+	"id_str": "1063456009228816384",
+	"text": "Today Anna Busch @FontaneArchiv &amp; me @UCLab_Potsdam presented our joint research (+@peertrilcke @nrchtct @vik_bru )… https://t.co/0S94hkwUA1",
+	"display_text_range": [
+	  0,
+	  140
+	],
+	"source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+	"truncated": true,
+	"in_reply_to_status_id": null,
+	"in_reply_to_status_id_str": null,
+	"in_reply_to_user_id": null,
+	"in_reply_to_user_id_str": null,
+	"in_reply_to_screen_name": null,
+	"user": {
+	  "id": 4127314775,
+	  "id_str": "4127314775",
+	  "name": "Mark-Jan Bludau",
+	  "screen_name": "markiaaan",
+	  "location": "Berlin, Deutschland",
+	  "url": "https://www.markjanbludau.de",
+	  "description": "infovis + research associate @UCLab_Potsdam + special interest for cultural collection visualizations.\nmaybe addicted to yerba mate",
+	  "translator_type": "none",
+	  "protected": false,
+	  "verified": false,
+	  "followers_count": 165,
+	  "friends_count": 407,
+	  "listed_count": 10,
+	  "favourites_count": 900,
+	  "statuses_count": 79,
+	  "created_at": "Fri Nov 06 14:12:47 +0000 2015",
+	  "utc_offset": null,
+	  "time_zone": null,
+	  "geo_enabled": false,
+	  "lang": "de",
+	  "contributors_enabled": false,
+	  "is_translator": false,
+	  "profile_background_color": "000000",
+	  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+	  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+	  "profile_background_tile": false,
+	  "profile_link_color": "7FDBB6",
+	  "profile_sidebar_border_color": "000000",
+	  "profile_sidebar_fill_color": "000000",
+	  "profile_text_color": "000000",
+	  "profile_use_background_image": false,
+	  "profile_image_url": "http://pbs.twimg.com/profile_images/665199035976949760/2GaE_YMJ_normal.jpg",
+	  "profile_image_url_https": "https://pbs.twimg.com/profile_images/665199035976949760/2GaE_YMJ_normal.jpg",
+	  "default_profile": false,
+	  "default_profile_image": false,
+	  "following": null,
+	  "follow_request_sent": null,
+	  "notifications": null
+	},
+	"geo": null,
+	"coordinates": null,
+	"place": null,
+	"contributors": null,
+	"is_quote_status": false,
+	"extended_tweet": {
+	  "full_text": "Today Anna Busch @FontaneArchiv &amp; me @UCLab_Potsdam presented our joint research (+@peertrilcke @nrchtct @vik_bru ) in Zürich #Randkulturen @ETH. We gave a first preview of our »scrolly« prototype, visualizing Reading Traces inside Fontane’s reference library #WIP #vikusfhp https://t.co/EiDbgO9YQn",
+	  "display_text_range": [
+		0,
+		278
+	  ],
+	  "entities": {
+		"hashtags": [
+		  {
+			"text": "Randkulturen",
+			"indices": [
+			  130,
+			  143
+			]
+		  },
+		  {
+			"text": "WIP",
+			"indices": [
+			  264,
+			  268
+			]
+		  },
+		  {
+			"text": "vikusfhp",
+			"indices": [
+			  269,
+			  278
+			]
+		  }
+		],
+		"urls": [],
+		"user_mentions": [
+		  {
+			"screen_name": "FontaneArchiv",
+			"name": "TheodorFontaneArchiv",
+			"id": 3238784939,
+			"id_str": "3238784939",
+			"indices": [
+			  17,
+			  31
+			]
+		  },
+		  {
+			"screen_name": "UCLab_Potsdam",
+			"name": "UCLab Potsdam",
+			"id": 2911549265,
+			"id_str": "2911549265",
+			"indices": [
+			  41,
+			  55
+			]
+		  },
+		  {
+			"screen_name": "peertrilcke",
+			"name": "Peer Trilcke",
+			"id": 48298968,
+			"id_str": "48298968",
+			"indices": [
+			  87,
+			  99
+			]
+		  },
+		  {
+			"screen_name": "nrchtct",
+			"name": "Marian Dörk",
+			"id": 52341962,
+			"id_str": "52341962",
+			"indices": [
+			  100,
+			  108
+			]
+		  },
+		  {
+			"screen_name": "vik_bru",
+			"name": "Viktoria Brüggemann",
+			"id": 751785803731394600,
+			"id_str": "751785803731394560",
+			"indices": [
+			  109,
+			  117
+			]
+		  },
+		  {
+			"screen_name": "ETH",
+			"name": "ETH Zürich",
+			"id": 202806809,
+			"id_str": "202806809",
+			"indices": [
+			  144,
+			  148
+			]
+		  }
+		],
+		"symbols": [],
+		"media": [
+		  {
+			"id": 1063455939603431400,
+			"id_str": "1063455939603431425",
+			"indices": [
+			  279,
+			  302
+			],
+			"media_url": "http://pbs.twimg.com/tweet_video_thumb/DsIniupXgAEWbsA.jpg",
+			"media_url_https": "https://pbs.twimg.com/tweet_video_thumb/DsIniupXgAEWbsA.jpg",
+			"url": "https://t.co/EiDbgO9YQn",
+			"display_url": "pic.twitter.com/EiDbgO9YQn",
+			"expanded_url": "https://twitter.com/markiaaan/status/1063456009228816384/photo/1",
+			"type": "animated_gif",
+			"video_info": {
+			  "aspect_ratio": [
+				61,
+				32
+			  ],
+			  "variants": [
+				{
+				  "bitrate": 0,
+				  "content_type": "video/mp4",
+				  "url": "https://video.twimg.com/tweet_video/DsIniupXgAEWbsA.mp4"
+				}
+			  ]
+			},
+			"sizes": {
+			  "large": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  },
+			  "thumb": {
+				"w": 150,
+				"h": 150,
+				"resize": "crop"
+			  },
+			  "medium": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  },
+			  "small": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  }
+			}
+		  }
+		]
+	  },
+	  "extended_entities": {
+		"media": [
+		  {
+			"id": 1063455939603431400,
+			"id_str": "1063455939603431425",
+			"indices": [
+			  279,
+			  302
+			],
+			"media_url": "http://pbs.twimg.com/tweet_video_thumb/DsIniupXgAEWbsA.jpg",
+			"media_url_https": "https://pbs.twimg.com/tweet_video_thumb/DsIniupXgAEWbsA.jpg",
+			"url": "https://t.co/EiDbgO9YQn",
+			"display_url": "pic.twitter.com/EiDbgO9YQn",
+			"expanded_url": "https://twitter.com/markiaaan/status/1063456009228816384/photo/1",
+			"type": "animated_gif",
+			"video_info": {
+			  "aspect_ratio": [
+				61,
+				32
+			  ],
+			  "variants": [
+				{
+				  "bitrate": 0,
+				  "content_type": "video/mp4",
+				  "url": "https://video.twimg.com/tweet_video/DsIniupXgAEWbsA.mp4"
+				}
+			  ]
+			},
+			"sizes": {
+			  "large": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  },
+			  "thumb": {
+				"w": 150,
+				"h": 150,
+				"resize": "crop"
+			  },
+			  "medium": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  },
+			  "small": {
+				"w": 610,
+				"h": 320,
+				"resize": "fit"
+			  }
+			}
+		  }
+		]
+	  }
+	},
+	"quote_count": 0,
+	"reply_count": 0,
+	"retweet_count": 9,
+	"favorite_count": 11,
+	"entities": {
+	  "hashtags": [],
+	  "urls": [
+		{
+		  "url": "https://t.co/0S94hkwUA1",
+		  "expanded_url": "https://twitter.com/i/web/status/1063456009228816384",
+		  "display_url": "twitter.com/i/web/status/1…",
+		  "indices": [
+			121,
+			144
+		  ]
+		}
+	  ],
+	  "user_mentions": [
+		{
+		  "screen_name": "FontaneArchiv",
+		  "name": "TheodorFontaneArchiv",
+		  "id": 3238784939,
+		  "id_str": "3238784939",
+		  "indices": [
+			17,
+			31
+		  ]
+		},
+		{
+		  "screen_name": "UCLab_Potsdam",
+		  "name": "UCLab Potsdam",
+		  "id": 2911549265,
+		  "id_str": "2911549265",
+		  "indices": [
+			41,
+			55
+		  ]
+		},
+		{
+		  "screen_name": "peertrilcke",
+		  "name": "Peer Trilcke",
+		  "id": 48298968,
+		  "id_str": "48298968",
+		  "indices": [
+			87,
+			99
+		  ]
+		},
+		{
+		  "screen_name": "nrchtct",
+		  "name": "Marian Dörk",
+		  "id": 52341962,
+		  "id_str": "52341962",
+		  "indices": [
+			100,
+			108
+		  ]
+		},
+		{
+		  "screen_name": "vik_bru",
+		  "name": "Viktoria Brüggemann",
+		  "id": 751785803731394600,
+		  "id_str": "751785803731394560",
+		  "indices": [
+			109,
+			117
+		  ]
+		}
+	  ],
+	  "symbols": []
+	},
+	"favorited": false,
+	"retweeted": false,
+	"possibly_sensitive": false,
+	"filter_level": "low",
+	"lang": "en"
+  },
+  "is_quote_status": false,
+  "quote_count": 0,
+  "reply_count": 0,
+  "retweet_count": 0,
+  "favorite_count": 0,
+  "entities": {
+	"hashtags": [],
+	"urls": [],
+	"user_mentions": [
+	  {
+		"screen_name": "markiaaan",
+		"name": "Mark-Jan Bludau",
+		"id": 4127314775,
+		"id_str": "4127314775",
+		"indices": [
+		  3,
+		  13
+		]
+	  },
+	  {
+		"screen_name": "FontaneArchiv",
+		"name": "TheodorFontaneArchiv",
+		"id": 3238784939,
+		"id_str": "3238784939",
+		"indices": [
+		  32,
+		  46
+		]
+	  },
+	  {
+		"screen_name": "UCLab_Potsdam",
+		"name": "UCLab Potsdam",
+		"id": 2911549265,
+		"id_str": "2911549265",
+		"indices": [
+		  56,
+		  70
+		]
+	  },
+	  {
+		"screen_name": "peertrilcke",
+		"name": "Peer Trilcke",
+		"id": 48298968,
+		"id_str": "48298968",
+		"indices": [
+		  102,
+		  114
+		]
+	  },
+	  {
+		"screen_name": "nrchtct",
+		"name": "Marian Dörk",
+		"id": 52341962,
+		"id_str": "52341962",
+		"indices": [
+		  115,
+		  123
+		]
+	  },
+	  {
+		"screen_name": "vik_bru",
+		"name": "Viktoria Brüggemann",
+		"id": 751785803731394600,
+		"id_str": "751785803731394560",
+		"indices": [
+		  124,
+		  132
+		]
+	  }
+	],
+	"symbols": []
+  },
+  "favorited": false,
+  "retweeted": false,
+  "filter_level": "low",
+  "lang": "en",
+  "timestamp_ms": "1542384235660"
+}
+```
 
+<!-- .element: style="float: right; white-space: pre-wrap; width: 30%; font-size: small" -->
+
+
+
+- collection of the random 1% sample of the Twitter streaming API
+  between January 2013 and June 2023 <em class="tonedown">(subset of those used for [TweetsKB](https://data.gesis.org/tweetskb/))</em>
+  - 3,700 gzip-compressed [JSONL](https://en.wikipedia.org/wiki/JSON_streaming#JSONL) files
+  - approx. 8.4 Terabyte
+  - 14,160,083,429 valid tweets
+- [some details on the collection process](https://slides.igada.de/2023-07-07-fontane_archiv/)
+
+<!-- .element: style="width: 65%;" -->
 
 
 --
 
-## Filtering
+## Filtering Tweets
 
-3,716,933,904 English tweets, we removed 1,606,843,572 retweets and
-2,718,439 duplicates (due to redundant collection), resulting in
-2,107,371,893 unique tweets.
+| count              | type                      |
+| -------------:     | -----------               |
+| 14,160,083,429     | valid                     |
+| -9,260,435,685     | non-English               |
+| -1,182,713,840     | deleted                   |
+| -1,606,843,572     | retweets                  |
+| -2,718,439         | duplicates                |
+| **=2,107,371,893** | **unique English tweets** |
 
-- what about deleted tweets?
+Notes:
+- deleted: deletion information contained in our dataset
+- duplicates: due to redundant collection
 
 --
+
 ## Tokenization
 
 All URLs and @mentions of user names were removed from the textual
@@ -184,7 +710,7 @@ Beispiel-Tabelle:
 - gaps & errors
 - timeframe
 - post-collection deletions
-- sampling
+- sampling <em class="tonedown">([Morstatter et al. 2013](https://doi.org/10.1609/icwsm.v7i1.14401))
 
 Note:
 - gaps: outages (crawler, Twitter API)
@@ -202,9 +728,87 @@ Note:
 
 --
 
-## Thanks
 
-- doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
+<!--
+
+qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2026-03-18-smad/"
+
+-->
+
+<div style="float:right; width:24%;">
+
+  [![Link zu den Folien](images/qrcode.png)<!-- .element class="noshadow" style="margin-bottom:0px" -->](https://slides.igada.de/2024-09-13-hu/)
+
+  <!-- .element style="margin-bottom: 0" -->
+
+  [https://slides.igada.de/2026-03-18-smad/](https://slides.igada.de/2026-03-18-smad/)
+
+  <!-- .element style="font-size:.45em;padding-top:0px;margin-top:0px;" -->
+
+  doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
+
+  [![www.bibsonomy.org](images/postit.png)<!-- .element class="noshadow" -->](https://www.bibsonomy.org/)
+
+  [![weltliteratur.net](images/logo_weltliteratur_953x265.png)<!-- .element class="noshadow" -->](http://weltliteratur.net/)
+
+
+</div>
+
+
+![XKCD: Questions?](images/xkcd_1256.png)
+<!-- .element: style="width:100%;margin-bottom:0px;" -->
+
+<!-- .element: style="width:70%;margin-bottom:0px;margin-top:0px;" -->
+
+<small>© [XKCD, Randall Munroe](https://xkcd.com/1256) / [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)</small>
+
+<!-- .element: style="margin-top:0px;" -->
+
+
+<ul>
+<li class="clap"><small>thanks to Asmelash Teka Hadgu, Ernesto Diaz-Aviles, Erdal Baran, Stefan Dietze, Dimitar Dimitrov, Pavlos Fafalios, Vasileios Iosifidis, Ran Yu, Xiaofei Zhu, Matthäus Zloch, Sebastian Schellhammer</small>
+<li class="mail"><a href="mailto:robert.jaeschke@hu-berlin.de">robert.jaeschke@hu-berlin.de</a>
+<li class="web"><a href="https://hu.berlin/RJ">https://hu.berlin/RJ</a>
+</ul>
+
+
+<!-- .element: style="width: 70%; float:left;" -->
+
+
+
+
+<small>Vectors and icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a>.</small>
+
+
+--
+
+## References
+
+- Dennis Assenmacher et al. “**The end of the rehydration era – the
+  problem of sharing harmful Twitter research data**.” In: *2nd
+  Workshop on Novel Evaluation Approaches for Text Classification
+  Systems (NEATCLasS)*, 2023.
+  doi:[10.36190/2023.56](https://doi.org/10.36190/2023.56).
+- Pavlos Fafalios et al. “**TweetsKB: A Public and Large-Scale RDF
+  Corpus of Annotated Tweets**.” In: *The Semantic Web*,
+  pp. 177–190, 2018.
+  doi:[10.1007/978-3-319-93417-4_12](https://doi.org/10.1007/978-3-319-93417-4_12).
+- Amaç Herdağdelen. “**Twitter n-gram corpus with demographic
+  metadata**.” In: *Language resources and evaluation*, 47.4,
+  pp. 1127-1147, 2013.
+  doi:[10.1007/s10579-013-9227-2](https://doi.org/10.1007/s10579-013-9227-2)
+- Christof Schöch et al. “**Abgeleitete Textformate: Text und Data
+  Mining mit urheberrechtlich geschützten Textbeständen**.” In:
+  *Zeitschrift für digitale Geisteswissenschaften* 5, 2020.
+  doi:[10.17175/2020_006](https://doi.org/10.17175/2020_006).
+- Fred Morstatter et al. “**Is the Sample Good Enough? Comparing Data
+  from Twitter's Streaming API with Twitter's Firehose.**.” In:
+  *Proceedings of the Seventh International AAAI Conference on Weblogs
+  and Social Media*, pp. 400-408, 2013.
+  doi:[10.1609/icwsm.v7i1.14401](https://doi.org/10.1609/icwsm.v7i1.14401)
+
+<!-- .element style="font-size: smaller" -->
+
 
 					</textarea>
 				</section>

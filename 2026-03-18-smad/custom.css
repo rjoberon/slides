@@ -54,7 +54,7 @@ li.smiling::marker {
   font-size: 1em; }
 
 .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h5 {
-    font-family: Gill Sans;
+    font-family: Gill Sans, sans-serif;
     font-weight: 300;
 }
 
@@ -123,4 +123,12 @@ ol ol {
 }
 .reveal .slideurl::before {
     content: "📽  ";
+}
+
+.reveal em.tonedown {
+    color: gray;
+}
+
+.reveal em.tonedown a {
+    color: #5a75b4;
 }
