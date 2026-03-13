@@ -145,7 +145,6 @@ Note:
 - here: tokens = words, but could also be characters
 - existing dataset based on 74,579,965 tweets from 2010 only
 
-
 ---
 
 # Approach
@@ -670,22 +669,20 @@ content. To account for idiosyncrasies typical of social media, such
 as creative orthography, meta-information (e.g., hashtags, mentions),
 and emoticons, the text was tokenised using twokenize
 
+[Ritter et al. 2011](https://aclanthology.org/D11-1141/)
 
-<small>Alan Ritter et al. “Named Entity Recognition in Tweets: An
-Experimental Study.” In: <em>Proceedings of the 2011 Conference on
-Empirical Methods in Natural Language Processing</em>. Edinburgh,
-Scotland, UK.: Association for Computational Linguistics, July 2011,
-pp. 1524–1534. url:[https://aclanthology.org/D11-1141/](https://aclanthology.org/D11-1141/).</small>
+
 
 --
 ## Result
 
-Screenshot Zenodo
+![Dataset on Zenodo](images/zenodo_dataset.png)
 
 doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
 
 --
 ## Result
+
 - 2 parts: case of letters preserved vs. case normalized to lower case
 - each part: 11 TAR files, one for each year (2013-2023)
 - each TAR: up to 12 gzip-compressed TSV files (one for each month)
@@ -699,9 +696,31 @@ columns:
   month
 - `ngram`: the n-gram itself
 
-Beispiel-Tabelle:
+--
 
+## Example
 
+The first ten rows (plus header) of the file `2018-01.tsv.gz`
+
+```
+ngram_type  count   ngram
+1           195891  .
+1           145089  the
+1           142295  ,
+1           134689  to
+1           111336  a
+1           106765  I
+1           98259   …
+1           85359   and
+1           77553   you
+1           73279   of
+```
+
+--
+
+## Example
+
+![Timeline of the hashtag '#covid19' and the terms 'trump' and 'biden'](images/example_timeline.png)<!-- .element class="noshadow" -->
 
 --
 
@@ -719,12 +738,24 @@ Note:
   - started from 1%, then filtered → not 1% of English tweets
 
 ---
+
+# Discussion
+
+--
+
+## Discussion
+
+
+<br/>
+
 ## Outlook
 
 - well-known situation also in other areas of research, just think
-  about the sharing of annotated copyright-protected material →
-  BibloCon-Vortrag :-)
+  about the sharing of annotated copyright-protected material
 
+  → [Arnold and Jäschke 2025](https://doi.org/10.1007/978-3-032-06136-2_13)
+
+  → talk [Sharing Is Caring: Wie das Teilen von Annotationen urheberrechtlich geschützter Texte gelingen kann](https://bibliocon2026.abstractserver.com/program/#/details/presentations/248) @ [BiblioCon 2026](https://2026.bibliocon.de/)
 
 --
 
@@ -784,6 +815,11 @@ qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2026-03-18-smad/"
 
 ## References
 
+- Frederik Arnold and Robert Jäschke. “**Sharing is Caring: A Text
+  Alignment Approach for Sharing Annotations of Copyrighted Texts**.”
+  In: *New Trends in Theory and Practice of Digital Libraries: TPDL
+  2025 Short Papers and Workshops*, pp. 135–145, 2025.
+  doi:[10.1007/978-3-032-06136-2_13](https://doi.org/10.1007/978-3-032-06136-2_13)
 - Dennis Assenmacher et al. “**The end of the rehydration era – the
   problem of sharing harmful Twitter research data**.” In: *2nd
   Workshop on Novel Evaluation Approaches for Text Classification
@@ -806,6 +842,12 @@ qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2026-03-18-smad/"
   *Proceedings of the Seventh International AAAI Conference on Weblogs
   and Social Media*, pp. 400-408, 2013.
   doi:[10.1609/icwsm.v7i1.14401](https://doi.org/10.1609/icwsm.v7i1.14401)
+- Alan Ritter et al. “**Named Entity Recognition in Tweets: An
+  Experimental Study**.” In: *Proceedings of the 2011 Conference on
+  Empirical Methods in Natural Language Processing*,
+  pp. 1524–1534, 2011.
+  url:[https://aclanthology.org/D11-1141/](https://aclanthology.org/D11-1141/)
+
 
 <!-- .element style="font-size: smaller" -->
 
