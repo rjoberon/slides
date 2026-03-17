@@ -92,7 +92,7 @@ is dead<!-- .element style="color: red" --> <em class="tonedown">([Assenmacher e
 
 <br/>
 
-→ limited availability of actual text content <!-- .element: class="fragment" -->
+→ seldom textual content  <!-- .element: class="fragment" -->
 
 
 Note:
@@ -116,9 +116,10 @@ Note:
 
 - transform texts such that original can not be reconstructed
   - document-term matrices
-  - n-grams
+  - n-grams <em class="tonedown">(e.g., [Google Books n-grams](http://commondatastorage.googleapis.com/books/syntactic-ngrams/index.html))</em>
   - word embeddings
 - transformed texts useful for (some) research
+  - e.g., topic modelling, authorship classification
 
 → [Text+ working group](https://text-plus.org/en/themen-dokumentation/atf/)
 
@@ -662,70 +663,192 @@ Note:
 | **=2,107,371,893** | **unique English tweets** |
 
 Notes:
-- deleted: deletion information contained in our dataset
-- duplicates: due to redundant collection
+- **invalid**: e.g., incomplete due to disconnect, empty tweets (no text)
+- **English**:
+- **deleted**: deletion information contained in our dataset
+- **retweets**: avoid distortions/spam (but could be interesting as an extension)
+- **duplicates**: due to redundant collection
 
 --
 
-## Tokenization
+## Processing
 
-All URLs and @mentions of user names were removed from the textual
-content. To account for idiosyncrasies typical of social media, such
-as creative orthography, meta-information (e.g., hashtags, mentions),
-and emoticons, the text was tokenised using twokenize
+- removed URLs and @mentions
+- tokenized with twokenize <em class="tonedown">([Ritter et al. 2011](https://aclanthology.org/D11-1141/))</em>
+- optional: normalization to lower case
+- extracted 1-, 2-, 3-grams
 
-[Ritter et al. 2011](https://aclanthology.org/D11-1141/)
+```text
+what’s
+don’t
+&
+06/12/2023
+€3.50
+#OMG
+@user
+30°C
+;D
+>.<
+123
+45.67
+1,000
+🔥
+```
+
+<!-- .element class="fragment" style="float:right; width:10%;" data-fragment-index="3" -->
 
 
+> what’s don’t &amp; 06/12/2023 €3.50 #OMG @user 30°C ;D >.< 123 45.67 1,000 🔥
+
+<!-- .element class="fragment" style="width: 60%;" data-fragment-index="2" -->
+
+
+Note:
+- URLs/@mentions: privacy/personal rights; URLs: not our focus
+- tokenization: separating individual tokens
+- typically words, numbers etc. but tweets very rich:
+  - idiosyncrasies typical of social media, such as creative
+	orthography, meta-information (e.g., hashtags, mentions), and
+	emoticons
+- simple / standard tokenizer not sufficient
+  - e.g., separates emoticons or currency symbols (or units like °C)
+  - thus: **twokenize**
+- as can be seen: **we keep punctuation**
 
 --
-## Result
+## Dataset
+
+- two parts: *original case* and *lower case*
+  - each part: 11 TAR files, one for each year (2013-2023)
+	- each TAR: up to 12 gzip-compressed TSV files, one for each month
+- → overall: 125 TSV files
+  - each line represents an n-gram with the following columns: <!-- .element class="fragment" -->
+	- `ngram_type`: 1, 2, or 3
+	- `count`: frequency <em class="tonedown">(i.e., number of appearances per month)</em>
+	- `ngram`: the n-gram itself
+
+--
+
+## Examples
+
+<em class="tonedown">(some rows from the file `2018-01.tsv.gz`)</em>
+
+<style>
+.container{
+	display: flex;
+}
+.col{
+	flex: 1;
+}
+</style>
+
+<div class="container">
+<div class="col">
+<small>
+first twenty rows
+
+| ngram_type |  count | ngram |
+| ---------: | -----: | :---- |
+|          1 | 195891 | .     |
+|          1 | 145089 | the   |
+|          1 | 142295 | ,     |
+|          1 | 134689 | to    |
+|          1 | 111336 | a     |
+|          1 | 106765 | I     |
+|          1 |  98259 | …     |
+|          1 |  85359 | and   |
+|          1 |  77553 | you   |
+|          1 |  73279 | of    |
+|          1 |  69851 | !     |
+|          1 |  68355 | is    |
+|          1 |  68253 | in    |
+|          1 |  67921 | for   |
+|          1 |  58991 | :     |
+|          1 |  47744 | on    |
+|          1 |  44847 | ?     |
+|          1 |  40520 | my    |
+|          1 |  39672 | it    |
+|          1 |  37573 | that  |
+
+</small>
+</div>
+<div class="col">
+<small>
+rows around 'library'
+
+| ngram_type | count | ngram       |
+| ---------: | ----: | :---------  |
+|          1 |   150 | POTUS       |
+|          1 |   150 | Seeing      |
+|          1 |   150 | TX          |
+|          1 |   150 | Unknown     |
+|          1 |   150 | apartment   |
+|          1 |   150 | audience    |
+|          1 |   150 | concern     |
+|          1 |   150 | friendship  |
+|          1 |   150 | hehe        |
+|          1 |   150 | hottest     |
+|          1 |   150 | **library** |
+|          1 |   150 | limit       |
+|          1 |   150 | messages    |
+|          1 |   150 | pleased     |
+|          1 |   150 | print       |
+|          1 |   150 | properly    |
+|          1 |   150 | racism      |
+|          1 |   150 | 💞          |
+|          1 |   149 | #free       |
+|          1 |   149 | Casino      |
+
+</small>
+</div>
+<div class="col">
+<small>
+3-grams with 'library'
+
+| ngram_type | count | ngram                           |
+| ---------: | ----: | :---------                      |
+|          3 |    21 | library ! #tvtime               |
+|          3 |    21 | my library !                    |
+|          3 |    21 | to my library                   |
+|          3 |    19 | in the library                  |
+|          3 |    10 | at the library                  |
+|          3 |     7 | to the library                  |
+|          3 |     5 | the library .                   |
+|          3 |     5 | the library and                 |
+|          3 |     4 | library . I                     |
+|          3 |     3 | from the library                |
+|          3 |     3 | the library but                 |
+|          3 |     3 | visit the library               |
+|          3 |     2 | a library book                  |
+|          3 |     2 | library is closed               |
+|          3 |     2 | the library ,                   |
+|          3 |     2 | the library i                   |
+|          3 |     2 | the library in                  |
+|          3 |     2 | the library on                  |
+|          3 |     2 | the library this                |
+|          3 |     2 | the library tomorrow            |
+
+
+</small>
+</div>
+</div>
+
+
+
+Note:
+- frequent English words
+- punctuation
+- mixed (original) case
+- hashtags (#free) and emojis (💞)
+
+--
+
+## Published Dataset
 
 ![Dataset on Zenodo](images/zenodo_dataset.png)
 
 doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
 
---
-## Result
-
-- 2 parts: case of letters preserved vs. case normalized to lower case
-- each part: 11 TAR files, one for each year (2013-2023)
-- each TAR: up to 12 gzip-compressed TSV files (one for each month)
-
-→ overall: 125 TSV files
-
-each line in a TSV file represents an n-gram using the following
-columns:
-- `ngram_type`: 1, 2, or 3
-- `count`: frequency, that is, number of times it appears in that
-  month
-- `ngram`: the n-gram itself
-
---
-
-## Example
-
-The first ten rows (plus header) of the file `2018-01.tsv.gz`
-
-```
-ngram_type  count   ngram
-1           195891  .
-1           145089  the
-1           142295  ,
-1           134689  to
-1           111336  a
-1           106765  I
-1           98259   …
-1           85359   and
-1           77553   you
-1           73279   of
-```
-
---
-
-## Example
-
-![Timeline of the hashtag '#covid19' and the terms 'trump' and 'biden'](images/example_timeline.png)<!-- .element class="noshadow" -->
 
 --
 
@@ -736,9 +859,10 @@ ngram_type  count   ngram
 - post-collection deletions
 - sampling <em class="tonedown">([Morstatter et al. 2013](https://doi.org/10.1609/icwsm.v7i1.14401))
 
+
 Note:
 - gaps: outages (crawler, Twitter API)
-- timeframe: first & last month and thus years incomplete
+- timeframe: 01/2013 and 06/2023 incomplete, 07/2023++ missing → years incomplete
 - sampling:
   - started from 1%, then filtered → not 1% of English tweets
 
@@ -748,19 +872,33 @@ Note:
 
 --
 
-## Discussion
+## Summary
 
+- monthly 1-, 2-, 3-grams based on more than 2 billion English tweets
+  - 01/2013 – 06/2023
+  - including frequency information
+- publicly available at doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
 
-<br/>
+![Timeline of the hashtag '#covid19' and the terms 'trump' and 'biden'](images/example_timeline.png)<!-- .element class="noshadow fragment" -->
+
+Note:
+- effortless re-use
+  - no need for complex filtering and pre-processing
+  - handling raw data is cumbersome!
+  - it's quite simple to produce analyses like this plot
+
+--
 
 ## Outlook
 
-- well-known situation also in other areas of research, just think
-  about the sharing of annotated copyright-protected material
+- online n-gram viewer: https://data.gesis.org/twitterngram (test phase)
+- sharing annotations of copyrighted texts
+  - [Rehm et al. 2007](https://nbn-resolving.org/urn:nbn:de:bsz:mh39-45145), [Arnold and Jäschke 2025](https://doi.org/10.1007/978-3-032-06136-2_13)
+  - [Sharing Is Caring: Wie das Teilen von Annotationen urheberrechtlich geschützter Texte gelingen kann](https://bibliocon2026.abstractserver.com/program/#/details/presentations/248) @ [BiblioCon 2026](https://2026.bibliocon.de/)
 
-  → [Arnold and Jäschke 2025](https://doi.org/10.1007/978-3-032-06136-2_13)
-
-  → talk [Sharing Is Caring: Wie das Teilen von Annotationen urheberrechtlich geschützter Texte gelingen kann](https://bibliocon2026.abstractserver.com/program/#/details/presentations/248) @ [BiblioCon 2026](https://2026.bibliocon.de/)
+Note:
+- limitations also in other areas of research, e.g., sharing of
+  annotated copyrighted texts
 
 --
 
@@ -833,6 +971,10 @@ qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2026-03-18-smad/"
   metadata**.” In: *Language resources and evaluation*, 47.4,
   pp. 1127-1147, 2013.
   doi:[10.1007/s10579-013-9227-2](https://doi.org/10.1007/s10579-013-9227-2)
+- Georg Rehm et al. “**Corpus masking: Legally bypassing licensing
+  restrictions for the free distribution of text collections**.” In:
+  *Digital Humanities 2007. Conference Abstracts*, pp. 166-170, 2007.
+  urn:[nbn:de:bsz:mh39-45145](https://nbn-resolving.org/urn:nbn:de:bsz:mh39-45145)
 - Christof Schöch et al. “**Abgeleitete Textformate: Text und Data
   Mining mit urheberrechtlich geschützten Textbeständen**.” In:
   *Zeitschrift für digitale Geisteswissenschaften* 5, 2020.
