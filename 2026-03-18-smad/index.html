@@ -54,11 +54,12 @@ tube](images/woman-scientist-svgrepo-com.svg) <!-- .element: class="noshadow" st
 
 
 Note:
-- needs of researchers vs. legal constraints
-- researchers:
+- Twitter/X interesting resource for researchers:
   - language evolution on social media
   - trends & topics
-- legal constraints:
+  - polarization of society
+  - effects of algorithms (e.g., echo chambers)
+- 🖱️  but legal constraints:
   - terms of service
   - copyright, licensing etc.
   - personal (privacy)
@@ -97,8 +98,10 @@ is dead<!-- .element style="color: red" --> <em class="tonedown">([Assenmacher e
 
 Note:
 - astoundingly many "tweet" datasets on Zenodo and elsewhere
-- often: just tweet ids →
-- rehydration: publis tweet ids → now practically useless
+- often: just tweet ids
+  - 🖱️  rehydration: get actual tweets from Twitter's API
+	- 🖱️  since 2023 practically useless
+- 🖱️  alternatives: limited parts of data
 
 --
 
@@ -124,8 +127,10 @@ Note:
 → [Text+ working group](https://text-plus.org/en/themen-dokumentation/atf/)
 
 Note:
+- idea: share information *about* texts without sharing the texts
 - animation shows topic detection on documents for which only a
   document-term matrix is available
+
 
 --
 ## n-Grams
@@ -149,7 +154,8 @@ Note:
 Note:
 - consecutive sequence of n tokens
 - here: tokens = words, but could also be characters
-- existing dataset based on 74,579,965 tweets from 2010 only
+- 🖱️  prior dataset based on 74,579,965 tweets from 2010 only
+  - ... and no longer available
 
 ---
 
@@ -649,6 +655,10 @@ Note:
 <!-- .element: style="width: 65%;" -->
 
 
+Note:
+- so processing this data is not trivial
+- for instance, we had to filter ... 🖱️
+
 --
 
 ## Filtering Tweets
@@ -706,13 +716,13 @@ don’t
 Note:
 - URLs/@mentions: privacy/personal rights; URLs: not our focus
 - tokenization: separating individual tokens
-- typically words, numbers etc. but tweets very rich:
-  - idiosyncrasies typical of social media, such as creative
-	orthography, meta-information (e.g., hashtags, mentions), and
-	emoticons
-- simple / standard tokenizer not sufficient
-  - e.g., separates emoticons or currency symbols (or units like °C)
-  - thus: **twokenize**
+  - typically words, numbers etc. but tweets very rich:
+	- 🖱️  idiosyncrasies typical of social media, such as creative
+	  orthography, meta-information (e.g., hashtags, mentions), and
+	  emoticons
+  - simple / standard tokenizer not sufficient
+	- e.g., separates emoticons or currency symbols (or units like °C)
+	- thus: **twokenize** 🖱️  *(works like a charm)*
 - as can be seen: **we keep punctuation**
 
 --
@@ -726,6 +736,19 @@ Note:
 	- `ngram_type`: 1, 2, or 3
 	- `count`: frequency <em class="tonedown">(i.e., number of appearances per month)</em>
 	- `ngram`: the n-gram itself
+
+--
+
+## Statistics
+
+![Monthly numbers of 1-, 2-, and 3-grams](images/stats.svg)<!-- .element class="noshadow" -->
+
+Note:
+- avg. 600k distinct 1-grams per month
+- avg. 3.3M distinct 2-grams per month
+- avg. 6M distinct 3-grams per month
+- gaps: server fault / API v1 shutdown in 2022-12
+- trends: decline until 2020 → resurgence during pandemic
 
 --
 
@@ -743,7 +766,7 @@ Note:
 </style>
 
 <div class="container">
-<div class="col">
+<div class="col fragment">
 <small>
 first twenty rows
 
@@ -772,7 +795,7 @@ first twenty rows
 
 </small>
 </div>
-<div class="col">
+<div class="col fragment">
 <small>
 rows around 'library'
 
@@ -801,7 +824,7 @@ rows around 'library'
 
 </small>
 </div>
-<div class="col">
+<div class="col fragment">
 <small>
 3-grams with 'library'
 
@@ -861,7 +884,7 @@ doi:[10.5281/zenodo.15736201](https://doi.org/10.5281/zenodo.15736201)
 
 
 Note:
-- gaps: outages (crawler, Twitter API)
+- gaps: outages (crawler, Twitter API), API v1 shutdown (→ 2022-12 missing)
 - timeframe: 01/2013 and 06/2023 incomplete, 07/2023++ missing → years incomplete
 - sampling:
   - started from 1%, then filtered → not 1% of English tweets
@@ -885,7 +908,7 @@ Note:
 - effortless re-use
   - no need for complex filtering and pre-processing
   - handling raw data is cumbersome!
-  - it's quite simple to produce analyses like this plot
+  - it's quite simple to produce analyses like this plot 🖱️
 
 --
 
