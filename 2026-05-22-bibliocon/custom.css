@@ -1,0 +1,32 @@
+li.web::marker {      content: "🌐 ";}
+li.doc::marker {      content: "🗎 ";}
+li.mail::marker {     content: "📧 ";}
+li.clap::marker {     content: "👏 ";}
+li.club::marker {     content: "♣ ";}
+li.diamond::marker {  content: "♦ ";}
+li.thinking::marker { content: "🤔 ";}
+li.idea::marker {     content: "💡 ";}
+li.diagonal::marker { content: "🫤 ";}
+li.frowning::marker { content: "🙁 ";}
+li.smiling::marker {  content: "😀 ";}
+li.smiling::marker {  content: "😀 ";}
+
+.reveal { font-size: 24px; }
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h5 {
+    font-family: Gill Sans, sans-serif;
+    font-weight: 300;
+}
+
+.reveal section img {
+  border: 4px none #000;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.reveal a { color: #2048a0; }
+.reveal a:hover { color: #4068c0; }
+.reveal img.noshadow { box-shadow: none; }
+.reveal em.tonedown { color: gray; }
+.reveal em.tonedown a { color: #5a75b4; }
+
+.container {display: flex;}
+.col {flex: 1;}
