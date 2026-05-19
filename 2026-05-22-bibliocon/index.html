@@ -74,8 +74,15 @@ Note:
 Notes:
 - Annotierte Daten (insbesondere Texte) sind für viele Disziplinen
   unverzichtbar ...
+- Texte:
+  - Linguistik (Wortarten, Satzstruktur, Entitäten etc.)
+  - LitWiss (komplexe Konzepte wie Emotion oder Handlung mit
+	umfangreichen Annotationen/Richtlinien)
+  - auch: Informatik zum Trainieren von Sprachmodellen (etwa zur
+	Extraktion bibliographischer Metadaten aus wiss. Artikeln)
+- Bilder: Kunstgeschichte, Architektur, Layouterkennung
+- Musik: Musikwiss., Music-IR
 
---
 
 ![Zenodo Search Query](images/zenodo.png)
 
@@ -113,7 +120,7 @@ Droste-Hülshoffs „Judenbuche“, *Zeitschrift für deutsche Philologie*
 
 Notes:
 - Herausforderung: urheberrechtlich geschützte Werke
-- hier: Text von 1995
+- hier: Text von 1995, Annotation verschiedener Arten von Textbezugnahmen
 
 
 ---
@@ -121,20 +128,56 @@ Notes:
 # Lösungsansätze
 
 --
-Bild: Stand-Off-Annotationen
 
+<div class="container">
+
+<div class="col">
+
+![Screenshot of the UAM Corpus Tool](images/uamcorpustool.png)<!-- .element style="width:90%;margin:0px"-->
+
+</div>
+
+<div class="col">
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<document>
+  <segments>
+	<segment id='1' start='158' end='176'
+			 features='participant;human' state='active'/>
+	<segment id='2' start='207' end='214'
+			 features='participant;organisation;company'
+			 state='active'/>
+	...
+  </segments>
+</document>
+```
+
+<!-- .element style="margin-left:0px;margin-right:0px;width:100%;" -->
+
+</div>
+
+</div>
 
 <small>
 
-Burghardt, M., & Wolff, C. (2009). [Stand Off-Annotation für
-Textdokumente: Vom Konzept zur Implementierung (zur
+O’Donnell, M. (2008). [Demonstration of the UAM CorpusTool for Text
+and Image Annotation](https://aclanthology.org/P08-4004/). In
+*Proceedings of the ACL-08: HLT Demo Session* (pp. 13–16). Association
+for Computational Linguistics.
+
+
+*siehe auch:* Burghardt, M., & Wolff, C. (2009). [Stand Off-Annotation
+für Textdokumente: Vom Konzept zur Implementierung (zur
 Standardisierung?)](https://epub.uni-regensburg.de/14223/1/Stand-off-AnnotationGSCL2009.pdf). In
 *Proceedings of the Biennial GSCL Conference* (pp. 53-59).
 
 </small>
 
 Notes:
-- Idee von Stand-Off-Annotationen erklären
+- Idee von Stand-Off-Annotationen
+- Beispiel hier: UAM CorpusTool → XML getrennt vom Text; bezieht sich
+  auf Zeichenpositionen
 - da etwa die Verwendung von Stand-Off-Annotationen einige Expertise
   benötigt und je nach Art der Daten nur mit statistischen Verfahren
   und damit verbundenen Ungenauigkeiten umsetzbar ist.
@@ -144,7 +187,7 @@ Notes:
 
 <small>
 
-M. L. Forcada, M. Esplà-Gomis, & J. A. Pérez-Ortiz (2016): [Stand-off
+M. L. Forcada, M. Esplà-Gomis, & J. A. Pérez-Ortiz (2016). [Stand-off
 Annotation of Web Content as a Legally Safer Alternative to Crawling
 for Distribution](https://aclanthology.org/W16-3405/). In *Proceedings
 of the 19th Annual Conference of the European Association for Machine
