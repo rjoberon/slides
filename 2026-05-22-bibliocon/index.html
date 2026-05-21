@@ -47,6 +47,14 @@ This work is licensed under <a rel="license" href="http://creativecommons.org/li
 Note:
 - 20min + 10min
 
+--
+
+# Agenda
+
+1. Motivation und Ausgangslage
+2. Lösungsansätze
+3. Vision und Diskussion
+
 ---
 
 # Motivation und Ausgangslage
@@ -72,7 +80,8 @@ Note:
 
 ![annotiertes Audio](images/pride.png)<!-- .element style="height:5cm;" class="fragment" -->
 
-Notes:
+
+Note:
 - Annotierte Daten (insbesondere Texte) sind für viele Disziplinen
   unverzichtbar ...
 - Texte:
@@ -85,15 +94,20 @@ Notes:
 - Musik: Musikwiss., Music-IR
 
 
+--
+
 ![Zenodo Search Query](images/zenodo.png)
 
 
 [Zenodo: "annotated text"](https://zenodo.org/search?q=annotated%20text&f=resource_type%3Adataset&f=file_type%3Atxt&l=list&p=1&s=10&sort=bestmatch)
 
 
-Notes:
+Note:
 - ... und Forschende erfahren zunehmend Anerkennung für das Annotieren
   und Teilen von Daten auf entsprechenden Plattformen.
+- HuggingFace, Zenodo, TextGrid etc.
+- auch: "Datensatz-Paper"
+- essentieller Aspekt von "Open Science", FAIRer Zugang zu Forschungsdaten
 
 --
 
@@ -103,19 +117,26 @@ Notes:
 [DARIAH Annotation Viewer](https://annotation.de.dariah.eu/AnnotationViewer/)
 
 
-Notes:
+Note:
 - Werkzeuge und Plattformen zur (kollaborativen) (Online-)Annotation
-- HuggingFace, Zenodo, TextGrid etc.
 
 --
 
-![Krauss 1995](images/krauss.png)<!-- .element style="width:40%"-->
+## Herausforderung Urheberrecht
+
+![Krauss 1995](images/krauss.png)<!-- .element style="width:35%"-->
 
 <small>Karoline Krauss (1995): Das Offene Geheimnis in Annette von
 Droste-Hülshoffs „Judenbuche“, *Zeitschrift für deutsche Philologie*
 114(4), S. 542-559</small>
 
-Notes:
+<small>(Annotation im Rahmen des DFG-Projektes [Ist Expert:innenwissen
+der Schlüssel? Interpretationstexte als Ressource für die Analyse
+literarischer Werke in den Computational Literary
+Studies](https://www.projekte.hu-berlin.de/de/schluesselstellen))</small>
+
+
+Note:
 - Herausforderung: urheberrechtlich geschützte Werke
 - hier: Text von 1995, Annotation verschiedener Arten von Textbezugnahmen
 
@@ -126,15 +147,19 @@ Notes:
 
 --
 
+## Stand-Off-Annotationen
+
 <div class="container">
 
 <div class="col">
 
-![Screenshot of the UAM Corpus Tool](images/uamcorpustool.png)<!-- .element style="width:90%;margin:0px"-->
+![Screenshot of the UAM Corpus Tool](images/uamcorpustool.png)<!-- .element class="fragment" style="width:90%;margin:0px" data-fragment-index="2" -->
 
 </div>
 
 <div class="col">
+
+![Stand-Off-Annotation](images/standoff.svg)<!-- .element class="noshadow fragment" data-fragment-index="1" -->
 
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -150,13 +175,13 @@ Notes:
 </document>
 ```
 
-<!-- .element style="margin-left:0px;margin-right:0px;width:100%;" -->
+<!-- .element class="fragment" style="margin-left:0px;margin-right:0px;width:100%;" data-fragment-index="3" -->
 
 </div>
 
 </div>
 
-<small>O’Donnell, M. (2008). [Demonstration of the UAM CorpusTool for Text
+<small class="fragment" data-fragment-index="2">O’Donnell, M. (2008). [Demonstration of the UAM CorpusTool for Text
 and Image Annotation](https://aclanthology.org/P08-4004/). In
 *Proceedings of the ACL-08: HLT Demo Session* (pp. 13–16). Association
 for Computational Linguistics.
@@ -175,14 +200,10 @@ of the 19th Annual Conference of the European Association for Machine
 Translation*, pp. 152–164.
 --></small>
 
-Notes:
+Note:
 - Stand-Off-Annotationen: Trennung von Inhalt und Annotationen
 - Beispiel hier: UAM CorpusTool → XML getrennt vom Text; bezieht sich
   auf Zeichenpositionen
-- Zusammenfügen bei Vorliegen eines bit-identischen Ursprungsdokuments
-  technisch einfach
-- oft nicht der Fall (typischer Grund: PDF) → herausfordernd!
-- statistische Verfahren → Ungenauigkeiten
 
 
 --
@@ -195,11 +216,16 @@ for the free distribution of text
 collections](https://nbn-resolving.org/urn:nbn:de:bsz:mh39-45145). *Digital
 Humanities 2007*. Conference Abstracts (pp. 166-170).</small>
 
-Notes:
+Note:
 - hier "Corpus Masking"
+- Zusammenfügen bei Vorliegen eines bit-identischen Ursprungsdokuments
+  technisch einfach
+- oft nicht der Fall (typischer Grund: PDF) → herausfordernd!
 
 
 --
+
+## Alignment
 
 ![Sharing is Caring](images/sisc.png)<!-- .element style="width:60%" class="noshadow"-->
 
@@ -210,13 +236,14 @@ in Theory and Practice of Digital Libraries: TPDL 2025 Short Papers
 and Workshops* (pp. 135-145), Springer.</small>
 
 
-Notes:
-- Fokus auf nicht bitgenaue Dokumente
+Note:
+- hier setzt SisC an: Fokus auf nicht bitgenaue Dokumente
 - statistischer Ansatz zum Zusammenfügen
+- Ungenauigkeiten!
 
 ---
 
-# Vision
+# Vision und Diskussion
 
 
 --
@@ -236,7 +263,7 @@ in Theory and Practice of Digital Libraries: TPDL 2025 Short Papers
 and Workshops* (pp. 135-145), Springer.</small>
 
 
-Notes:
+Note:
 Deposit:
 1. Forschende laden Annotationen hoch
 2. Rechteklärung
@@ -257,6 +284,8 @@ Auch:
 - Verknüpfung von FDM mit Digital Libraries, Discovery-Systemen, Katalogen
 - Vereinfachung des Teilens → Förderung von Open Science
 
+
+Wer baut's? <!-- .element class="fragment" -->
 
 ---
 
