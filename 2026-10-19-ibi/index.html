@@ -60,6 +60,7 @@ Note:
 
 --
 
+## Motivation
 
 ca. 2012/2013 @ [Forschungszentrum L3S](https://www.l3s.de/):
 
@@ -143,19 +144,38 @@ Content-Type: text/html; charset=utf-8
 
 Index-Dateien mit Metadaten; spaltenbasiert (TSV); eine Zeile pro WARC-Record
 
-| id | explanation                      |
-| -- | -------------------------------- |
-| N  | massaged url (special SURT form) |
-| b  | timestamp                        |
-| a  | original url                     |
-| m  | mime type of original document   |
-| s  | response code                    |
-| k  | checksum                         |
-| r  | redirect                         |
-| M  | meta tags                        |
-| S  | compressed record size           |
-| V  | compressed arc/warc file offset  |
-| g  | filename                         |
+| id | Erklärung                        | Beispiel                                       |
+| -- | -------------------------------- | ----                                           |
+| N  | massaged url (special SURT form) | de,uni-freiburg,bioss)/cms/2075.html           |
+| b  | timestamp                        | 20141201095348                                 |
+| a  | original url                     | http://www.bioss.uni-freiburg.de/cms/2075.html |
+| m  | mime type of original document   | text/html                                      |
+| s  | response code                    | 200                                            |
+| k  | checksum                         | PH4FSLSY6LKYQQ7SMOT7D4YFUK4IM6ZQ               |
+| r  | redirect                         | -                                              |
+| M  | meta tags                        | -                                              |
+| S  | compressed record size           | 29237                                          |
+| V  | compressed arc/warc file offset  | 491                                            |
+| g  | filename                         | 20141201095350661-00089.warc.gz                |
+
+
+--
+
+## CDX
+
+```tsv
+ CDX N  b a m s k r M S V g
+warcinfo:/20141201082856948-00004.warc.gz/ia-web-commons.1.3.1-SNAPSHOT-20250123023918 20141201082856 warcinfo:/20141201082856948-00004.warc.gz/ia-web-commons.1.3.1-SNAPSHOT-20250123023918 warc-info - - - - 491 0 20141201082856948-00004.warc.gz
+de,hmt-rostock) 20141201082856 dns:hmt-rostock.de text/dns - - - - 241 491 20141201082856948-00004.warc.gz
+de,fau) 20141201082856 dns:fau.de text/dns - - - - 233 732 20141201082856948-00004.warc.gz
+...
+de,hsu-hh)/robots.txt 20141201082859 http://hsu-hh.de/robots.txt text/plain 200 I5U7KY2IPN5ZIOPDU56QVAH7KF32Y2YM - - 542 3878 20141201082856948-00004.warc.gz
+de,hsu-hh)/robots.txt 20141201082859 http://hsu-hh.de/robots.txt warc/request - - - - 401 4420 20141201082856948-00004.warc.gz
+de,hsu-hh)/robots.txt 20141201082859 http://hsu-hh.de/robots.txt warc/metadata - - - - 323 4821 20141201082856948-00004.warc.gz
+...
+de,uni-freiburg,bioss)/cms/2075.html 20141201095348 http://www.bioss.uni-freiburg.de/cms/2075.html text/html 200 PH4FSLSY6LKYQQ7SMOT7D4YFUK4IM6ZQ - - 29237 491 20141201095350661-00089.warc.gz
+de,uni-freiburg,bioss)/cms/2075.html 20141201095348 http://www.bioss.uni-freiburg.de/cms/2075.html warc/request - - - - 532 29728 20141201095350661-00089.warc.gz
+de,uni-freiburg,bioss)/cms/2075.html 20141201095348 http://www.bioss.uni-freiburg.de/cms/2075.html warc/metadata - - - - 3326 30260 20141201095350661-00089.warc.gz
 
 ---
 
@@ -313,10 +333,13 @@ above sequence worked several times for me!"*
 
 --
 
-## Post-Post-Crawling / Aufräumen
+## Post-Post-Crawling
 
-Schritte erläutern
-
+- Abschaltung des L3S-Clusters
+- Archivierung
+- 💣 [Probleme mit den CDX-Dateien](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/cdx.org?ref_type=heads)
+  - Überprüfung
+  - teilweise Neugenierung
 
 --
 
@@ -340,10 +363,10 @@ reserved](https://www.cms.hu-berlin.de/de/dl/systemservice/fileservice/tsm/bilde
 | 2012-10 | ✅        | ✅    | ✅     | ✅    |         | !       |        |
 | 2013-12 | running   |       | 💣     |       |         | !       |        |
 | 2014-12 | ✅        | ✅    | ✅     | ✅    |         | !       |        |
-| 2015-12 | !!        |       | ✅     |       | ✅      | !       |        |
+| 2015-12 | !!        |       | ✅?    |       | ✅      | !       |        |
 | 2016-12 | ✅        | ✅    | ✅     | ✅    | ✅      | !       |        |
-| 2017-12 | !!        |       | ✅?    | ✅    | ✅      | !       |        |
-| 2018-12 | !!        |       | ✅?    | ✅    | ✅      | !       |        |
+| 2017-12 | !!        |       | ✅     | ✅    | ✅      | !       |        |
+| 2018-12 | !!        |       | ✅     | ✅    | ✅      | !       |        |
 | 2019-12 | ✅        | ✅    | ✅     | ✅    | ✅      | ✅      |        |
 | 2020-12 | ✅        | ✅    | ✅     | ✅    | ✅      | !       |        |
 | 2021-12 | ✅        | ✅    | ✅     | ✅    | ✅      | ✅      |        |
