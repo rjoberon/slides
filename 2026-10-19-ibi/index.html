@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>German Academic Web: Past, Present, and Future</title>
+
+		<!-- link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Puritan" -->
+		<link rel="stylesheet" href="../reveal.js_5/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js_5/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js_5/dist/theme/simple.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../reveal.js_5/plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-separator="^\n---\n"  data-separator-vertical="^\n--\n">
+					<textarea data-template>
+
+# German Academic Web <!-- .element: style="font-size:3em;" -->
+
+## Past, Present, and Future <!-- .element: style="font-size:2em;" -->
+
+<br/>[Robert Jäschke](https://hu.berlin/RJ/)
+
+
+Humboldt-Universität zu Berlin<br/>Institut für Bibliotheks- und Informationswissenschaft<!-- .element: style="font-size:0.75em;" -->
+
+19. Oktober 2026
+
+
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/4.0/"><img
+alt="Creative Commons Lizenzvertrag"
+style="border-width:0;width:88px;margin:0;" src="images/cc.png"/></a>
+<small style="width: 24em">
+This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+</small>
+
+<!-- .element style="padding-top: 4em;" -->
+
+Note:
+- 20min + 10min
+
+--
+
+# Agenda
+
+1. Motivation und Ausgangslage
+2. Vorgehen und Aktueller Stand
+3. Ausblick und Diskussion
+
+---
+
+# Motivation und Ausgangslage
+
+--
+
+
+ca. 2012/2013 @ [Forschungszentrum L3S](https://www.l3s.de/):
+
+> build a longitudinal knowledge base on (German) academia ("DBpedia
+> for the German research landscape") → **German Academic Web** (GAW)
+
+→ Projektantrag war nicht erfolgreich ("es gibt doch Google"), aber
+wir haben einfach los- und weitergecrawlt
+
+→ https://german-academic-web.de/
+
+--
+
+## Ausgangslage
+
+*halbjährliche Crawls "deutscher akademischer Webseiten"*
+
+→ Seed-Liste mit ca. 150 Web-Domänen [Deutscher Universitäten](http://de.wikipedia.org/wiki/Liste_der_Hochschulen_in_Deutschland)
+mit Promotionsrecht
+
+(+mpg.de & fraunhofer.de)
+
+
+--
+
+## Ausgangslage
+
+
+> [Heritrix](https://github.com/internetarchive/heritrix3) is the
+> Internet Archive's open-source, extensible, web-scale,
+> archival-quality web crawler project.
+
+
+komplexe Konfiguration, z.B.,
+
+- Kontaktdaten, [Webseite](https://amor.cms.hu-berlin.de/~jaeschkr/crawler/)
+- Ressourcenbeschränkungen (Threads, Speicher etc.)
+- Ein-/Ausschlussregeln *(← damit kann man Stunden verbringen!)*
+
+eine (derzeit) [3761 Zeilen lange XML-Datei](https://scm.cms.hu-berlin.de/ipa/gaw/blob/master/crawler-beans.cxml)
+
+
+--
+
+## WARC
+
+[Web ARChive](https://en.wikipedia.org/wiki/Web_ARChive)-Format – ISO-Standard
+- gzip-komprimierte Dateien (1GB groß, >7000 Dateien pro Crawl)
+- eine Datei enthält mehrere (tausend) WARC-Records
+- diese beinhalten HTTP-Anfragen und -Antworten und zusätzliche Metadaten
+
+```shell
+WARC/1.0
+WARC-Type: response
+WARC-Target-URI: https://www.uni-potsdam.de/de/lit-19-jhd/peertrilcke/
+WARC-Date: 2023-06-10T19:28:35Z
+WARC-IP-Address: 141.89.68.50
+WARC-Payload-Digest: sha1:DRWDIPN6JOUXLP7WHVXPWYPHDFAELZM5
+WARC-Record-ID: <urn:uuid:e7c44472-0622-48f8-a4b5-84cb2a89a769>
+Content-Type: application/http; msgtype=response
+Content-Length: 57723
+
+HTTP/1.1 200 OK
+Date: Sat, 10 Jun 2023 19:28:35 GMT
+Server: Apache
+Content-Language: de
+Content-Length: 57458
+Cache-Control: max-age=0
+Expires: Sat, 10 Jun 2023 19:28:35 GMT
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html; charset=utf-8
+
+<!DOCTYPE html><html dir="ltr" lang="de-DE"><head><meta charset="utf-8"><
+...
+```
+
+--
+
+## CDX
+
+Index-Dateien mit Metadaten; spaltenbasiert (TSV); eine Zeile pro WARC-Record
+
+| id | explanation                      |
+| -- | -------------------------------- |
+| N  | massaged url (special SURT form) |
+| b  | timestamp                        |
+| a  | original url                     |
+| m  | mime type of original document   |
+| s  | response code                    |
+| k  | checksum                         |
+| r  | redirect                         |
+| M  | meta tags                        |
+| S  | compressed record size           |
+| V  | compressed arc/warc file offset  |
+| g  | filename                         |
+
+---
+
+# Vorgehen und Aktueller Stand
+
+--
+
+## Infrastruktur
+
+<div style="float:right; width:40%;">
+
+![Cluster](images/cluster.jpg)<!-- .element style="margin-top: 0" -->
+
+</div>
+
+- Crawl-Rechner
+- Cluster (HU + L3S)
+- NAS/SAN @ HPC
+- Tape
+- HDDs @ Tresor
+- GitLab
+
+--
+
+## Pre-Crawling
+
+<small>
+
+In order to create a new GAW job, do the following:
+- check for a new version of Heritrix
+- check disk space (delete/cleanup old job)
+- create seed list ([`get_seeds.py`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/src/get_seeds.py?ref_type=heads))
+- clean seed list ([`clean_seeds.py`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/src/clean_seeds.py?ref_type=heads))
+- fix indicated errors/problems
+- add FHG+MPG
+- add seed list to git ([`data/2025-12-09.seeds`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/data/2025-12-09.seeds?ref_type=heads))
+- add changes from last crawls
+- *important*: read remarks from [`LogBook.org`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/LogBook.org?ref_type=heads)
+- start Heritrix
+- open https://localhost:8443/
+- create a new job from `gaw-profile`
+- build the new job
+- move the job directory
+- create symbolic link
+- create another symbolic link
+- copy seeds
+- update/add [`crawler-beans.cxml`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/crawler-beans.cxml?ref_type=heads)
+- launch job
+- unpause job
+- update https://amor.cms.hu-berlin.de/~jaeschkr/crawler/
+- *send mail to noc@cms.hu-berlin.de, noc@tu-berlin.de,
+  cert@dfn-cert.de & Uni K. (content: source IP, reason, Dauer)*
+- edit `progress.gpi` and start monitoring script [`crawl_progress.sh`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/src/crawl_progress.sh?ref_type=heads)
+- check number of retired hosts
+
+*"I needed several iterations to find the correct way to do this.  The
+above sequence worked several times for me!"*
+
+[Quelle](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/README.org)
+
+</small>
+
+
+--
+
+## Crawling
+
+![Progress Plot](https://amor.cms.hu-berlin.de/~kokoshki/gaw/progress.svg)<!-- .element class="noshadow" style="width: 50%" -->
+
+
+
+- finding hosts to be retired
+- retiring/ignoring hosts
+- update crawler plot on web page
+
+[Quelle](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/README.org)
+
+--
+
+## Post-Crawling
+
+
+- stop monitoring scripts
+- pause job, wait until paused *(this can take a while)*
+- terminate job, wait until terminated *(this can take a while)*
+- add `crawler_beans.cxml` to git ([`./data/${next_crawl_date}_crawler_beans.cxml`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/data/2020-06_crawler-beans.cxml?ref_type=heads)
+- create directory on HDFS (`hdfs dfs -mkdir /data/web/gaw/2025-12`)
+- compute MD5 sums (and add them to [`data`](https://scm.cms.hu-berlin.de/ipa/gaw/-/tree/master/src?ref_type=heads))
+- copy data to HDFS (L3S and possibly also HU)
+- compute MD5 sums in HDFS
+- copy MD5 sums to local dir
+- compare MD5 sums ([`compare_md5.sh`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/src/compare_md5.sh?ref_type=heads))
+- create mapping to rename files ([`move_warcs.py`](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/src/move_warcs.py?ref_type=heads))
+- actually rename the files ([`BatchRename`](https://github.com/rjoberon/hadoop-tools/blob/master/src/main/java/de/l3s/hadoop/BatchRename.java))
+- store file listing
+- generate CDX
+- compress crawl log files and copy to cluster
+- generate statistics and update the  [web page](https://german-academic-web.de/basic_statistics.html)
+
+[Quelle](https://scm.cms.hu-berlin.de/ipa/gaw/-/blob/master/README.org)
+
+
+--
+
+## Ergebnis
+
+### [git:data](https://scm.cms.hu-berlin.de/ipa/gaw/-/tree/master/data?ref_type=heads)
+
+<small>
+
+| file                         | size   |
+| ---------------------------- | ------:  |
+| `2025-12-09.seeds`           | 9.6 KB |
+| `2025-12.ls-lR`              | 1.1 MB |
+| `2025-12.map`                | 1.5 MB |
+| `2025-12.md5`                | 1.2 MB |
+| `2025-12_crawler-beans.cxml` | 188 KB |
+| `2025-12_hdfs.md5`           | 1.3 MB |
+
+</small>
+
+--
+
+### hdfs:/data/gaw/2025-12
+
+<small>
+
+| file / directory                                                    | size       |
+| ------------------------------------------------------------------- | ----------: |
+| 20251209103758408-00000.warc.gz                                     | 957.8 M    |
+| 20251209103758409-00001.warc.gz                                     | 953.7 M    |
+| ...                                                                 | ...        |
+| 20251227133907790-11037.warc.gz                                     | 452.3 M    |
+| 20251227134004226-11038.warc.gz                                     | 464.7 M    |
+| derived-data                                                        |            |
+| derived-data/cdx                                                    |            |
+| derived-data/cdx/20251209103758408-00000.warc.cdx                   | 8.7 M      |
+| derived-data/cdx/20251209103758409-00001.warc.cdx                   | 7.8 M      |
+| ...                                                                 | ...        |
+| derived-data/cdx/20251227133907790-11037.warc.cdx                   | 16.8 M     |
+| derived-data/cdx/20251227134004226-11038.warc.cdx                   | 16.4 M     |
+
+</small>
+
+<!--
+- big cluster: all crawls; small cluster: recent crawls only; server: last crawl only
+- subdirectories with generated / extracted metadata (e.g., CDX, WAT)
+- crawl metadata in [git repo](https://scm.cms.hu-berlin.de/ipa/gaw/blob/master/data) with the following files for each crawl:
+  - `*.md5` → MD5 sums of the crawled WARC files
+  - `*.wiki` → URLs from Wikipedia (created with `get_seeds.py`)
+  - `*.seeds` → URLs for the seeds (created with `clean_seeds.py`)
+  - `*.ls-lR` → output of `hdfs dfs -ls -R $DIR`
+  - `*.map` → mapping between original and shortened file names
+-->
+
+--
+
+## Post-Post-Crawling / Aufräumen
+
+Schritte erläutern
+
+
+--
+
+## Archivierung
+
+![Quantum Tape-Library Web-Cam View - Quelle: © 2014 Quantum
+Corporation. All rights
+reserved](https://www.cms.hu-berlin.de/de/dl/systemservice/fileservice/tsm/bilder/quantum-web-cam-view-webversion.jpg/@@images/image-768-e6b978818dd39114a6db5b0d475d225c.jpeg)<!-- .element style="float:right; width:40%; margin-top: 0" -->
+
+
+- Festplatten @ IBI
+- Magnetband @ [Zentraler Backupservice des CMS](https://www.cms.hu-berlin.de/de/dl/systemservice/fileservice/tsm)
+
+--
+
+## Status
+
+
+|   crawl | WARC→HU   | check | CDX@HU | check | CDX→L3S | tape    | counts |
+| ------- | --------- | ----- | ------ | ----- | ------- | ------- | ------ |
+| 2012-10 | ✅        | ✅    | ✅     | ✅    |         | !       |        |
+| 2013-12 | running   |       | 💣     |       |         | !       |        |
+| 2014-12 | ✅        | ✅    | ✅     | ✅    |         | !       |        |
+| 2015-12 | !!        |       | ✅     |       | ✅      | !       |        |
+| 2016-12 | ✅        | ✅    | ✅     | ✅    | ✅      | !       |        |
+| 2017-12 | !!        |       | ✅?    | ✅    | ✅      | !       |        |
+| 2018-12 | !!        |       | ✅?    | ✅    | ✅      | !       |        |
+| 2019-12 | ✅        | ✅    | ✅     | ✅    | ✅      | ✅      |        |
+| 2020-12 | ✅        | ✅    | ✅     | ✅    | ✅      | !       |        |
+| 2021-12 | ✅        | ✅    | ✅     | ✅    | ✅      | ✅      |        |
+| 2022-12 | ✅        | ✅    | ✅     | ✅    | ✅      | !       |        |
+| 2023-12 | ✅        | ✅    | ✅     | ✅    | ✅      | running |        |
+| 2024-12 | ✅        | ✅    | ✅     | ✅    | running | !       |        |
+| 2025-12 | ✅        | ✅    | ✅     | ✅    | ✅      | ✅      |        |
+
+
+--
+
+## Use Cases
+
+### Dissertation Michael Paris
+
+- [Evaluating dataset creation heuristics for concept detection
+  in web pages using
+  BERT](https://doi.org/10.1007/978-3-030-82147-0_14)
+- [How to Assess
+  the Exhaustiveness of Longitudinal Web Archives: A Case Study of the
+  German Academic Web](https://doi.org/10.1145/3372923.3404836))
+
+### Abschlussarbeiten
+- Kulturwandel zu Open Science: Eine Analyse der Webpräsenzen
+  wissenschaftlicher Institutionen in Deutschland (2021)
+- Publikationsdaten auf Webseiten deutscher Forschungseinrichtungen:
+  Eine Pilotstudie für die Analyse des German Academic Web (2022)
+- Evaluating Author Disambiguation in OpenAlex Using Persistent
+  identifiers from Academic Web Pages (2027)
+
+### Aktuell
+- RefinedGAW: A Refined German Academic Web Dataset @ [13th
+	Web-as-Corpus Workshop](https://wackyworkshop.org/)
+- Extraktion von Studien- und Prüfungsordnungen (mit RWI Essen)
+
+
+---
+
+# Diskussion
+
+
+
+--
+
+
+<!--
+
+qrencode -s15 -o images/qrcode.png "https://slides.igada.de/2026-10-19-ibi/"
+
+-->
+
+<div style="float:right; width:24%;">
+
+  [![Link zu den Folien](images/qrcode.png)<!-- .element class="noshadow" style="margin-bottom:0px" -->](https://slides.igada.de/2026-10-19-ibi/)
+
+  <!-- .element style="margin-bottom: 0" -->
+
+  [https://slides.igada.de/2026-10-19-ibi/](https://slides.igada.de/2026-10-19-ibi/)
+
+  <!-- .element style="font-size:.45em;padding-top:0px;margin-top:0px;" -->
+
+  [![www.bibsonomy.org](images/postit.png)<!-- .element class="noshadow" -->](https://www.bibsonomy.org/)
+
+  [![weltliteratur.net](images/logo_weltliteratur_953x265.png)<!-- .element class="noshadow" -->](http://weltliteratur.net/)
+
+
+</div>
+
+
+![XKCD: Questions?](images/xkcd_1256.png)
+<!-- .element: style="width:100%;margin-bottom:0px;" -->
+
+<!-- .element: style="width:70%;margin-bottom:0px;margin-top:0px;" -->
+
+<small>© [XKCD, Randall Munroe](https://xkcd.com/1256) / [CC BY-NC 2.5](https://creativecommons.org/licenses/by-nc/2.5/)</small>
+
+<!-- .element: style="margin-top:0px;" -->
+
+- <!-- .element class="clap"--> Michael Paris, Sebastian Tiesler, Ira Kokoshko
+- <!-- .element class="mail" -->
+  [robert.jaeschke@hu-berlin.de](mailto:robert.jaeschke@hu-berlin.de)
+- <!-- .element class="web" -->
+  [https:///german-academic-web.de/](https://german-academic-web.de/)
+
+
+<!-- .element: style="width: 70%; float:left;" -->
+
+--
+
+[![Link zu den Folien](images/qrcode.png)<!-- .element class="noshadow" style="margin-bottom:0px" -->](https://slides.igada.de/2026-05-22-bibliocon/)
+
+## [https://slides.igada.de/2026-05-22-bibliocon/](https://slides.igada.de/2026-05-22-bibliocon/)
+
+
+
+					</textarea>
+				</section>
+			</div>
+		</div>
+		<script src="../reveal.js_5/dist/reveal.js"></script>
+		<script src="../reveal.js_5/plugin/notes/notes.js"></script>
+		<script src="../reveal.js_5/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js_5/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				history: true,
+				slideNumber: "c/t",
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
+
+<!--
+  Local Variables:
+  mode: markdown
+  eval: (indent-tabs-mode)
+  End:
+  -->
